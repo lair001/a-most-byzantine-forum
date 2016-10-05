@@ -1,6 +1,6 @@
-class CreateThreads < ActiveRecord::Migration
+class CreateForumThreads < ActiveRecord::Migration
   def change
-  	create_table :threads do |t| 
+  	create_table :forum_threads do |t| 
   		t.string :title
   		t.timestamps
   	end

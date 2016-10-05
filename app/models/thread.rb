@@ -1,11 +1,9 @@
-module Byzantine
-	class Thread < ActiveRecord::Base
+class ForumThread < ActiveRecord::Base
 
-		include Byzantine::Slugifiable::InstanceMethods
-		extend Byzantine::Slugifiable::ClassMethods
+	include Slugifiable::InstanceMethods
+	extend Slugifiable::ClassMethods
 
-		has_many :posts
-		has_many :users, through: :posts
+	has_many :posts
+	has_many :users, through: :posts
 
-	end
 end

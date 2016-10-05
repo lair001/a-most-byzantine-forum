@@ -3,10 +3,10 @@ require 'spec_helper'
 describe 'Post' do 
 
   before do
-    @user = Byzantine::User.create(username: "test 123", email: "test123@aol.com", password: "test", moderator: false, administrator: false)
-    @thread = Byzantine::Thread.create(title: "nothing here")
-    @post1 = Byzantine::Post.create(content: "ipsum lorem", user_id: @user.id, thread_id: @thread.id)
-    @post2 = Byzantine::Post.create(content: "blah blah", user_id: @user.id, thread_id: @thread.id)
+    @user = ForumUser.create(username: "test 123", email: "test123@aol.com", password: "test", moderator: false, administrator: false)
+    @thread = ForumThread.create(title: "nothing here")
+    @post1 = ForumPost.create(content: "ipsum lorem", user_id: @user.id, thread_id: @thread.id)
+    @post2 = ForumPost.create(content: "blah blah", user_id: @user.id, thread_id: @thread.id)
   end
 
   it 'knows its content' do 

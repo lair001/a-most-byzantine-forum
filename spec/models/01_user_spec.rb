@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'User' do 
 
   before do
-    @user = Byzantine::User.create(username: "test 123", email: "test123@aol.com", password: "test", moderator: false, administrator: false)
+    @user = ForumUser.create(username: "test 123", email: "test123@aol.com", password: "test", moderator: false, administrator: false)
   end
   it 'can slug the username' do
     expect(@user.slug).to eq("test-123")
@@ -11,7 +11,7 @@ describe 'User' do
 
   it 'can find a user based on the slug' do
     slug = @user.slug
-    expect(Byzantine::User.find_by_slug(slug).username).to eq("test 123")
+    expect(ForumUser.find_by_slug(slug).username).to eq("test 123")
   end
 
   it 'has a secure password' do
@@ -36,10 +36,10 @@ describe 'User' do
   end
 
   it 'has many threads through posts' do 
-    @thread1 = Byzantine::Thread.create(title: "nothing here")
-    @thread2 = Byzantine::Thread.create(title: "hello there")
-    @post1 = Byzantine::Post.create(content: "ipsum lorem", user_id: @user.id, thread_id: @thread1.id)
-    @post2 = Byzantine::Post.create(content: "blah blah", user_id: @user.id, thread_id: @thread2.id)
+    @thread1 = ForumThread.create(title: "nothing here")
+    @thread2 = ForumThread.create(title: "hello there")
+    @post1 = ForumPost.create(content: "ipsum lorem", user_id: @user.id, thread_id: @thread1.id)
+    @post2 = ForumPost.create(content: "blah blah", user_id: @user.id, thread_id: @thread2.id)
     expect(@user.posts).to be_a(Array)
     expect(@user.posts).to include(@post1)
     expect(@user.posts).to include(@post2)
