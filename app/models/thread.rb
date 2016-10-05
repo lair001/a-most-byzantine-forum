@@ -1,4 +1,4 @@
-class Thread < Sinatra::Base
+class Thread < ActiveRecord::Base
 
 	include Slugifiable::InstanceMethods
 	extend Slugifiable::ClassMethods
