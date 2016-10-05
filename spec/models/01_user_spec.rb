@@ -40,10 +40,8 @@ describe 'User' do
     @thread2 = ForumThread.create(title: "hello there")
     @post1 = ForumPost.create(content: "ipsum lorem", forum_user_id: @user.id, forum_thread_id: @thread1.id)
     @post2 = ForumPost.create(content: "blah blah", forum_user_id: @user.id, forum_thread_id: @thread2.id)
-    expect(@user.forum_posts).to be_a(Array)
     expect(@user.forum_posts).to include(@post1)
     expect(@user.forum_posts).to include(@post2)
-    expect(@user.forum_threads).to be_a(Array)
     expect(@user.forum_threads).to include(@thread1)
     expect(@user.forum_threads).to include(@thread2)
   end
