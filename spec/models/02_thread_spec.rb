@@ -16,11 +16,11 @@ describe 'Thread' do
   end
 
   it 'knows when it was created' do 
-    expect(@user.created_at).to be_a(DateTime)
+    expect(@user.created_at).to be_a(Time)
   end
 
   it 'knows when it was last updated' do 
-    expect(@user.updated_at).to be_a(DateTime)
+    expect(@user.updated_at).to be_a(Time)
   end
 
   it 'has many users through posts' do 

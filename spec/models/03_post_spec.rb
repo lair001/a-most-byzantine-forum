@@ -15,13 +15,13 @@ describe 'Post' do
   end
 
   it 'knows when it was created' do 
-    expect(@post1.created_at).to be_a(DateTime)
-    expect(@post2.created_at).to be_a(DateTime)
+    expect(@post1.created_at).to be_a(Time)
+    expect(@post2.created_at).to be_a(Time)
   end
 
   it 'knows when it was last updated' do 
-    expect(@post1.updated_at).to be_a(DateTime)
-    expect(@post2.updated_at).to be_a(DateTime)
+    expect(@post1.updated_at).to be_a(Time)
+    expect(@post2.updated_at).to be_a(Time)
   end
 
   it 'belongs to a user' do 
