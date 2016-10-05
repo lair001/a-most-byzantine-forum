@@ -1,8 +1,8 @@
 module Byzantine
 	class User < ActiveRecord::Base
 
-		include Slugifiable::InstanceMethods
-		extend Slugifiable::ClassMethods
+		include Byzantine::Slugifiable::InstanceMethods
+		extend Byzantine::Slugifiable::ClassMethods
 
 		has_many :posts
 		has_many :threads, through: :posts

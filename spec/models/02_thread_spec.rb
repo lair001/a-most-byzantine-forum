@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Thread' do 
 
   before do
-    @thread = Thread.create(title: "test 123")
+    @thread = Byzantine::Thread.create(title: "test 123")
   end
 
   it 'can slug the title' do
@@ -12,7 +12,7 @@ describe 'Thread' do
 
   it 'can find a thread based on the slug' do
     slug = @thread.slug
-    expect(Thread.find_by_slug(slug).title).to eq("test 123")
+    expect(Byzantine::Thread.find_by_slug(slug).title).to eq("test 123")
   end
 
   it 'knows when it was created' do 
@@ -24,10 +24,10 @@ describe 'Thread' do
   end
 
   it 'has many users through posts' do 
-    @user1 = User.create(username: "test 123", email: "test123@aol.com", password: "test", moderator: false, administrator: false)
-    @user2 = User.create(username: "igor", email: "igor@aol.com", password: "yumyum", moderator: false, administrator: false)
-    @post1 = Post.create(content: "ipsum lorem", user_id: @user1.id, thread_id: @thread.id)
-    @post2 = Post.create(content: "blah blah", user_id: @user2.id, thread_id: @thread.id)
+    @user1 = Byzantine::User.create(username: "test 123", email: "test123@aol.com", password: "test", moderator: false, administrator: false)
+    @user2 = Byzantine::User.create(username: "igor", email: "igor@aol.com", password: "yumyum", moderator: false, administrator: false)
+    @post1 = Byzantine::Post.create(content: "ipsum lorem", user_id: @user1.id, thread_id: @thread.id)
+    @post2 = Byzantine::Post.create(content: "blah blah", user_id: @user2.id, thread_id: @thread.id)
     expect(@thread.posts).to be_a(Array)
     expect(@thread.posts).to include(@post1)
     expect(@thread.posts).to include(@post2)
