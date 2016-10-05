@@ -6,7 +6,7 @@ class CreateForumUsers < ActiveRecord::Migration
   		t.string :password_digest
   		t.boolean :moderator
   		t.boolean :administrator
-  		t.timestamps
+  		t.timestamps null: false
   	end
   end
 end
