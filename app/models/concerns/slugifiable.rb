@@ -1,8 +1,14 @@
 module Slugifiable
   module InstanceMethods
     def slug
-      return self.username.strip.downcase.gsub(' ', '-') if self.class == User
-      return self.title.strip.downcase.gsub(' ', '-') if self.class == Thread
+      begin
+        return self.username.strip.downcase.gsub(' ', '-') unless self.username.nil?
+      rescue NoMethodError
+      end
+      begin
+        return self.title.strip.downcase.gsub(' ', '-') unless self.title.nil?
+      rescue NoMethodError 
+      end
       nil
     end
   end
