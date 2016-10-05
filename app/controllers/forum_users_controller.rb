@@ -1,0 +1,3 @@
+class ForumUsersController < Controller
+
+end

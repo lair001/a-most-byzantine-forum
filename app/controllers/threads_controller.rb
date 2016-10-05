@@ -1,3 +1,0 @@
-class ThreadsController < Controller
-
-end
