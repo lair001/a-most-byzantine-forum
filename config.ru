@@ -5,7 +5,7 @@ if ActiveRecord::Migrator.needs_migration?
 end
 
 use Rack::MethodOverride
-use UsersController
-use PostsController
-use ThreadsController
+use ForumUsersController
+use ForumPostsController
+use ForumThreadsController
 run ApplicationController
