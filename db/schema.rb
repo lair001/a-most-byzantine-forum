@@ -15,10 +15,10 @@ ActiveRecord::Schema.define(version: 20161005033605) do
 
   create_table "forum_posts", force: :cascade do |t|
     t.string   "content"
-    t.integer  "user_id"
-    t.integer  "thread_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "forum_user_id"
+    t.integer  "forum_thread_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "forum_threads", force: :cascade do |t|

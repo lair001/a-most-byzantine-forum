@@ -25,13 +25,13 @@ describe 'Post' do
   end
 
   it 'belongs to a user' do 
-    expect(@post1.user).to eq(@user)
-    expect(@post2.user).to eq(@user)
+    expect(@post1.forum_user).to eq(@user)
+    expect(@post2.forum_user).to eq(@user)
   end
 
   it 'belongs to a thread' do 
-    expect(@post1.thread).to eq(@thread)
-    expect(@post2.thread).to eq(@thread)
+    expect(@post1.forum_thread).to eq(@thread)
+    expect(@post2.forum_thread).to eq(@thread)
   end
 
 end
