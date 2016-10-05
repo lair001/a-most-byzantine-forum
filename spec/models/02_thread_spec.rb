@@ -26,8 +26,8 @@ describe 'Thread' do
   it 'has many users through posts' do 
     @user1 = ForumUser.create(username: "test 123", email: "test123@aol.com", password: "test", moderator: false, administrator: false)
     @user2 = ForumUser.create(username: "igor", email: "igor@aol.com", password: "yumyum", moderator: false, administrator: false)
-    @post1 = ForumPost.create(content: "ipsum lorem", user_id: @user1.id, thread_id: @thread.id)
-    @post2 = ForumPost.create(content: "blah blah", user_id: @user2.id, thread_id: @thread.id)
+    @post1 = ForumPost.create(content: "ipsum lorem", forum_user_id: @user1.id, forum_thread_id: @thread.id)
+    @post2 = ForumPost.create(content: "blah blah", forum_user_id: @user2.id, forum_thread_id: @thread.id)
     expect(@thread.forum_posts).to be_a(Array)
     expect(@thread.forum_posts).to include(@post1)
     expect(@thread.forum_posts).to include(@post2)

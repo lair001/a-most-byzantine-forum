@@ -38,8 +38,8 @@ describe 'User' do
   it 'has many threads through posts' do 
     @thread1 = ForumThread.create(title: "nothing here")
     @thread2 = ForumThread.create(title: "hello there")
-    @post1 = ForumPost.create(content: "ipsum lorem", user_id: @user.id, thread_id: @thread1.id)
-    @post2 = ForumPost.create(content: "blah blah", user_id: @user.id, thread_id: @thread2.id)
+    @post1 = ForumPost.create(content: "ipsum lorem", forum_user_id: @user.id, forum_thread_id: @thread1.id)
+    @post2 = ForumPost.create(content: "blah blah", forum_user_id: @user.id, forum_thread_id: @thread2.id)
     expect(@user.forum_posts).to be_a(Array)
     expect(@user.forum_posts).to include(@post1)
     expect(@user.forum_posts).to include(@post2)
