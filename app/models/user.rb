@@ -1,10 +1,12 @@
-class User < ActiveRecord::Base
+module Byzantine
+	class User < ActiveRecord::Base
 
-	include Slugifiable::InstanceMethods
-	extend Slugifiable::ClassMethods
+		include Slugifiable::InstanceMethods
+		extend Slugifiable::ClassMethods
 
-	has_many :posts
-	has_many :threads, through: :posts
-	has_secure_password
+		has_many :posts
+		has_many :threads, through: :posts
+		has_secure_password
 
+	end
 end
