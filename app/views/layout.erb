@@ -27,6 +27,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
+        <% if current_route == '/C9P' %>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Navigate
         <span class="caret"></span></a>
@@ -64,6 +65,7 @@
             <li><a href="https://en.wikipedia.org/wiki/Mehmed_the_Conqueror">Mehmed</a></li>
           </ul>
         </li>
+        <% end %>
       </ul>
       <form class="navbar-form navbar-right" method="get" action="https://www.bing.com/search" role="search">
         <div class="form-group">
@@ -73,8 +75,10 @@
 </button>
       </form>
       <ul class="nav navbar-nav navbar-right">
+        <% if current_route == '/C9P' %>
         <li><a href="https://www.facebook.com/pages/Constantine-XI-Palaiologos/103225189731462?fref=ts"><i class="fa fa-facebook-official"></i> Facebook</a></li>
         <li><a href="https://www.tumblr.com/search/constantine-xi-palaiologos"><i class="fa fa-tumblr"></i> tumblr.</a></li>
+        <% end %>
       </ul>
     </div>
   </div>
