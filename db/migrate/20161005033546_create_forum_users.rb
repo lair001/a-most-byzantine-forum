@@ -4,8 +4,8 @@ class CreateForumUsers < ActiveRecord::Migration
   		t.string :username
   		t.string :email 
   		t.string :password_digest
-  		t.boolean :moderator
-  		t.boolean :administrator
+  		t.boolean :moderator, default: false
+  		t.boolean :administrator, default: false
   		t.timestamps null: false
   	end
   end

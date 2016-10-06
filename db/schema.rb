@@ -31,10 +31,10 @@ ActiveRecord::Schema.define(version: 20161005033605) do
     t.string   "username"
     t.string   "email"
     t.string   "password_digest"
-    t.boolean  "moderator"
-    t.boolean  "administrator"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.boolean  "moderator",       default: false
+    t.boolean  "administrator",   default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
 end
