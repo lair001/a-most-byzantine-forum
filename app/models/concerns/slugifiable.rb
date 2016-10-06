@@ -1,14 +1,8 @@
 module Slugifiable
   module InstanceMethods
     def slug
-      begin
-        return self.username.strip.downcase.gsub(' ', '-') unless self.username.nil?
-      rescue NoMethodError
-      end
-      begin
-        return self.title.strip.downcase.gsub(' ', '-') unless self.title.nil?
-      rescue NoMethodError 
-      end
+      return self.username.strip.downcase.gsub(' ', '-') if self.class.attribute_method?(:username)
+      return self.title.strip.downcase.gsub(' ', '-') if self.class.attribute_method?(:title)
       nil
     end
   end
