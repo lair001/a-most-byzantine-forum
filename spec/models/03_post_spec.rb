@@ -14,6 +14,11 @@ describe 'Post' do
     expect(@post2.content).to eq("blah blah")
   end
 
+  it 'validates for the presence of content' do 
+    expect(ForumPost.new.save).to eq(false)
+    expect(ForumPost.new(content: "Ipsum lorem is so cool!!!").save).to eq(true)
+  end
+
   it 'knows when it was created' do 
     expect(@post1.created_at).to be_a(Time)
     expect(@post2.created_at).to be_a(Time)
