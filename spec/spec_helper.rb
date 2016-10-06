@@ -34,15 +34,3 @@ def app
 end
 
 Capybara.app = app
-
-class Helpers
-
-  attr_accessor :session
-
-  include Helpable
-
-  def initialize
-    session = {}
-  end
-
-end
