@@ -13,7 +13,7 @@ class Controller < Sinatra::Base
 		end
 
 		def current_user
-			@current_user ||= User.find(session[:user_id])
+			@current_user ||= ForumUser.find(session[:user_id])
 		end
 
 		def moderator?
