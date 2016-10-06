@@ -16,6 +16,14 @@ class Controller < Sinatra::Base
 			@current_user ||= User.find(session[:id])
 		end
 
+		def moderator?
+			@moderator ||= current_user.moderator
+		end
+
+		def administrator?
+			@administrator ||= current_user.administrator
+		end
+
 		def current_route
 			@current_route ||= request.path_info
 		end
