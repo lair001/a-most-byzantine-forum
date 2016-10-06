@@ -20,4 +20,12 @@ module Helpable
 		@current_route ||= request.path_info
 	end
 
+	def sort_threads
+		@threads ||= Threads.order(updated_at: :desc)
+	end
+
+	def sort_posts
+		@posts ||= @thread.posts.order(created_at: :asc)
+	end
+
 end
