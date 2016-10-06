@@ -28,6 +28,13 @@ describe 'User' do
     expect(@user1.authenticate("test")).to eq(@user1)
   end
 
+  it 'validates for the presence of username, email, and password' do 
+    expect(ForumUser.create(email: "123@abc.com", password: "abc123").save).to eq(false)
+    expect(ForumUser.create(username: "I Can Read", password: "abc123").save).to eq(false)
+    expect(ForumUser.create(username: "I Can Read", email: "123@abc.com").save).to eq(false)
+    expect(ForumUser.create(username: "I Can Read", email: "123@abc.com", password: "abc123").save).to eq(true)
+  end
+
   it 'knows whether it is a moderator' do 
     expect(@user1.moderator).to eq(false)
     expect(@user2.moderator).to eq(true)
