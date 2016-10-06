@@ -4,8 +4,8 @@ class ApplicationController < Controller
 		erb :index
 	end
 
-	get '/k9p' do 
-		erb :k9p
+	get '/C9P' do 
+		erb :C9P
 	end
 
 end
