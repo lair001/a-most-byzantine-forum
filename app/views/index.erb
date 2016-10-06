@@ -1,0 +1,39 @@
+<div class="container">
+
+  <div class="jumbotron shadow">
+    <h1 class="text-center">
+      A Most Byzantine Forum
+    </h1>
+    <h2 class="text-center">
+      <em>
+        Chat About All Things Roman
+      </em>
+    </h2>
+  </div>
+  <a href="/C9P"><img src="images/C9_P1.jpg" class="titleimg img-circle img-responsive shadow cntrimg" alt="Religious icon depicting Constantine XI."></a>
+	<% if !logged_in? %>
+		<div class="row">
+			<div class="col-xs-6">
+				<a href="/signup">
+					<div class="jumbotron shadow">
+						<h2 class="text-center">Sign Up</h2>
+					</div>
+				</a>
+			</div>
+			<div class="col-xs-6">
+				<a href="/login">
+					<div class="jumbotron shadow">
+						<h2 class="text-center">Log In</h2>
+					</div>
+				</a>
+			</div>
+		</div>
+	<% else %>
+		<a href="/threads">
+			<div class="jumbotron shadow">
+				<h2 class="text-center">View Threads</h2>
+			</div>
+		</a>
+	<% end %>
+
+</div>
