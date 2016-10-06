@@ -13,7 +13,7 @@ module Slugifiable
       end
       nil
     end
-    def validation_by_slug(object)
+    def validate_by_slug(object)
       return false if object.class != self || object.slug.nil? || object.slug.match(/[^-]/).nil?
       self.all.each do |instance|
         return false if instance.slug == object.slug && instance != object
