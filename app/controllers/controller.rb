@@ -9,12 +9,17 @@ class Controller < Sinatra::Base
 
 	helpers do
 		def logged_in?
-		  !!session[:id]
+			!!session[:id]
 		end
 
 		def current_user
-		  @current_user ||= User.find(session[:id])
+			@current_user ||= User.find(session[:id])
 		end
+
+		def current_route
+			@current_route ||= request.path_info
+		end
+
 	end
 
 end
