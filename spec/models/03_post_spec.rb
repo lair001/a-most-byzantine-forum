@@ -14,9 +14,15 @@ describe 'Post' do
     expect(@post2.content).to eq("blah blah")
   end
 
-  it 'validates for the presence of content' do 
+  it 'validates for the presence of content, user, and thread' do 
     expect(ForumPost.new.save).to eq(false)
-    expect(ForumPost.new(content: "Ipsum lorem is so cool!!!").save).to eq(true)
+    expect(ForumPost.new(content: "Ipsum lorem is so cool!!!").save).to eq(false)
+    expect(ForumPost.new(forum_user: @user).save).to eq(false)
+    expect(ForumPost.new(forum_thread: @thread).save).to eq(false)
+    expect(ForumPost.new(content: "Ipsum lorem is so cool!!!", forum_user: @user).save).to eq(false)
+    expect(ForumPost.new(content: "Ipsum lorem is so cool!!!", forum_thread: @thread).save).to eq(false)
+    expect(ForumPost.new(forum_user: @user, forum_thread: @thread).save).to eq(false)
+    expect(ForumPost.new(content: "Ipsum lorem is so cool!!!", forum_user: @user, forum_thread: @thread).save).to eq(true)
   end
 
   it 'knows when it was created' do 
