@@ -29,10 +29,10 @@ describe 'User' do
   end
 
   it 'validates for the presence of username, email, and password' do 
-    expect(ForumUser.create(email: "123@abc.com", password: "abc123").save).to eq(false)
-    expect(ForumUser.create(username: "I Can Read", password: "abc123").save).to eq(false)
-    expect(ForumUser.create(username: "I Can Read", email: "123@abc.com").save).to eq(false)
-    expect(ForumUser.create(username: "I Can Read", email: "123@abc.com", password: "abc123").save).to eq(true)
+    expect(ForumUser.new(email: "123@abc.com", password: "abc123").save).to eq(false)
+    expect(ForumUser.new(username: "I Can Read", password: "abc123").save).to eq(false)
+    expect(ForumUser.new(username: "I Can Read", email: "123@abc.com").save).to eq(false)
+    expect(ForumUser.new(username: "I Can Read", email: "123@abc.com", password: "abc123").save).to eq(true)
   end
 
   it 'knows whether it is a moderator' do 
