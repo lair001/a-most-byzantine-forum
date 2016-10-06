@@ -4,7 +4,7 @@ class ForumUser < ActiveRecord::Base
 	extend Slugifiable::ClassMethods
 
 	has_many :forum_posts
-	has_many :forum_threads, through: :forum_post
+	has_many :forum_threads, through: :forum_posts
 
 	has_secure_password
 	validates :username, presence: true 
