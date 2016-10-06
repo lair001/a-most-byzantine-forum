@@ -29,6 +29,10 @@ describe 'User' do
   end
 
   it 'validates for the presence of username, email, and password' do 
+    expect(ForumUser.new.save).to eq(false)
+    expect(ForumUser.new(username: "I Can Read").save).to eq(false)
+    expect(ForumUser.new(email: "123@abc.com").save).to eq(false)
+    expect(ForumUser.new(password: "abc123").save).to eq(false)
     expect(ForumUser.new(email: "123@abc.com", password: "abc123").save).to eq(false)
     expect(ForumUser.new(username: "I Can Read", password: "abc123").save).to eq(false)
     expect(ForumUser.new(username: "I Can Read", email: "123@abc.com").save).to eq(false)
