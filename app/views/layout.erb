@@ -29,7 +29,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <% if logged_in %>
+        <% if logged_in? %>
           <li><a href="/logout">Logout</a></li>
         <% end %>
         <% if current_route == '/C9P' %>
@@ -89,12 +89,11 @@
     </div>
   </div>
 </nav>
-<%= yield %>
+<div class="container">
+  <%= yield %>
+</div>
     <script src='javascripts/jquery-2.2.4.min.js'></script>
 <script src='javascripts/bootstrap.min.js'></script>
 
-    
-    
-    
   </body>
 </html>
