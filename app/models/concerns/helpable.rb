@@ -24,7 +24,7 @@ module Helpable
 		@threads ||= Threads.order(updated_at: :desc)
 	end
 
-	def sort_posts
+	def sort_thread_posts
 		@posts ||= @thread.posts.order(created_at: :asc)
 	end
 
