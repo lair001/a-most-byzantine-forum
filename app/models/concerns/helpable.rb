@@ -33,7 +33,7 @@ module Helpable
 	end
 
 	def sort_users
-		@users ||= ForumUsers.order(username: :asc)
+		@users ||= ForumUser.order(username: :asc)
 	end
 
 	def sort_thread_posts

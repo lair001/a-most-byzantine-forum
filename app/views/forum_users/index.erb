@@ -1,0 +1,26 @@
+<div class="jumbotron text-center shadow">
+	<h1>Users</h1>
+	<h2><em>Your Rivals in the Basileus's Court</em></h2>
+</div>
+<div class="jumbotron shadow">
+	<% @users.each do |user| %>
+		<div class="forum-divider-top <%="forum-divider-bottom" if user == @users.last%>">
+			<div class="row">
+				<div class="col-xs-4">
+					<h4>Last Seen:</h4>
+					<h5><%=format_time(user.updated_at)%></h5>
+					<h4>Joined:</h4>
+					<h5><%=format_time(user.created_at)%></h5>
+				</div>
+				<div class="col-xs-8 text-center">
+					<br>
+					<a href="/forum_users/<%=user.slug%>">
+						<h3><%=user.username%></h3>
+					</a>
+					<h4><em><%=user.email%></em></h4>
+					<br>
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>

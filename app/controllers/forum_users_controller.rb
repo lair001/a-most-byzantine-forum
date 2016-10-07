@@ -27,9 +27,10 @@ class ForumUsersController < Controller
 		end
 	end
 
-	get 'users' do 
+	get '/users' do 
 		if logged_in?
-			erb :'forum_users/users'
+			sort_users
+			erb :'forum_users/index'
 		else
 			redirect '/'
 		end
