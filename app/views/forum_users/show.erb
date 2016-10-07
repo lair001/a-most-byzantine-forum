@@ -1,0 +1,32 @@
+<div class="jumbotron text-center shadow">
+	<h1><%=@user.username%></h1>
+	<h2><em><%=@user.email%></em></h2>
+<% if moderator? || post.forum_user == current_user %>
+	<a href="/users/<%=@user.slug%>/edit">
+		<button type="submit" id="edit" class="btn btn-primary btn-forum quarter-width top-margin-10px shadow">
+		<i class="fa fa-pencil-square-o"></i> Edit
+		</button>
+	</a>
+<% end %>
+</div>
+
+<div class="jumbotron shadow">
+	<% @user_posts.each do |post| %>
+		<div class="forum-divider-top clearfix <%="forum-divider-bottom" if post == @user_posts.last%>">
+			<div class="row">
+				<div class="col-xs-4">
+					<h4>Updated:</h4>
+					<h5><%=format_time(post.updated_at)%></h5>
+					<h4>Created:</h4>
+					<h5><%=format_time(post.created_at)%></h5>
+				</div>
+				<div class="col-xs-8">
+					<br>
+					<a href="/forum_threads/<%=post.forum_thread.slug%>#<%=post.id%>"><h3 text-center><%=post.forum_thread.title%></h3></a>
+					<p><%=post.content%></p>
+					<br>
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>

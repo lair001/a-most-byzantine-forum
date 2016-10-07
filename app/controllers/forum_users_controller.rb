@@ -27,7 +27,7 @@ class ForumUsersController < Controller
 		end
 	end
 
-	get '/users' do 
+	get '/forum_users' do 
 		if logged_in?
 			sort_users
 			erb :'forum_users/index'
@@ -36,10 +36,10 @@ class ForumUsersController < Controller
 		end
 	end
 
-	get 'users/:slug' do 
+	get '/forum_users/:slug' do 
 		if logged_in?
-			@user = User.find_by_slug(params[:slug])
-			redirect '/threads' if @user.nil
+			@user = ForumUser.find_by_slug(params[:slug])
+			redirect '/threads' if @user.nil?
 			sort_user_posts(@user)
 			erb :'forum_users/show'
 		else

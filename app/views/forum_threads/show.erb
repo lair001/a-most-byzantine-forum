@@ -6,7 +6,7 @@
 <div class="jumbotron shadow">
 	<% @thread_posts.each do |post| %>
 		<div class="forum-divider-top clearfix <%="forum-divider-bottom" if post == @thread_posts.last%>">
-			<div class="row">
+			<div class="row" id="<%=post.id%>">
 				<div class="col-xs-4">
 					<a href="/forum_users/<%=post.forum_user.slug%>">
 						<h3><%=post.forum_user.username%></h3>
