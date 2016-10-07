@@ -29,7 +29,7 @@ module Helpable
 	end
 
 	def sort_threads
-		@threads ||= Threads.order(updated_at: :desc)
+		@threads ||= ForumThread.order(updated_at: :desc)
 	end
 
 	def sort_thread_posts
