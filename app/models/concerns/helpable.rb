@@ -8,6 +8,10 @@ module Helpable
 		@current_user ||= ForumUser.find(session[:user_id])
 	end
 
+	def current_user_posts
+		@current_user_posts = current_user.posts
+	end
+
 	def moderator?
 		@moderator ||= current_user.moderator
 	end
@@ -25,7 +29,7 @@ module Helpable
 	end
 
 	def sort_thread_posts
-		@posts ||= @thread.posts.order(created_at: :asc)
+		@thread_posts ||= @thread.posts.order(created_at: :asc)
 	end
 
 end
