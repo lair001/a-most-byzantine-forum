@@ -32,6 +32,10 @@ module Helpable
 		@threads ||= ForumThread.order(updated_at: :desc)
 	end
 
+	def sort_users
+		@users ||= ForumUsers.order(username: :asc)
+	end
+
 	def sort_thread_posts
 		@thread_posts ||= @thread.forum_posts.order(created_at: :asc)
 	end
