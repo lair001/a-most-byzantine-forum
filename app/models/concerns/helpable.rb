@@ -12,8 +12,8 @@ module Helpable
 		@current_user_posts ||= current_user.posts
 	end
 
-	def user_posts(user)
-		@user_posts = user.forum_posts.order(updated_at: :desc)
+	def sort_user_posts(user)
+		@user_posts ||= user.forum_posts.order(updated_at: :desc)
 	end
 
 	def moderator?
