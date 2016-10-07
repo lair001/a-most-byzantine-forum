@@ -20,7 +20,7 @@
 				</div>
 			</div>
 			<% if moderator? %>
-				<form method="post" action="/threads">
+				<form method="post" action="/threads" class="quarter-width">
 					<input type="hidden" name="_method" value="delete">
 					<input type="hidden" name="thread[id]" value=<%=thread.id%>>
 					<button type="submit" id="login" class="btn btn-primary btn-forum shadow">
