@@ -15,12 +15,12 @@
 				</div>
 				<div class="col-xs-8">
 					<br>
-					<a href="/threads/<%=thread.slug%>"><h3 class="text-center"><%=thread.title%></h3></a>
+					<a href="/forum_threads/<%=thread.slug%>"><h3 class="text-center"><%=thread.title%></h3></a>
 					<br>
 				</div>
 			</div>
 			<% if moderator? %>
-				<form method="post" action="/threads" class="quarter-width">
+				<form method="post" action="/forum_threads" class="quarter-width">
 					<input type="hidden" name="_method" value="delete">
 					<input type="hidden" name="thread[id]" value=<%=thread.id%>>
 					<button type="submit" id="login" class="btn btn-primary btn-forum shadow">
