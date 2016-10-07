@@ -5,7 +5,7 @@
 </a>
 <div class="jumbotron shadow">
 	<% @thread_posts.each do |post| %>
-		<div class="forum-divider-top <%="forum-divider-bottom" if post == @thread_posts.last%>">
+		<div class="forum-divider-top clearfix <%="forum-divider-bottom" if post == @thread_posts.last%>">
 			<div class="row">
 				<div class="col-xs-4">
 					<a href="/forum_users/<%=post.forum_user.slug%>">
@@ -23,17 +23,20 @@
 				</div>
 			</div>
 			<% if moderator? || post.forum_user == current_user %>
-				 <a href="/posts/<%=post.id%>/edit">
+				<a href="/posts/<%=post.id%>/edit">
 				<button type="submit" id="edit" class="btn btn-primary btn-forum float-right quarter-width shadow">
 					<i class="fa fa-pencil-square-o"></i> Edit
 	 			</button>
-				<form method="post" action="/posts" class="quarter-width">
-					<input type="hidden" name="_method" value="delete">
-					<input type="hidden" name="post[id]" value=<%=post.id%>>
-					<button type="submit" id="delete" class="btn btn-primary btn-forum shadow">
-						<i class="fa fa-bomb"></i> Delete
-		 			</button>
-		 		</form>
+	 			</a>
+	 			<% if @thread_posts.size == 1 || post != @thread_posts.first %>
+					<form method="post" action="/posts" class="quarter-width">
+						<input type="hidden" name="_method" value="delete">
+						<input type="hidden" name="post[id]" value=<%=post.id%>>
+						<button type="submit" id="delete" class="btn btn-primary btn-forum shadow">
+							<i class="fa fa-bomb"></i> Delete
+			 			</button>
+			 		</form>
+		 		<% end %>
 			<% end %>
 		</div>
 	<% end %>

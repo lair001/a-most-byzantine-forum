@@ -10,6 +10,15 @@
   margin-bottom: 5px;
 }
 
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  line-height: 0;
+}
+
 .cntrimg {
     display: block;
     margin-left: auto;
