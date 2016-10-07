@@ -36,12 +36,13 @@
 .forum-divider-top {
   display: block;
   border-top: 1px solid #B8860B;
+  margin-top: 5px
 }
 
 .forum-divider-bottom {
   display: block;
-  border-top: 1px solid #B8860B;
   border-bottom: 1px solid #B8860B;
+  padding-bottom: 5px
 }
 
 .jumbotron {
@@ -49,6 +50,10 @@
   border-color: #B8860B;
   border-style: solid;
   border-width: 5px;
+}
+
+.half-width {
+	width: 50%;
 }
 
 .navbar-brand {
@@ -67,6 +72,10 @@
   color: #fff;
   background-color: transparent;
   border-color: transparent;
+}
+
+.quarter-width {
+	width: 25%;
 }
 
 .shadow {
