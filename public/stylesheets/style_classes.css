@@ -1,0 +1,86 @@
+.brandimg {
+  max-height: 30px;
+}
+
+.btn-forum {
+  background-color: #222;
+  border-color: #222;
+  color: #9d9d9d;
+  width: 100%;
+}
+
+.cntrimg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.creditbox {
+  background-color: #66023C;
+  border-color: #B8860B;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: 5px;
+}
+
+.endingcitetext {
+  color: #B8860B;
+}
+
+.endingquote {
+  border-color: #B8860B;
+  margin-top: 10px;
+}
+
+.jumbotron {
+  background-color: #66023C;
+  border-color: #B8860B;
+  border-style: solid;
+  border-width: 5px;
+}
+
+.navbar-brand {
+  padding: 10px;
+}
+
+.navbar-inverse .submitbtn,
+.navbar-inverse .submitbtn:active {
+  color: #9d9d9d;
+  background-color: #222;
+  border-color: #222;
+}
+
+.navbar-inverse .submitbtn:hover, 
+.navbar-inverse .submitbtn:focus {
+  color: #fff;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.shadow {
+  box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.2);
+}
+
+.titleimg {
+  border-color: #B8860B;
+  border-style: solid;
+  border-width: 5px;
+  margin-bottom: 20px;
+  max-height: 320px;
+}
+
+.thumbnail {
+  background-color: #8D2963;
+  border-color: #B8860B;
+  border-width: 5px;
+  padding: 10px
+}
+
+.statuecaption {
+  background-color: #66023C;
+}
+
+
+
+
+
