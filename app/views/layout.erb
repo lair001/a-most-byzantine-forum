@@ -29,45 +29,48 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
+        <% if logged_in %>
+          <li><a href="/logout">Logout</a></li>
+        <% end %>
         <% if current_route == '/C9P' %>
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Navigate
-        <span class="caret"></span></a>
-          <ul class="dropdown-menu shadow">
-            <li><a href="#Top">Top</a></li>
-            <li><a href="#Statue">Statue</a></li>
-            <li><a href="#Timeline">Timeline</a></li>
-            <li><a href="#Painting">Painting</a></li>
-            <li><a href="#Bottom">Bottom</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Places
-        <span class="caret"></span></a>
-          <ul class="dropdown-menu shadow">
-            <li><a href="https://en.wikipedia.org/wiki/Byzantine_Empire">Byzantine Empire</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Constantinople">Constantinople</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Morea">Morea</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Duchy_of_Athens">Duchy of Athens</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Hexamilion_wall">Hexamilion Wall</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Ottoman_Empire">Ottoman Empire</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Republic_of_Venice">Republic of Venice</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">People
-        <span class="caret"></span></a>
-          <ul class="dropdown-menu shadow">
-            <li><a href="https://en.wikipedia.org/wiki/Palaiologos">Palaiologos Dynasty</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Theodora_Tocco">Theodora Tocco</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Carlo_I_Tocco">Carlo I Tocco</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/John_VIII_Palaiologos">John VIII</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Caterina_Gattilusio">Caterina Gattilusio</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Dorino_I_Gattilusio">Dorino I Gattilusio</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Murad_II">Murad II</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Mehmed_the_Conqueror">Mehmed</a></li>
-          </ul>
-        </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Navigate
+          <span class="caret"></span></a>
+            <ul class="dropdown-menu shadow">
+              <li><a href="#Top">Top</a></li>
+              <li><a href="#Statue">Statue</a></li>
+              <li><a href="#Timeline">Timeline</a></li>
+              <li><a href="#Painting">Painting</a></li>
+              <li><a href="#Bottom">Bottom</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Places
+          <span class="caret"></span></a>
+            <ul class="dropdown-menu shadow">
+              <li><a href="https://en.wikipedia.org/wiki/Byzantine_Empire">Byzantine Empire</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Constantinople">Constantinople</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Morea">Morea</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Duchy_of_Athens">Duchy of Athens</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Hexamilion_wall">Hexamilion Wall</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Ottoman_Empire">Ottoman Empire</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Republic_of_Venice">Republic of Venice</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">People
+          <span class="caret"></span></a>
+            <ul class="dropdown-menu shadow">
+              <li><a href="https://en.wikipedia.org/wiki/Palaiologos">Palaiologos Dynasty</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Theodora_Tocco">Theodora Tocco</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Carlo_I_Tocco">Carlo I Tocco</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/John_VIII_Palaiologos">John VIII</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Caterina_Gattilusio">Caterina Gattilusio</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Dorino_I_Gattilusio">Dorino I Gattilusio</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Murad_II">Murad II</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Mehmed_the_Conqueror">Mehmed</a></li>
+            </ul>
+          </li>
         <% end %>
       </ul>
       <form class="navbar-form navbar-right" method="get" action="https://www.bing.com/search" role="search">
