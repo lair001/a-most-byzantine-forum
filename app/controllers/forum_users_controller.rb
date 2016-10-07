@@ -2,9 +2,9 @@ class ForumUsersController < Controller
 
 	get '/login' do
 		if logged_in?
-			redirect '/threads'
+			redirect '/forum_threads'
 		else
-			erb :'users/login'
+			erb :'forum_users/login'
 		end
 	end
 
@@ -12,7 +12,7 @@ class ForumUsersController < Controller
 		@user = ForumUser.find_by(username: params[:username])
 		if @user && @user.authenticate(params[:password])
 			session[:user_id] = @user.id
-			redirect '/threads'
+			redirect '/forum_threads'
 		else
 			redirect '/'
 		end
