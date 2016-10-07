@@ -1,24 +1,33 @@
 <a href="/forum_threads/new">
 	<div class="jumbotron shadow">
-		<h2>Create Thread</h2>
+		<h2 class="text-center">Create Thread</h2>
 	</div>
 </a>
 <div class="jumbotron shadow">
 	<% @threads.each do |thread| %>
-		<div class="row">
-			<div class="col-xs-4"
+		<div class="forum-divider-top <%="forum-divider-bottom" if thread == @threads.last%>">
+			<div class="row">
+				<div class="col-xs-4">
+					<h4>Updated:</h4>
+					<h5><%=format_time(thread.updated_at)%></h5>
+					<h4>Created:</h4>
+					<h5><%=format_time(thread.created_at)%></h5>
+				</div>
+				<div class="col-xs-8">
+					<br>
+					<a href="/threads/<%=thread.slug%>"><h3 class="text-center"><%=thread.title%></h3></a>
+					<br>
+				</div>
 			</div>
-			<div class="col-xs-8"
-			</div>
+			<% if moderator? %>
+				<form method="post" action="/threads">
+					<input type="hidden" name="_method" value="delete">
+					<input type="hidden" name="thread[id]" value=<%=thread.id%>>
+					<button type="submit" id="login" class="btn btn-primary btn-forum shadow">
+						<i class="fa fa-bomb"></i> Delete
+		 			</button>
+		 		</form>
+			<% end %>
 		</div>
-		<% if moderator? %>
-			<form method="post" action="/treads">
-				<input type="hidden" name="_method" value="delete">
-				<input type="hidden" name="thread[id]" value=<%=thread.id%>>
-				<button type="submit" id="login" class="btn btn-primary btn-forum shadow">
-					<i class="fa fa-bomb"></i> Delete
-	 			</button>
-	 		</form>
-		<% end %>
 	<% end %>
 </div>
