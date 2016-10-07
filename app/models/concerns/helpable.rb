@@ -36,4 +36,8 @@ module Helpable
 		@thread_posts ||= @thread.posts.order(created_at: :asc)
 	end
 
+	def format_time(time)
+		time.strftime("%Y/%m/%d %H:%M:%S")
+	end
+
 end
