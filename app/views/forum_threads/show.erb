@@ -23,6 +23,10 @@
 				</div>
 			</div>
 			<% if moderator? || post.forum_user == current_user %>
+				 <a href="/posts/<%=post.id%>/edit">
+				<button type="submit" id="edit" class="btn btn-primary btn-forum float-right quarter-width shadow">
+					<i class="fa fa-pencil-square-o"></i> Edit
+	 			</button>
 				<form method="post" action="/posts" class="quarter-width">
 					<input type="hidden" name="_method" value="delete">
 					<input type="hidden" name="post[id]" value=<%=post.id%>>

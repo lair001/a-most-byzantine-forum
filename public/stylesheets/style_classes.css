@@ -45,6 +45,10 @@
   padding-bottom: 5px
 }
 
+.float-right {
+	float: right;
+}
+
 .jumbotron {
   background-color: #66023C;
   border-color: #B8860B;
