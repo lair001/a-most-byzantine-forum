@@ -1,13 +1,4 @@
-.endingcitetext {
-  color: #B8860B;
-}
-
-.endingquote {
-  border-color: #B8860B;
-  margin-top: 10px;
-}
-
-.statuecaption {
+.thumbnail-caption {
   background-color: #66023C;
 }
 
@@ -16,4 +7,13 @@
   border-color: #B8860B;
   border-width: 5px;
   padding: 10px
+}
+
+#ending_citation {
+  color: #B8860B;
+}
+
+#ending_quote {
+  border-color: #B8860B;
+  margin-top: 10px;
 }
