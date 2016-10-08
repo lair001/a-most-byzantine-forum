@@ -1,0 +1,23 @@
+<div class="jumbotron text-center shadow">
+	<h2 class="forum-divider-bottom">Editing User: <%=@user.username%></h2>
+	<form method="post" action="/users" class="center-block quarter-width">
+		<input type="hidden" name="_method" value="patch">
+		<div class="form-group">
+			<label for="username"><%=administrator? ? 'Username:' : '' %></label>
+			<input class="form-control" id="username" name="forum_user[username]" type="<%= administrator? ? 'text' : 'hidden' %>" value="<%=@user.username%>">
+		</div>
+		<div class="form-group">
+			<label for="email">Email:</label>
+			<input class="form-control" id="email" name="forum_user[email]" type="text" value="<%=@user.email%>">
+		</div>
+		<div class="form-group">
+			<label for="password">Password:</label>
+			<input class="form-control" id="password" name="forum_user[password]" type="password">
+		</div>
+		<input type="hidden" name="forum_user[id]" value=<%=@user.id%>>
+		<input type="hidden" name="cached_route" value="<%=current_route%>">
+		<button type="submit" id="signup" class="btn btn-primary btn-forum shadow">
+			<i class="fa fa-pencil-square-o"></i> Edit
+		</button>
+	</form>
+</div>

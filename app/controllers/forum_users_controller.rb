@@ -26,7 +26,7 @@ class ForumUsersController < Controller
 		end
 	end
 
-	post '/users/new' do 
+	post '/users' do 
 		@user = User.new
 		set_attributes(@user, params[:forum_user], ["username", "email", "password"])
 		if ForumUser.validate_by_slug(@user)
@@ -65,6 +65,44 @@ class ForumUsersController < Controller
 			redirect '/threads' if @user.nil?
 			sort_user_posts(@user)
 			erb :'forum_users/show'
+		else
+			redirect '/'
+		end
+	end
+
+	get '/forum_users/:slug/edit' do 
+		if logged_in?
+			@user = FormUser.find_by_slug(params[:slug])
+			if administrator? || @user = current_user
+				erb :'forum_users/edit'
+			else
+				redirect '/'
+			end
+		else
+			redirect '/'
+		end
+	end
+
+	patch '/forum_users' do
+		if logged_in?
+			@user = ForumUser.find(params[:forum_user][:id])
+			redirect "#{params[:cached_route]}" if @user.nil?
+			settable_attr_array = []
+			settable_attr_array << "banned" if moderator?
+			if administrator?
+				settable_attr_array << "username"
+				settable_attr_array << "email"
+				settable_attr_array << "password"
+			elsif @user == current_user
+				settable_attr_array << "email"
+				settable_attr_array << "password"
+			end
+			set_attributes(@user, params[:forum_user], settable_attr_array)
+			if @user.save
+				redirect '/users'
+			else
+				redirect "#{params[:cached_route]}"
+			end
 		else
 			redirect '/'
 		end

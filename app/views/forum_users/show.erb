@@ -1,7 +1,7 @@
 <div class="jumbotron text-center shadow">
 	<% if moderator? && !@user.administrator && !@user.moderator %>
 		<% if !@user.banned %>
-			<form class="center-block quarter-width" method="post" action="/users/<%=@user.slug%>/edit">
+			<form class="center-block quarter-width" method="post" action="/users">
 				<input type="hidden" name="_method" value="patch">
 				<input type="hidden" name="forum_user[banned]" value="1">
 				<button type="submit" id="ban" class="btn btn-primary btn-forum shadow">
@@ -9,7 +9,7 @@
 				</button>
 			</form>
 		<% else %>
-			<form class="quarter-width" method="post" action="/users/<%=@user.slug%>/edit">
+			<form class="quarter-width" method="post" action="/users">
 				<input type="hidden" name="_method" value="patch">
 				<input type="hidden" name="forum_user[banned]" value="0">
 				<button type="submit" id="unban" class="btn btn-primary btn-forum shadow">
