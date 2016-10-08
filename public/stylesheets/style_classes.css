@@ -7,24 +7,6 @@
   line-height: 0;
 }
 
-.cntrimg {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.creditbox {
-  background-color: #66023C;
-  border-color: #B8860B;
-  border-style: solid;
-  border-width: 5px;
-  border-radius: 5px;
-}
-
-.float-right {
-	float: right;
-}
-
 .jumbotron {
   background-color: #66023C;
   border-color: #B8860B;
@@ -42,14 +24,6 @@
 
 .shadow {
   box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.2);
-}
-
-.titleimg {
-  border-color: #B8860B;
-  border-style: solid;
-  border-width: 5px;
-  margin-bottom: 20px;
-  max-height: 320px;
 }
 
 .top-margin-20px {

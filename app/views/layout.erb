@@ -19,6 +19,7 @@
     <% if current_route == '/C9P' %>
       <link rel="stylesheet" href="/stylesheets/C9P.css">
     <% end %>
+    <link rel="stylesheet" href="/stylesheets/style_ids.css">
 
   </head>
 
@@ -57,7 +58,7 @@
               <li><a href="#Statue">Statue</a></li>
               <li><a href="#Timeline">Timeline</a></li>
               <li><a href="#Painting">Painting</a></li>
-              <li><a href="#Bottom">Bottom</a></li>
+              <li><a href="#credit_box">Bottom</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -107,11 +108,11 @@
 </nav>
     <div class="container">
       <%= yield %>
-      <div class="row" id="Bottom">
+      <div class="row">
         <div class="col-xs-4">
         </div>
         <div class="col-xs-4">
-          <div class="creditbox shadow">
+          <div class="shadow" id="credit_box">
             <footer class="text-center">Coded by <a href="https://github.com/lair001" target="_blank">Samuel Lair</a>.</footer>
           </div>
         </div>
