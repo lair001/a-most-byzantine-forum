@@ -35,6 +35,7 @@
 						<input type="hidden" name="_method" value="delete">
 						<input type="hidden" name="post[id]" value=<%=post.id%>>
 						<button type="submit" id="delete" class="btn btn-primary btn-forum shadow">
+						<input type="hidden" name="cached_route" value="<%=current_route%>">
 							<i class="fa fa-bomb"></i> Delete
 			 			</button>
 			 		</form>
