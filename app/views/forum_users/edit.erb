@@ -1,6 +1,6 @@
 <div class="jumbotron text-center shadow">
 	<h2 class="forum-divider-bottom">Editing User: <%=@user.username%></h2>
-	<form method="post" action="/users" class="center-block quarter-width">
+	<form method="post" action="/forum_users" class="center-block quarter-width">
 		<input type="hidden" name="_method" value="patch">
 		<div class="form-group">
 			<label for="username"><%=administrator? ? 'Username:' : '' %></label>

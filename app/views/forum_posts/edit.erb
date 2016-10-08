@@ -1,6 +1,6 @@
 <div class="jumbotron text-center shadow">
 	<h2 class="forum-divider-bottom">Editing Post #<%=@post.id%></h2>
-	<h3>Thread: <%=@thread.title%></h3>
+	<h3>Thread: <%=@post.forum_thread.title%></h3>
 	<h3>Author: <%=@post.forum_user.username%></h3>
 	<form method="post" action="/forum_posts" class="center-block half-width">
 		<input type="hidden" name="_method" value="patch">
@@ -8,6 +8,7 @@
 			<label for="content">Content:</label>
 			<textarea class="form-control" id="content" name="forum_post[content]" type="text"><%=@post.content%></textarea>
 		</div>
+		<input type="hidden" name="forum_post[id]" value="<%=@post.id%>">
 		<input type="hidden" name="cached_route" value="<%=current_route%>">
 		<button type="submit" id="edit_post" class="btn btn-primary btn-forum shadow">
 			<i class="fa fa-pencil-square-o"></i> Edit Post

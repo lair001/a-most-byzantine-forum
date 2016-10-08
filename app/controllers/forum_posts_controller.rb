@@ -1,8 +1,10 @@
 class ForumPostsController < Controller
 
 	get '/forum_posts/new/:slug' do
-		if logged_in
-			@thread = ForumThread.find_by_slug(:slug)
+		if logged_in?
+			@thread = ForumThread.find_by_slug(params[:slug])
+
+			redirect '/forum_threads' if @thread.nil?
 			erb :'/forum_posts/create'
 		else
 			redirect '/'
@@ -11,7 +13,7 @@ class ForumPostsController < Controller
 
 	get '/forum_posts/:id/edit' do 
 		if logged_in?
-			@post = FormPost.find(params[:id])
+			@post = ForumPost.find(params[:id])
 			if moderator? || (@post && @post.forum_user == current_user)
 				erb :'forum_posts/edit'
 			else
@@ -58,7 +60,7 @@ class ForumPostsController < Controller
 			redirect "#{params[:cached_route]}" if @post.nil? || (@post.forum_user != current_user && !moderator?)
 			@thread = @post.forum_thread
 			@post.delete
-			if @thread.posts.count == 0
+			if @thread.forum_posts.count == 0
 				@thread.delete
 				redirect '/threads'
 			else

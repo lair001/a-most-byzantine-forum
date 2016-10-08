@@ -42,7 +42,7 @@ class ForumThreadsController < Controller
 	get '/forum_threads/:slug' do
 		if logged_in?
 			@thread = ForumThread.find_by_slug(params[:slug])
-			redirect '/threads' if @thread.nil?
+			redirect '/forum_threads' if @thread.nil?
 			sort_thread_posts
 			erb :'forum_threads/show'
 		else
@@ -53,7 +53,7 @@ class ForumThreadsController < Controller
 	get '/forum_threads/:slug/edit' do 
 		if logged_in?
 			@thread = ForumThread.find_by_slug(params[:slug])
-			redirect '/threads' if @thread.nil?
+			redirect '/forum_threads' if @thread.nil?
 			erb :'forum_threads/edit'
 		else
 			redirect '/'
@@ -63,12 +63,12 @@ class ForumThreadsController < Controller
 	delete '/forum_threads' do
 		if moderator?
 			@thread = ForumThread.find(params[:forum_thread][:id])
-			redirect '/threads' if @thread.nil?
-			@thread.posts.each do |post|
+			redirect '/forum_threads' if @thread.nil?
+			@thread.forum_posts.each do |post|
 				post.delete
 			end
 			@thread.delete
-			redirect '/threads'
+			redirect '/forum_threads'
 		else
 			redirect '/'
 		end
@@ -80,7 +80,7 @@ class ForumThreadsController < Controller
 			redirect "#{params[:cached_route]}" if @thread.nil?
 			set_attributes(@thread, params[:forum_thread], ["title"])
 			if @thread.save
-				redirect '/threads'
+				redirect '/forum_threads'
 			else
 				redirect "#{params[:cached_route]}"
 			end

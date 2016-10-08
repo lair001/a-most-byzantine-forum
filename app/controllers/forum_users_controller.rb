@@ -27,7 +27,7 @@ class ForumUsersController < Controller
 	end
 
 	post '/users' do 
-		@user = User.new
+		@user = ForumUser.new
 		set_attributes(@user, params[:forum_user], ["username", "email", "password"])
 		if ForumUser.validate_by_slug(@user)
 			if @user.save
@@ -72,7 +72,7 @@ class ForumUsersController < Controller
 
 	get '/forum_users/:slug/edit' do 
 		if logged_in?
-			@user = FormUser.find_by_slug(params[:slug])
+			@user = ForumUser.find_by_slug(params[:slug])
 			if administrator? || (@user && @user == current_user)
 				erb :'forum_users/edit'
 			else
@@ -99,7 +99,7 @@ class ForumUsersController < Controller
 			end
 			set_attributes(@user, params[:forum_user], settable_attr_array)
 			if @user.save
-				redirect '/users'
+				redirect '/forum_users'
 			else
 				redirect "#{params[:cached_route]}"
 			end

@@ -1,7 +1,6 @@
 <div class="jumbotron text-center shadow">
 	<h2 class="forum-divider-bottom">Posting to Thread: <%=@thread.title%></h2>
 	<form method="post" action="/forum_posts" class="center-block half-width">
-		<input type="hidden" name="_method" value="patch">
 		<div class="form-group">
 			<label for="content">Content:</label>
 			<textarea class="form-control" id="content" name="forum_post[content]" type="text"></textarea>
