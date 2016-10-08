@@ -46,7 +46,7 @@ module Helpable
 
 	def set_attributes(object, attr_hash, settable_attr_array)
 		settable_attr_array.each do |attr|
-			object.send("#{attr}=", attr_hash[attr.sym]) if !attr_hash[attr.sym].nil? && attr_hash[attr.sym] != ""
+			object.send("#{attr}=", attr_hash[attr.to_sym]) if !attr_hash[attr.to_sym].nil? && attr_hash[attr.to_sym] != ""
 		end
 	end
 

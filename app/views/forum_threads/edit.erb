@@ -1,0 +1,15 @@
+<div class="jumbotron text-center shadow">
+	<h2 class="forum-divider-bottom">Editing Thread: <%=@thread.title%></h2>
+	<form method="post" action="/threads" class="center-block quarter-width">
+		<input type="hidden" name="_method" value="patch">
+		<div class="form-group">
+			<label for="title">Title:</label>
+			<input class="form-control" id="title" name="forum_thread[title]" type="text" value="<%=@thread.title%>">
+		</div>
+		<input type="hidden" name="forum_thread[id]" value=<%=@thread.id%>>
+		<input type="hidden" name="cached_route" value="<%=current_route%>">
+		<button type="submit" id="edit" class="btn btn-primary btn-forum shadow">
+			<i class="fa fa-pencil-square-o"></i> Edit
+		</button>
+	</form>
+</div>
