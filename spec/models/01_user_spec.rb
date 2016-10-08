@@ -5,8 +5,8 @@ describe 'User' do
   before do
     @user1 = ForumUser.create(username: "test 123", email: "test123@aol.com", password: "test", moderator: false, administrator: false)
     @user2 = ForumUser.create(username: "Top Gun", email: "tops@aol.com", password: "thebest", moderator: true, administrator: true)
-    @user3 = ForumUser.create(username: "billy bob", email: "bb@gmail.com", password: "bobs")
-    @user4 = ForumUser.create(username: "BiLlY BoB", email: "hackzor@gmail.com", password: "1337")
+    @user3 = ForumUser.create(username: "billy bob", email: "bb@gmail.com", password: "bobs", banned: false)
+    @user4 = ForumUser.create(username: "BiLlY BoB", email: "hackzor@gmail.com", password: "1337", banned: true)
   end
   it 'can slug the username' do
     expect(@user1.slug).to eq("test-123")
@@ -74,6 +74,15 @@ describe 'User' do
     expect(@user1.forum_posts).to include(@post2)
     expect(@user1.forum_threads).to include(@thread1)
     expect(@user1.forum_threads).to include(@thread2)
+  end
+
+  it 'knows whether it has been banned' do 
+    expect(@user3.banned).to eq(false)
+    expect(@user4.banned).to eq(true)
+  end
+
+  it 'is not banned by default' do 
+    expect(@user1.banned).to eq(false)
   end
 
 end
