@@ -10,7 +10,7 @@ class ForumUsersController < Controller
 
 	post '/login' do
 		@user = ForumUser.find_by(username: params[:forum_user][:username])
-		if @user && @user.authenticate(params[:forum_user][:password])
+		if @user && !@user.banned && @user.authenticate(params[:forum_user][:password])
 			session[:forum_user_id] = @user.id
 			redirect '/forum_threads'
 		else
