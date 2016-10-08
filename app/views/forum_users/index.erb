@@ -7,10 +7,12 @@
 		<div class="forum-divider-top <%="forum-divider-bottom" if user == @users.last%>">
 			<div class="row">
 				<div class="col-xs-4">
+					<br>
 					<h4>Last Seen:</h4>
 					<h5><%=format_time(user.updated_at)%></h5>
 					<h4>Joined:</h4>
 					<h5><%=format_time(user.created_at)%></h5>
+					<br>
 				</div>
 				<div class="col-xs-8 text-center">
 					<br>

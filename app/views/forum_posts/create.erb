@@ -3,7 +3,7 @@
 	<form method="post" action="/forum_posts" class="center-block half-width">
 		<div class="form-group">
 			<label for="content">Content:</label>
-			<textarea class="form-control" id="content" name="forum_post[content]" type="text"></textarea>
+			<textarea rows="20" class="form-control forum-textarea" id="content" name="forum_post[content]" type="text"></textarea>
 		</div>
 		<input type="hidden" name="forum_post[forum_user_id]" value=<%=current_user.id%>>
 		<input type="hidden" name="forum_post[forum_thread_id]" value=<%=@thread.id%>>
