@@ -1,6 +1,6 @@
 <div class="jumbotron text-center shadow">
-	<% if moderator? && @user.administrator == false && @user.moderator == false %>
-		<% if @user.banned == false %>
+	<% if moderator? && !@user.administrator && !@user.moderator %>
+		<% if !@user.banned %>
 			<form class="center-block quarter-width" method="post" action="/users/<%=@user.slug%>/edit">
 				<input type="hidden" name="_method" value="patch">
 				<input type="hidden" name="forum_user[banned]" value="1">
@@ -34,14 +34,16 @@
 		<div class="forum-divider-top clearfix <%="forum-divider-bottom" if post == @user_posts.last%>">
 			<div class="row">
 				<div class="col-xs-4">
+					<br>
 					<h4>Updated:</h4>
 					<h5><%=format_time(post.updated_at)%></h5>
 					<h4>Created:</h4>
 					<h5><%=format_time(post.created_at)%></h5>
+					<br>
 				</div>
 				<div class="col-xs-8">
 					<br>
-					<a href="/forum_threads/<%=post.forum_thread.slug%>#<%=post.id%>"><h3 text-center><%=post.forum_thread.title%></h3></a>
+					<a href="/forum_threads/<%=post.forum_thread.slug%>#<%=post.id%>"><h3 class="text-center"><%=post.forum_thread.title%></h3></a>
 					<p><%=post.content%></p>
 					<br>
 				</div>
