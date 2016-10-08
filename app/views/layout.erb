@@ -36,8 +36,15 @@
       <ul class="nav navbar-nav">
         <% if logged_in? %>
           <li><a href="/logout">Logout</a></li>
-          <li><a href="/forum_users/<%=current_user.slug%>">Profile</a>
-          <li><a href="/forum_users">Users</a></li>
+          <%= if current_route != "/forum_users/#{current_user.slug}" %>
+            <li><a href="/forum_users/<%=current_user.slug%>">Profile</a>
+          <% end %>
+          <%= if current_route != "/forum_users" %>
+            <li><a href="/forum_users">Users</a></li>
+          <% end %>
+          <%= if current_route != "/forum_threads" %>
+          <li><a href="/forum_threads">Threads</a></li>
+          <% end %>
         <% end %>
         <% if current_route == '/C9P' %>
           <li class="dropdown">

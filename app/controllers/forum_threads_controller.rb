@@ -21,7 +21,7 @@ class ForumThreadsController < Controller
 		if logged_in?
 			@thread = ForumThread.new 
 			set_attributes(@thread, params[:forum_thread], ["title"])
-			if @thread.save
+			if ForumThread.validate_by_slug(@thread) && @thread.save
 				@post = ForumPost.new 
 				set_attributes(@post, params[:forum_post], ["content", "forum_user_id"])
 				@post.forum_thread = @thread 
