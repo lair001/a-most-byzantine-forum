@@ -1,6 +1,6 @@
 <a href="/forum_posts/new/<%=@thread.slug%>">
-	<div class="jumbotron shadow">
-		<h2 class="text-center">Post to Thread</h2>
+	<div class="jumbotron text-center shadow">
+		<h1><%=@thread.title%></h1>
 	</div>
 </a>
 <div class="jumbotron shadow">
@@ -8,6 +8,7 @@
 		<div class="forum-divider-top clearfix <%="forum-divider-bottom" if post == @thread_posts.last%>">
 			<div class="row" id="<%=post.id%>">
 				<div class="col-xs-4">
+					<br>
 					<a href="/forum_users/<%=post.forum_user.slug%>">
 						<h3><%=post.forum_user.username%></h3>
 					</a>
@@ -15,6 +16,7 @@
 					<h5><%=format_time(post.updated_at)%></h5>
 					<h4>Created:</h4>
 					<h5><%=format_time(post.created_at)%></h5>
+					<br>
 				</div>
 				<div class="col-xs-8">
 					<br>

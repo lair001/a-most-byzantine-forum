@@ -1,6 +1,7 @@
 <a href="/forum_threads/new">
-	<div class="jumbotron shadow">
-		<h2 class="text-center">Create Thread</h2>
+	<div class="jumbotron text-center shadow">
+		<h1>Threads</h1>
+		<h2><em>Spread rumors about your friends and enemies!</em></h2>
 	</div>
 </a>
 <div class="jumbotron shadow">
@@ -8,10 +9,12 @@
 		<div class="forum-divider-top <%="forum-divider-bottom" if thread == @threads.last%>">
 			<div class="row">
 				<div class="col-xs-4">
+					<br>
 					<h4>Updated:</h4>
 					<h5><%=format_time(thread.updated_at)%></h5>
 					<h4>Created:</h4>
 					<h5><%=format_time(thread.created_at)%></h5>
+					<br>
 				</div>
 				<div class="col-xs-8">
 					<br>
