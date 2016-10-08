@@ -38,6 +38,14 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <% if logged_in? && current_route != '/C9P' %>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Navigate
+          <span class="caret"></span></a>
+            <ul class="dropdown-menu shadow">
+              <li><a href="#top">Top</a></li>
+              <li><a href="#credit_box">Bottom</a></li>
+            </ul>
+          </li>
           <li><a href="/logout">Logout</a></li>
           <% if current_route != "/forum_users/#{current_user.slug}" %>
             <li><a href="/forum_users/<%=current_user.slug%>">Profile</a>
@@ -54,7 +62,7 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Navigate
           <span class="caret"></span></a>
             <ul class="dropdown-menu shadow">
-              <li><a href="#Top">Top</a></li>
+              <li><a href="#top">Top</a></li>
               <li><a href="#Statue">Statue</a></li>
               <li><a href="#Timeline">Timeline</a></li>
               <li><a href="#Painting">Painting</a></li>
@@ -106,7 +114,7 @@
     </div>
   </div>
 </nav>
-    <div class="container">
+    <div class="container" id="top">
       <%= yield %>
       <div class="row">
         <div class="col-xs-4">
