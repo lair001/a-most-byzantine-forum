@@ -20,4 +20,18 @@ class ForumThreadsController < Controller
 		end
 	end
 
+	delete '/forum_threads/:slug' do
+		if moderator?
+			@thread = ForumThread.find_by_slug(params[:slug])
+			redirect '/threads' if @thread.nil?
+			@thread.posts.each do |post|
+				post.delete
+			end
+			@thread.delete
+			redirect '/threads'
+		else
+			redirect '/'
+		end
+	end
+
 end
