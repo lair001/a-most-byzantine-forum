@@ -8,6 +8,14 @@ class ForumUsersController < Controller
 		end
 	end
 
+	get '/forum_users/new' do 
+		if logged_in?
+			redirect '/forum_threads'
+		else
+			erb :'forum_users/create'
+		end
+	end
+
 	post '/login' do
 		@user = ForumUser.find_by(username: params[:forum_user][:username])
 		if @user && !@user.banned && @user.authenticate(params[:forum_user][:password])
@@ -15,6 +23,21 @@ class ForumUsersController < Controller
 			redirect '/forum_threads'
 		else
 			redirect '/'
+		end
+	end
+
+	post '/users/new' do 
+		@user = User.new
+		set_attributes(@user, params[:forum_user], ["username", "email", "password"])
+		if ForumUser.validate_by_slug(@user)
+			if @user.save
+				session[:forum_user_id] = @user.id 
+				redirect '/forum_threads'
+			else
+				redirect '/forum_users/new'
+			end
+		else
+			redirect '/forum_users/new'
 		end
 	end
 
