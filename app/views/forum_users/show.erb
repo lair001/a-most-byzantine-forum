@@ -1,13 +1,32 @@
 <div class="jumbotron text-center shadow">
+	<% if moderator? && @user.administrator == false && @user.moderator == false %>
+		<% if @user.banned == false %>
+			<form class="center-block quarter-width" method="post" action="/users/<%=@user.slug%>/edit">
+				<input type="hidden" name="_method" value="patch">
+				<input type="hidden" name="forum_user[banned]" value="1">
+				<button type="submit" id="ban" class="btn btn-primary btn-forum shadow">
+				<i class="fa fa-ban"></i> Ban
+				</button>
+			</form>
+		<% else %>
+			<form class="quarter-width" method="post" action="/users/<%=@user.slug%>/edit">
+				<input type="hidden" name="_method" value="patch">
+				<input type="hidden" name="forum_user[banned]" value="0">
+				<button type="submit" id="unban" class="btn btn-primary btn-forum shadow">
+				<i class="fa fa-check-circle"></i> Unban
+				</button>
+			</form>
+		<% end %>
+	<% end %>
 	<h1><%=@user.username%></h1>
 	<h2><em><%=@user.email%></em></h2>
-<% if moderator? || post.forum_user == current_user %>
-	<a href="/users/<%=@user.slug%>/edit">
-		<button type="submit" id="edit" class="btn btn-primary btn-forum quarter-width top-margin-10px shadow">
-		<i class="fa fa-pencil-square-o"></i> Edit
-		</button>
-	</a>
-<% end %>
+	<% if administrator? || @user == current_user %>
+		<a href="/users/<%=@user.slug%>/edit">
+			<button type="submit" id="edit" class="btn btn-primary btn-forum quarter-width top-margin-20px shadow">
+			<i class="fa fa-pencil-square-o"></i> Edit
+			</button>
+		</a>
+	<% end %>
 </div>
 
 <div class="jumbotron shadow">
