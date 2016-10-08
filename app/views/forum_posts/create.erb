@@ -1,9 +1,10 @@
 <div class="jumbotron text-center shadow">
 	<h2 class="forum-divider-bottom">Posting to Thread: <%=@thread.title%></h2>
-	<form method="post" action="/forum_posts" class="center-block quarter-width">
+	<form method="post" action="/forum_posts" class="center-block half-width">
+		<input type="hidden" name="_method" value="patch">
 		<div class="form-group">
 			<label for="content">Content:</label>
-			<input class="form-control" id="content" name="forum_post[content]" type="text">
+			<textarea class="form-control" id="content" name="forum_post[content]" type="text"></textarea>
 		</div>
 		<input type="hidden" name="forum_post[forum_user_id]" value=<%=current_user.id%>>
 		<input type="hidden" name="forum_post[forum_thread_id]" value=<%=@thread.id%>>

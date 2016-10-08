@@ -73,7 +73,7 @@ class ForumUsersController < Controller
 	get '/forum_users/:slug/edit' do 
 		if logged_in?
 			@user = FormUser.find_by_slug(params[:slug])
-			if administrator? || @user = current_user
+			if administrator? || (@user && @user == current_user)
 				erb :'forum_users/edit'
 			else
 				redirect '/'
