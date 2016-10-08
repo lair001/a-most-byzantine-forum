@@ -37,7 +37,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <% if logged_in? %>
+        <% if logged_in? && current_route != '/C9P' %>
           <li><a href="/logout">Logout</a></li>
           <% if current_route != "/forum_users/#{current_user.slug}" %>
             <li><a href="/forum_users/<%=current_user.slug%>">Profile</a>
