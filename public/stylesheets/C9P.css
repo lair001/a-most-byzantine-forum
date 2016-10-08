@@ -1,0 +1,19 @@
+.endingcitetext {
+  color: #B8860B;
+}
+
+.endingquote {
+  border-color: #B8860B;
+  margin-top: 10px;
+}
+
+.statuecaption {
+  background-color: #66023C;
+}
+
+.thumbnail {
+  background-color: #8D2963;
+  border-color: #B8860B;
+  border-width: 5px;
+  padding: 10px
+}

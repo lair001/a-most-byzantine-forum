@@ -8,14 +8,16 @@
     <link rel="stylesheet" href="/stylesheets/font-awesome.min.css">
 
     <link rel='stylesheet prefetch' href='/stylesheets/bootstrap.min.css'>
-
+    <% if current_route != '/' && current_route != '/C9P' %>
+      <link rel="stylesheet" href="/stylesheets/forum.css">
+    <% end %>
     <link rel="stylesheet" href="/stylesheets/style_tags.css">
 
     <link rel="stylesheet" href="/stylesheets/style_classes.css">
 
     <link rel="stylesheet" href="/stylesheets/navbar.css">
     <% if current_route == '/C9P' %>
-      <link rel="stylesheet" href="/stylesheets/CP9.css">
+      <link rel="stylesheet" href="/stylesheets/C9P.css">
     <% end %>
 
   </head>
