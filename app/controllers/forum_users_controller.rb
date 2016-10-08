@@ -9,9 +9,9 @@ class ForumUsersController < Controller
 	end
 
 	post '/login' do
-		@user = ForumUser.find_by(username: params[:username])
-		if @user && @user.authenticate(params[:password])
-			session[:user_id] = @user.id
+		@user = ForumUser.find_by(username: params[:forum_user][:username])
+		if @user && @user.authenticate(params[:forum_user][:password])
+			session[:forum_user_id] = @user.id
 			redirect '/forum_threads'
 		else
 			redirect '/'

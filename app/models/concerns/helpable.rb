@@ -1,11 +1,11 @@
 module Helpable
 
 	def logged_in?
-		!!session[:user_id]
+		!!session[:forum_user_id]
 	end
 
 	def current_user
-		@current_user ||= ForumUser.find(session[:user_id])
+		@current_user ||= ForumUser.find(session[:forum_user_id])
 	end
 
 	def current_user_posts
