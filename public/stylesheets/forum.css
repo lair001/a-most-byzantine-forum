@@ -50,14 +50,17 @@
   opacity: 1;
   color: #dda10d;
 }
+
 .forum-input::-moz-placeholder { /* Firefox 19+ */
   opacity: 1;
   color: #dda10d;
 }
+
 .forum-input:-ms-input-placeholder { /* IE 10+ */
   opacity: 1;
   color: #dda10d;
 }
+
 .forum-input:-moz-placeholder { /* Firefox 18- */
   opacity: 1;
   color: #dda10d;
