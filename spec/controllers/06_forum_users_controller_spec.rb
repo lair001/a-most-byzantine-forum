@@ -3,7 +3,10 @@ require 'spec_helper'
 describe 'ForumUsersController' do 
 
   before do
-  	@user = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true)
+  	@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true)
+  	@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal")
+  	@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true)
+  	@user4 = ForumUser.create(username: "wal", email: "wal@wal.com", password: "wal", administrator: true)
   end
 
 	describe "get '/login'" do
@@ -95,6 +98,30 @@ describe 'ForumUsersController' do
 
 	end
 
+	describe "post '/login'" do 
+
+		it "redirects to the login page if login fails" do 
+			params = { forum_user: { username: "val", password: "willy" } }
+			post '/login', params
+			expect(last_response.status).to eq(302)
+		  	follow_redirect!
+			expect(last_response.status).to eq(200)
+			expect(last_request.path).to include("/login")
+			expect(last_response.body).to include("Welcome back!")
+		end
+
+		it "redirects to /forum_threads if login succeeds" do
+			params = { forum_user: { username: "val", password: "val" } }
+			post '/login', params
+			expect(last_response.status).to eq(302)
+		  	follow_redirect!
+			expect(last_response.status).to eq(200)
+			expect(last_request.path).to include("/forum_threads")
+		  	expect(last_response.body).to include("Threads")
+		end
+
+	end
+
 	describe "post '/forum_users'" do 
 
 		it 'redirects to /forum_users/new if it fails to create a new user' do
@@ -116,6 +143,60 @@ describe 'ForumUsersController' do
 		  	expect(last_request.path).to include("/forum_threads")
 		  	expect(last_response.body).to include("Threads")
 		  	expect(ForumUser.find_by_slug("willy").username).to eq("willy")
+		end
+
+	end
+
+	describe "get '/logout'" do 
+
+		it "redirects to '/' in not logged in" do 
+			get '/logout' 
+			expect(last_response.status).to eq(302)
+		  	follow_redirect!
+		  	expect(last_response.status).to eq(200)
+		  	expect(last_request.path).to include("/")
+			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Sign Up")
+			expect(last_response.body).to include("Log In")
+		end
+
+		it "redirects to '/' and logs out if logged in" do
+			params = { forum_user: { username: "val", password: "val" } }
+			post '/login', params
+			get '/logout' 
+			expect(last_response.status).to eq(302)
+		  	follow_redirect!
+		  	expect(last_response.status).to eq(200)
+		  	expect(last_request.path).to include("/")
+			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Sign Up")
+			expect(last_response.body).to include("Log In")
+		end
+
+	end
+
+	describe "get '/forum_users'" do 
+
+		it 'redirects to / if not logged in' do 
+			get '/forum_users'
+			expect(last_response.status).to eq(302)
+		  	follow_redirect!
+		  	expect(last_response.status).to eq(200)
+		  	expect(last_request.path).to include("/")
+			expect(last_response.body).to include("A Most Byzantine Forum")
+		end
+
+		it 'sorts the users by username and renders forum_user/index if logged in' do
+			params = { forum_user: { username: "val", password: "val" } }
+			post '/login', params
+			get '/forum_users'
+			expect(@users.first.username).to eq("hal")
+			expect(@users[1].username).to eq("sal")
+			expect(@users[2].username).to eq("val")
+			expect(@users.last.username).to eq("wal")
+			expect(last_response.status).to eq(200)
+			expect(last_request.path).to include("/forum_users")
+			expect(last_response.body).to include("Users")
 		end
 
 	end
