@@ -186,14 +186,10 @@ describe 'ForumUsersController' do
 			expect(last_response.body).to include("A Most Byzantine Forum")
 		end
 
-		it 'sorts the users by username and renders forum_user/index if logged in' do
+		it 'renders forum_user/index if logged in' do
 			params = { forum_user: { username: "val", password: "val" } }
 			post '/login', params
 			get '/forum_users'
-			expect(@users.first.username).to eq("hal")
-			expect(@users[1].username).to eq("sal")
-			expect(@users[2].username).to eq("val")
-			expect(@users.last.username).to eq("wal")
 			expect(last_response.status).to eq(200)
 			expect(last_request.path).to include("/forum_users")
 			expect(last_response.body).to include("Users")
