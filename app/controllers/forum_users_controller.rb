@@ -101,7 +101,7 @@ class ForumUsersController < Controller
 			begin
 				@user = ForumUser.find(params[:forum_user][:id])
 			rescue ActiveRecord::RecordNotFound
-				redirect "#{params[:cached_route]}"
+				cached_route_or_home
 			end
 			settable_attr_array = []
 			settable_attr_array << "banned" if moderator?
@@ -117,7 +117,7 @@ class ForumUsersController < Controller
 			if @user.save
 				redirect '/forum_users'
 			else
-				redirect "#{params[:cached_route]}"
+				cached_route_or_home
 			end
 		else
 			redirect '/'

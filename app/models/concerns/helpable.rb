@@ -54,4 +54,8 @@ module Helpable
 		@slug ||= string.strip.downcase.gsub(' ', '-')
 	end
 
+	def cached_route_or_home
+		params[:cached_route].nil? ? redirect('/') : redirect("#{params[:cached_route]}")
+	end
+
 end

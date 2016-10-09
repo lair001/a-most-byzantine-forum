@@ -307,6 +307,20 @@ describe 'ForumUsersController' do
 				expect(last_response.body).to include("Constantine XI Palaiologos")
 			end
 
+			it 'redirects to / if there is no cached route and no user for the given user id' do 
+				params = {
+		  			forum_user: { username: "val", password: "val" }
+		  		}
+		  		post '/login', params
+		  		params = { forum_user: { id: "255", email: "frank@gmail.com" } }
+		  		patch '/forum_users', params 
+		  		expect(last_response.status).to eq(302)
+			  	follow_redirect!
+			  	expect(last_response.status).to eq(200)
+			  	expect(last_request.path).to include("/")
+				expect(last_response.body).to include("A Most Byzantine Forum")
+			end
+
 			it 'allows a moderator to ban a user but cannot change username, email or password' do 
 				@user = ForumUser.create(username: "frank", email: "frank@frank.com", password: "frank")
 				id = @user.id
