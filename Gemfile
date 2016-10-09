@@ -17,4 +17,5 @@ group :test do
   gem 'capybara', '~> 2.5'
   gem 'rack-test', '~> 0.6', '>= 0.6.3'
   gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner.git'
+  gem 'orderly', '~> 0.0', '>= 0.0.3'
 end
