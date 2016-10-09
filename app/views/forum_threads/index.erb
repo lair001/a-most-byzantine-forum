@@ -1,9 +1,7 @@
-<a href="/forum_threads/new">
-	<div class="jumbotron text-center shadow">
-		<h1>Threads</h1>
-		<h2><em>Spread rumors about your friends and enemies!</em></h2>
-	</div>
-</a>
+<div class="jumbotron text-center shadow">
+	<h1>Threads</h1>
+	<h2><em>Spread rumors about your friends and enemies!</em></h2>
+</div>
 <div class="jumbotron shadow">
 	<% @threads.each do |thread| %>
 		<div class="forum-divider-top <%="forum-divider-bottom" if thread == @threads.last%>">

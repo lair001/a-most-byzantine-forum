@@ -1,8 +1,6 @@
-<a href="/forum_posts/new/<%=@thread.slug%>">
-	<div class="jumbotron text-center shadow">
-		<h1><%=@thread.title%></h1>
-	</div>
-</a>
+<div class="jumbotron text-center shadow">
+	<h1><%=@thread.title%></h1>
+</div>
 <div class="jumbotron shadow">
 	<% @thread_posts.each do |post| %>
 		<div class="forum-divider-top clearfix <%="forum-divider-bottom" if post == @thread_posts.last%>">
