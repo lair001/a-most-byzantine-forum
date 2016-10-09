@@ -98,8 +98,11 @@ class ForumUsersController < Controller
 
 	patch '/forum_users' do
 		if logged_in?
-			@user = ForumUser.find(params[:forum_user][:id])
-			redirect "#{params[:cached_route]}" if @user.nil?
+			begin
+				@user = ForumUser.find(params[:forum_user][:id])
+			rescue ActiveRecord::RecordNotFound
+				redirect "#{params[:cached_route]}"
+			end
 			settable_attr_array = []
 			settable_attr_array << "banned" if moderator?
 			if administrator?

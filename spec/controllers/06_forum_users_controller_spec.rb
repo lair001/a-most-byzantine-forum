@@ -3,10 +3,10 @@ require 'spec_helper'
 describe 'ForumUsersController' do 
 
   before do
-  	@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true)
-  	@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal")
-  	@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true)
-  	@user4 = ForumUser.create(username: "wal", email: "wal@wal.com", password: "wal", administrator: true)
+  	@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
+  	@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal", id: 2)
+  	@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true, id: 3)
+  	@user4 = ForumUser.create(username: "wal", email: "wal@wal.com", password: "wal", administrator: true, id: 4)
   end
 
 	describe "get '/login'" do
@@ -291,6 +291,20 @@ describe 'ForumUsersController' do
 			  	expect(last_response.status).to eq(200)
 			  	expect(last_request.path).to include("/forum_users")
 				expect(last_response.body).to include("Users")
+			end
+
+			it 'redirects to cached route if there is no user for the given user id' do 
+				params = {
+		  			forum_user: { username: "val", password: "val" }
+		  		}
+		  		post '/login', params
+		  		params = { cached_route: '/C9P', forum_user: { id: "255", email: "frank@gmail.com" } }
+		  		patch '/forum_users', params 
+		  		expect(last_response.status).to eq(302)
+			  	follow_redirect!
+			  	expect(last_response.status).to eq(200)
+			  	expect(last_request.path).to include("/C9P")
+				expect(last_response.body).to include("Constantine XI Palaiologos")
 			end
 
 			it 'allows a moderator to ban a user but cannot change username, email or password' do 
