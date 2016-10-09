@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Thread' do 
+describe 'ForumThread' do 
 
   before do
     @thread1 = ForumThread.create(title: "test 123")
