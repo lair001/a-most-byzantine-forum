@@ -18,7 +18,7 @@ class ForumUsersController < Controller
 
 	post '/forum_users/search' do 
 		if logged_in?
-			@user = ForumUser.find_by_slug(to_slug(params[:username]))
+			@user = ForumUser.find_by_slug(to_slug(params[:forum_user][:username]))
 			if @user 
 				redirect "/forum_users/#{@slug}"
 			else

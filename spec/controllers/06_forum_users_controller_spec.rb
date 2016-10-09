@@ -70,7 +70,6 @@ describe 'ForumUsersController' do
 		  		forum_user: { username: "val", password: "val" }
 		  	}
 		  	post '/login', params
-			params = { username: "val" }
 			post '/forum_users/search', params 
 			expect(last_response.status).to eq(302)
 		  	follow_redirect!
@@ -84,7 +83,7 @@ describe 'ForumUsersController' do
 		  		forum_user: { username: "val", password: "val" }
 		  	}
 		  	post '/login', params
-			params = { username: "billy" }
+			params = { forum_user: { username: "billy" } }
 			post '/forum_users/search', params 
 			expect(last_response.status).to eq(302)
 		  	follow_redirect!
