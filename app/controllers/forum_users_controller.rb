@@ -16,6 +16,19 @@ class ForumUsersController < Controller
 		end
 	end
 
+	post '/forum_users/search' do 
+		if logged_in?
+			@user = ForumUser.find_by_slug(to_slug(params[:username]))
+			if @user 
+				redirect "/forum_users/#{@slug}"
+			else
+				redirect '/forum_users?message=Username+not+found.'
+			end
+		else
+			redirect '/'
+		end
+	end
+
 	post '/login' do
 		@user = ForumUser.find_by(username: params[:forum_user][:username])
 		if @user && !@user.banned && @user.authenticate(params[:forum_user][:password])

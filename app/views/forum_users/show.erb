@@ -24,7 +24,7 @@
 	<h2><em><%=@user.email%></em></h2>
 	<% if administrator? || @user == current_user %>
 		<a href="/forum_users/<%=@user.slug%>/edit">
-			<button type="submit" id="edit" class="btn btn-primary btn-forum quarter-width top-margin-20px shadow">
+			<button type="submit" id="edit" class="btn btn-primary btn-forum quarter-width top-margin-40px shadow">
 			<i class="fa fa-pencil-square-o"></i> Edit
 			</button>
 		</a>

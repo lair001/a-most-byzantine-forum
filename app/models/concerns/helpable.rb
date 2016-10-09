@@ -50,4 +50,8 @@ module Helpable
 		end
 	end
 
+	def to_slug(string)
+		@slug ||= string.strip.downcase.gsub(' ', '-')
+	end
+
 end

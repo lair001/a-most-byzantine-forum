@@ -1,6 +1,14 @@
 <div class="jumbotron text-center shadow">
 	<h1>Users</h1>
 	<h2><em>Your Rivals in the Basileus's Court</em></h2>
+	<form class="quarter-width center-block" method="post" action="/forum_users/search" role="search">
+		<div class="form-group">
+			<input type="text" class="form-control forum-input" placeholder="<%= params[:message] ? params[:message] : 'Username Search' %>" name="username">
+		</div>
+		<button type="submit" class="btn btn-primary btn-forum shadow">
+			<i class="fa fa-search"></i> Search
+		</button>
+	</form>
 </div>
 <div class="jumbotron shadow">
 	<% @users.each do |user| %>

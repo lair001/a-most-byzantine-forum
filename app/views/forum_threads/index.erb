@@ -1,6 +1,14 @@
 <div class="jumbotron text-center shadow">
 	<h1>Threads</h1>
 	<h2><em>Spread rumors about your friends and enemies!</em></h2>
+	<form class="quarter-width center-block" method="post" action="/forum_threads/search" role="search">
+		<div class="form-group">
+			<input type="text" class="form-control forum-input" placeholder="<%= params[:message] ? params[:message] : 'Title Search' %>" name="title">
+		</div>
+		<button type="submit" class="btn btn-primary btn-forum shadow">
+			<i class="fa fa-search"></i> Search
+		</button>
+	</form>
 </div>
 <div class="jumbotron shadow">
 	<% @threads.each do |thread| %>
