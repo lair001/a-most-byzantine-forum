@@ -35,7 +35,7 @@ class ForumUsersController < Controller
 			session[:forum_user_id] = @user.id
 			redirect '/forum_threads'
 		else
-			redirect '/'
+			redirect '/login'
 		end
 	end
 
