@@ -39,7 +39,7 @@ class ForumUsersController < Controller
 		end
 	end
 
-	post '/users' do 
+	post '/forum_users' do 
 		@user = ForumUser.new
 		set_attributes(@user, params[:forum_user], ["username", "email", "password"])
 		if ForumUser.validate_by_slug(@user)
