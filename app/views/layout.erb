@@ -4,131 +4,108 @@
     <meta charset="UTF-8">
     <title>A Most Byzantine Forum</title>
     <script src="/javascripts/modernizr.js" type="text/javascript"></script>
-
     <link rel="stylesheet" href="/stylesheets/font-awesome.min.css">
-
     <link rel='stylesheet prefetch' href='/stylesheets/bootstrap.min.css'>
-    <% if current_route != '/' && current_route != '/C9P' %>
-      <link rel="stylesheet" href="/stylesheets/forum.css">
-    <% end %>
+    <%= current_route != '/' && current_route != '/C9P' ? '<link rel="stylesheet" href="/stylesheets/forum.css">' : '' %>
     <link rel="stylesheet" href="/stylesheets/style_tags.css">
-
     <link rel="stylesheet" href="/stylesheets/style_classes.css">
-
     <link rel="stylesheet" href="/stylesheets/navbar.css">
-    <% if current_route == '/C9P' %>
-      <link rel="stylesheet" href="/stylesheets/C9P.css">
-    <% end %>
+    <%= current_route == '/C9P' ? '<link rel="stylesheet" href="/stylesheets/C9P.css">' : '' %>
     <link rel="stylesheet" href="/stylesheets/style_ids.css">
-
   </head>
 
   <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top shadow">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="<%= current_route == '/C9P' ? '/' : '/C9P' %>"><img alt="Pllg" id="brand_image" src="/images/Palaiologos_Flag.jpg"></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <% if logged_in? && current_route != '/C9P' %>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Navigate
-          <span class="caret"></span></a>
-            <ul class="dropdown-menu shadow">
-              <li><a href="#top">Top</a></li>
-              <li><a href="#credit_box">Bottom</a></li>
-            </ul>
-          </li>
-          <li><a href="/logout">Logout</a></li>
-          <% if current_route != "/forum_users/#{current_user.slug}" %>
-            <li><a href="/forum_users/<%=current_user.slug%>">Profile</a>
-          <% end %>
-          <% if current_route != "/forum_users" %>
-            <li><a href="/forum_users">Users</a></li>
-          <% end %>
-          <% if current_route != "/forum_threads" %>
-            <li><a href="/forum_threads">Threads</a></li>
-          <% end %>
-        <% end %>
-        <% if current_route == '/C9P' %>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Navigate
-          <span class="caret"></span></a>
-            <ul class="dropdown-menu shadow">
-              <li><a href="#top">Top</a></li>
-              <li><a href="#Statue">Statue</a></li>
-              <li><a href="#Timeline">Timeline</a></li>
-              <li><a href="#Painting">Painting</a></li>
-              <li><a href="#credit_box">Bottom</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Places
-          <span class="caret"></span></a>
-            <ul class="dropdown-menu shadow">
-              <li><a href="https://en.wikipedia.org/wiki/Byzantine_Empire" target="_blank">Byzantine Empire</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Constantinople" target="_blank">Constantinople</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Morea" target="_blank">Morea</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Duchy_of_Athens" target="_blank">Duchy of Athens</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Hexamilion_wall" target="_blank">Hexamilion Wall</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Ottoman_Empire" target="_blank">Ottoman Empire</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Republic_of_Venice" target="_blank">Republic of Venice</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">People
-          <span class="caret"></span></a>
-            <ul class="dropdown-menu shadow">
-              <li><a href="https://en.wikipedia.org/wiki/Palaiologos" target="_blank">Palaiologos Dynasty</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Theodora_Tocco" target="_blank">Theodora Tocco</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Carlo_I_Tocco" target="_blank">Carlo I Tocco</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/John_VIII_Palaiologos" target="_blank">John VIII</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Caterina_Gattilusio" target="_blank">Caterina Gattilusio</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Dorino_I_Gattilusio" target="_blank">Dorino I Gattilusio</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Murad_II" target="_blank">Murad II</a></li>
-              <li><a href="https://en.wikipedia.org/wiki/Mehmed_the_Conqueror" target="_blank">Mehmed</a></li>
-            </ul>
-          </li>
-        <% end %>
-      </ul>
-      <form class="navbar-form navbar-right" method="get" action="https://www.google.com/search" role="search" target="_blank">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Google Search" name="q">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="<%= current_route == '/C9P' ? '/' : '/C9P' %>"><img alt="Pllg" id="brand_image" src="/images/Palaiologos_Flag.jpg"></a>
         </div>
-        <button type="submit" class="btn btn-default submitbtn"><i class="fa fa-search"></i>
-</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <% if current_route == '/forum_threads' || ( current_route != '/forum_threads/new' && current_route.match(/\/forum_threads\/[^\/]+/)) %>
-          <li><a href="<%=current_route == '/forum_threads' ? '/forum_threads/new' : "/forum_posts/new/#{@thread.slug}" %>">Create</a></li>
-        <% end %>
-        <% if current_route == '/C9P' %>
-        <li><a href="https://www.facebook.com/pages/Constantine-XI-Palaiologos/103225189731462?fref=ts" target="_blank"><i class="fa fa-facebook-official"></i> Facebook</a></li>
-        <li><a href="https://www.tumblr.com/search/constantine-xi-palaiologos" target="_blank"><i class="fa fa-tumblr"></i> tumblr.</a></li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
-</nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Navigate
+              <span class="caret"></span></a>
+                <ul class="dropdown-menu shadow">
+                  <li><a href="#top">Top</a></li>
+                  <% if current_route == '/C9P' %>
+                    <li><a href="#Statue">Statue</a></li>
+                    <li><a href="#Timeline">Timeline</a></li>
+                    <li><a href="#Painting">Painting</a></li>
+                  <% end %>
+                  <li><a href="#credit_box">Bottom</a></li>
+                </ul>
+              </li>
+            <% if logged_in? && current_route != '/C9P' %>
+              <li><a href="/logout">Logout</a></li>
+              <% if current_route != "/forum_users/#{current_user.slug}" %>
+                <li><a href="/forum_users/<%=current_user.slug%>">Profile</a>
+              <% end %>
+              <% if current_route != "/forum_users" %>
+                <li><a href="/forum_users">Users</a></li>
+              <% end %>
+              <% if current_route != "/forum_threads" %>
+                <li><a href="/forum_threads">Threads</a></li>
+              <% end %>
+            <% end %>
+            <% if current_route == '/C9P' %>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Places
+              <span class="caret"></span></a>
+                <ul class="dropdown-menu shadow">
+                  <li><a href="https://en.wikipedia.org/wiki/Byzantine_Empire" target="_blank">Byzantine Empire</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Constantinople" target="_blank">Constantinople</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Morea" target="_blank">Morea</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Duchy_of_Athens" target="_blank">Duchy of Athens</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Hexamilion_wall" target="_blank">Hexamilion Wall</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Ottoman_Empire" target="_blank">Ottoman Empire</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Republic_of_Venice" target="_blank">Republic of Venice</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">People
+              <span class="caret"></span></a>
+                <ul class="dropdown-menu shadow">
+                  <li><a href="https://en.wikipedia.org/wiki/Palaiologos" target="_blank">Palaiologos Dynasty</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Theodora_Tocco" target="_blank">Theodora Tocco</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Carlo_I_Tocco" target="_blank">Carlo I Tocco</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/John_VIII_Palaiologos" target="_blank">John VIII</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Caterina_Gattilusio" target="_blank">Caterina Gattilusio</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Dorino_I_Gattilusio" target="_blank">Dorino I Gattilusio</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Murad_II" target="_blank">Murad II</a></li>
+                  <li><a href="https://en.wikipedia.org/wiki/Mehmed_the_Conqueror" target="_blank">Mehmed</a></li>
+                </ul>
+              </li>
+            <% end %>
+          </ul>
+          <form class="navbar-form navbar-right" method="get" action="https://www.google.com/search" role="search" target="_blank">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Google Search" name="q">
+            </div>
+            <button type="submit" class="btn btn-default submitbtn"><i class="fa fa-search"></i></button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <% if current_route == '/forum_threads' || ( current_route != '/forum_threads/new' && current_route.match(/\/forum_threads\/[^\/]+/)) %>
+              <li><a href="<%= current_route == '/forum_threads' ? '/forum_threads/new' : "/forum_posts/new/#{@thread.slug}" %>">Create</a></li>
+            <% end %>
+            <% if current_route == '/C9P' %>
+            <li><a href="https://www.facebook.com/pages/Constantine-XI-Palaiologos/103225189731462?fref=ts" target="_blank"><i class="fa fa-facebook-official"></i> Facebook</a></li>
+            <li><a href="https://www.tumblr.com/search/constantine-xi-palaiologos" target="_blank"><i class="fa fa-tumblr"></i> tumblr.</a></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <div class="container" id="top">
       <%= yield %>
-      <div class="row">
-        <div class="col-xs-4">
-        </div>
-        <div class="col-xs-4">
-          <div class="shadow" id="credit_box">
-            <footer class="text-center">Coded by <a href="https://github.com/lair001" target="_blank">Samuel Lair</a>.</footer>
-          </div>
-        </div>
-        <div class="col-xs-4">
-        </div>
+      <div class="shadow center-block seventh-width" id="credit_box">
+        <footer class="text-center">Coded by <a href="http://samlair.com" target="_blank">Samuel Lair</a>.</footer>
       </div>
     </div>
 
