@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'forum_users/edit' do
+describe 'forum_users/index' do
 
   before do
   	@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
@@ -13,13 +13,12 @@ describe 'forum_users/edit' do
     @helper1 = Helper.new
   end
 
-  it 'renders a listing of all users' do 
+  it 'renders an alphabetical listing of all users' do 
   	visit '/login'
     fill_in("username", with: "val")
     fill_in("password", with: "val")
     click_button 'login'
     visit '/forum_users'
-    expect(page).to have_css('input[placeholder="Username Search"]')
 
     #testing for order of users using css selectors
     user_selector = 'div.forum-divider-top div.row a'
@@ -46,8 +45,5 @@ describe 'forum_users/edit' do
     visit '/forum_users?message=Username+not+found.'
     expect(page).to have_css('input[name="forum_user[username]"][placeholder="Username not found."]')
   end
-
-
-
 
 end
