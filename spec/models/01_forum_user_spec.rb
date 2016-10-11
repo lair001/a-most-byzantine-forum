@@ -8,6 +8,7 @@ describe 'ForumUser' do
     @user3 = ForumUser.create(username: "billy bob", email: "bb@gmail.com", password: "bobs", banned: false)
     @user4 = ForumUser.create(username: "BiLlY BoB", email: "hackzor@gmail.com", password: "1337", banned: true)
   end
+  
   it 'can slug the username' do
     expect(@user1.slug).to eq("test-123")
   end
