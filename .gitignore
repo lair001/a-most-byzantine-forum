@@ -51,4 +51,4 @@ build-iPhoneSimulator/
 
 # ignore databases
 
-.sqlite
+*.sqlite
