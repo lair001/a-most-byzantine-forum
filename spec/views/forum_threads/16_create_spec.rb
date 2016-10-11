@@ -13,7 +13,8 @@ describe 'forum_threads/create' do
     click_button 'login'
   	visit '/forum_threads/new'
   	expect(page).to have_css('form[method="post"][action="/forum_threads"]')
-  	expect(page).to have_css('button[type="submit"]')
+    expect(page).to have_no_field("_method")
+    expect(page).to have_css('button[type="submit"]')
   	expect(page).to have_field('forum_thread[title]')
   	expect(page).to have_field('forum_post[content]')
   end
