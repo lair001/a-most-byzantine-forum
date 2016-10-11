@@ -7,7 +7,6 @@ describe 'forum_threads/index' do
     @user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal", id: 2)
     @user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true, id: 3)
 
-
     @thread1 = ForumThread.create(title: "the worst first", id: 1)
     @thread2 = ForumThread.create(title: "Michael Jackson is a very bad boy", id: 2)
     @thread3 = ForumThread.create(title: "The Lion, the Witch, and Madeline Albright", id: 3)

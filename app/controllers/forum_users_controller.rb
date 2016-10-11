@@ -105,14 +105,7 @@ class ForumUsersController < Controller
 			end
 			settable_attr_array = []
 			settable_attr_array << "banned" if moderator?
-			if administrator?
-				settable_attr_array << "username"
-				settable_attr_array << "email"
-				settable_attr_array << "password"
-			elsif @user == current_user
-				settable_attr_array << "email"
-				settable_attr_array << "password"
-			end
+			administrator? ? settable_attr_array.push("username", "email", "password") : (settable_attr_array.push("email", "password") if @user == current_user)
 			set_attributes(@user, params[:forum_user], settable_attr_array)
 			if @user.save
 				redirect '/forum_users'
