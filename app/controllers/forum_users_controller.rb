@@ -42,13 +42,9 @@ class ForumUsersController < Controller
 	post '/forum_users' do 
 		@user = ForumUser.new
 		set_attributes(@user, params[:forum_user], ["username", "email", "password"])
-		if ForumUser.validate_by_slug(@user)
-			if @user.save
-				session[:forum_user_id] = @user.id 
-				redirect '/forum_threads'
-			else
-				redirect '/forum_users/new'
-			end
+		if @user.save
+			session[:forum_user_id] = @user.id 
+			redirect '/forum_threads'
 		else
 			redirect '/forum_users/new'
 		end

@@ -6,7 +6,7 @@ describe 'ForumUser' do
     @user1 = ForumUser.create(username: "test 123", email: "test123@aol.com", password: "test", moderator: false, administrator: false)
     @user2 = ForumUser.create(username: "Top Gun", email: "tops@aol.com", password: "thebest", moderator: true, administrator: true)
     @user3 = ForumUser.create(username: "billy bob", email: "bb@gmail.com", password: "bobs", banned: false)
-    @user4 = ForumUser.create(username: "BiLlY BoB", email: "hackzor@gmail.com", password: "1337", banned: true)
+    @user4 = ForumUser.create(username: "hackzor", email: "hackzor@gmail.com", password: "1337", banned: true)
   end
   
   it 'can slug the username' do
@@ -16,12 +16,6 @@ describe 'ForumUser' do
   it 'can find a user based on the slug' do
     slug = @user1.slug
     expect(ForumUser.find_by_slug(slug).username).to eq("test 123")
-  end
-
-  it 'can validate by slug' do 
-    expect(ForumUser.validate_by_slug(@user3)).to eq(false)
-    expect(ForumUser.validate_by_slug(@user4)).to eq(false)
-    expect(ForumUser.validate_by_slug(@user1)).to eq(true)
   end
 
   it 'has a secure password' do
@@ -37,6 +31,11 @@ describe 'ForumUser' do
     expect(ForumUser.new(email: "123@abc.com", password: "abc123").save).to eq(false)
     expect(ForumUser.new(username: "I Can Read", password: "abc123").save).to eq(false)
     expect(ForumUser.new(username: "I Can Read", email: "123@abc.com").save).to eq(false)
+    expect(ForumUser.new(username: "I Can Read", email: "123@abc.com", password: "abc123").save).to eq(true)
+  end
+
+  it 'validates for the uniqueness of its slug' do 
+    expect(ForumUser.new(username: "tOP-gUn", email: "123@abc.com", password: "abc123").save).to eq(false)
     expect(ForumUser.new(username: "I Can Read", email: "123@abc.com", password: "abc123").save).to eq(true)
   end
 

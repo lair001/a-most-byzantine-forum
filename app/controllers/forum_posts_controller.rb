@@ -3,7 +3,6 @@ class ForumPostsController < Controller
 	get '/forum_posts/new/:slug' do
 		if logged_in?
 			@thread = ForumThread.find_by_slug(params[:slug])
-
 			redirect '/forum_threads' if @thread.nil?
 			erb :'/forum_posts/create'
 		else

@@ -11,4 +11,6 @@ class ForumUser < ActiveRecord::Base
 	validates :email, presence: true 
 	validates :password_digest, presence: true
 
+	validate :presence_of_unique_slug
+
 end

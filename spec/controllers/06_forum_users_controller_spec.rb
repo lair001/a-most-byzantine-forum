@@ -411,16 +411,4 @@ describe 'ForumUsersController' do
 
 	end
 
-	#   it 'redirects to /forum_threads if logged in' do 
- #      	visit '/login'
- #      	fill_in("username", with: "val")
-	# 	fill_in("password", with: "val")
-	# 	click_button 'login'
-	# 	get '/login'
- #      	expect(last_response.status).to eq(200)
- # #    	expect(last_request.path).to include("/forum_threads")
-	#   end
-
-
-
 end

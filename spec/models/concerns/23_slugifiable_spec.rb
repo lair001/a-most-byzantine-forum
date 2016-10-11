@@ -1,23 +1,38 @@
 require 'spec_helper'
 
+class Errors
+
+	attr_accessor :all
+
+	def initialize
+		self.all = []
+	end
+
+	def add(symbol, string)
+		all << [symbol, string]
+	end
+
+end
+
 class SlugUsername
 
 	include Slugifiable::InstanceMethods
 	extend Slugifiable::ClassMethods
 
-	attr_accessor :username
+	attr_accessor :username, :errors
 
 	cattr_accessor :all
 
 	self.all = []
 
-	def self.attribute_method?(symbol)
-		symbol == :username ? true : false
-	end
-
 	def initialize(username = nil)
 		self.username = username
+		self.errors = Errors.new
 		self.class.all << self
+	end
+
+	def self.attribute_method?(symbol)
+		symbol == :username ? true : false
 	end
 
 end
@@ -57,6 +72,24 @@ describe 'Slugifiable' do
 				@slug_title = SlugTitle.new
 				@slug_title.title = "catcher In-sOme Hay"
 				expect(@slug_title.slug).to eq("catcher-in-some-hay")
+			end
+
+		end
+
+		describe '#presence_of_unique_slug' do 
+
+			it 'adds an error if a slug is not present' do
+				@slug5 = SlugUsername.new
+				@slug5.presence_of_unique_slug
+				expect(@slug5.errors.all).to include([:base, 'Must have a slug.'])
+
+			end
+
+			it 'adds an error if the slug is not unique' do
+				@slug1.presence_of_unique_slug
+				@slug2.presence_of_unique_slug
+				expect(@slug1.errors.all).to include([:base, 'Must have a unique slug.'])
+				expect(@slug2.errors.all).to include([:base, 'Must have a unique slug.'])
 			end
 
 		end

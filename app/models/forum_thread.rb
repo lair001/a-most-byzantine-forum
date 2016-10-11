@@ -8,4 +8,6 @@ class ForumThread < ActiveRecord::Base
 
 	validates :title, presence: true
 
+	validate :presence_of_unique_slug
+
 end

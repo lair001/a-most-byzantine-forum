@@ -5,7 +5,6 @@ describe 'ForumThread' do
   before do
     @thread1 = ForumThread.create(title: "test 123")
     @thread2 = ForumThread.create(title: "Wow, Bob")
-    @thread3 = ForumThread.create(title: "WoW, BoB")
   end
 
   it 'can slug the title' do
@@ -15,12 +14,6 @@ describe 'ForumThread' do
   it 'can find a thread based on the slug' do
     slug = @thread1.slug
     expect(ForumThread.find_by_slug(slug).title).to eq("test 123")
-  end
-
-  it 'can validate by slug' do 
-    expect(ForumThread.validate_by_slug(@thread2)).to eq(false)
-    expect(ForumThread.validate_by_slug(@thread3)).to eq(false)
-    expect(ForumThread.validate_by_slug(@thread1)).to eq(true)
   end
 
   it 'knows when it was created' do 
@@ -34,6 +27,11 @@ describe 'ForumThread' do
   it 'validates for the presence of title' do 
     expect(ForumThread.new.save).to eq(false)
     expect(ForumThread.new(title: "Where am I?").save).to eq(true)
+  end
+
+  it 'validates for the uniqueness of its slug' do 
+    expect(ForumThread.new(title: "tEsT-123").save).to eq(false)
+    expect(ForumThread.new(title: "I Can Read Good").save).to eq(true)
   end
 
   it 'has many users through posts' do 
