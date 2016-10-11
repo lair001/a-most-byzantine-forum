@@ -90,12 +90,12 @@ class ForumThreadsController < Controller
 	patch '/forum_threads' do
 		if moderator?
 			@thread = ForumThread.find(params[:forum_thread][:id])
-			redirect "#{params[:cached_route]}" if @thread.nil?
+			cached_route_or_home if @thread.nil?
 			set_attributes(@thread, params[:forum_thread], ["title"])
 			if @thread.save
 				redirect '/forum_threads'
 			else
-				redirect "#{params[:cached_route]}"
+				cached_route_or_home
 			end
 		else
 			redirect '/'

@@ -32,7 +32,7 @@ class ForumPostsController < Controller
 				route_array = params[:cached_route].split("/")
 				redirect "/forum_threads/#{route_array.last}"
 			else
-				redirect "#{params[:cached_route]}"
+				cached_route_or_home
 			end
 		else
 			redirect '/'
@@ -42,12 +42,12 @@ class ForumPostsController < Controller
 	patch '/forum_posts' do 
 		if logged_in?
 			@post = ForumPost.find(params[:forum_post][:id])
-			redirect "#{params[:cached_route]}" if @post.nil? || (@post.forum_user != current_user && !moderator?)
+			cached_route_or_home if @post.nil? || (@post.forum_user != current_user && !moderator?)
 			set_attributes(@post, params[:forum_post], ["content"])
 			if @post.save
 				redirect "/forum_threads/#{@post.forum_thread.slug}"
 			else
-				redirect "#{params[:cached_route]}"
+				cached_route_or_home
 			end
 		else
 			redirect '/'
@@ -57,14 +57,14 @@ class ForumPostsController < Controller
 	delete '/forum_posts' do
 		if logged_in?
 			@post = ForumPost.find(params[:forum_post][:id])
-			redirect "#{params[:cached_route]}" if @post.nil? || (@post.forum_user != current_user && !moderator?)
+			cached_route_or_home if @post.nil? || (@post.forum_user != current_user && !moderator?)
 			@thread = @post.forum_thread
 			@post.delete
 			if @thread.forum_posts.count == 0
 				@thread.delete
 				redirect '/threads'
 			else
-				redirect "#{params[:cached_route]}"
+				cached_route_or_home
 			end
 		else
 			redirect '/'
