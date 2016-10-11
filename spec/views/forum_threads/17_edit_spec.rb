@@ -7,7 +7,7 @@ describe 'forum_threads/edit' do
     @thread1 = ForumThread.create(title: "The Bad", id: 1)
   end
 
-  it 'renders a edit thread form with field for thread title' do
+  it 'renders a edit thread form with a field for thread title' do
     visit '/login'
     fill_in("username", with: "val")
     fill_in("password", with: "val")
