@@ -8,10 +8,6 @@ module Helpable
 		@current_user ||= ForumUser.find(session[:forum_user_id])
 	end
 
-	def current_user_posts
-		@current_user_posts ||= current_user.posts
-	end
-
 	def sort_user_posts(user)
 		@user_posts ||= user.forum_posts.order(updated_at: :desc)
 	end
