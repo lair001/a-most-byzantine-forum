@@ -12,7 +12,7 @@ describe 'Helpable' do
 	  	@thread1 = ForumThread.create(title: "the worst first", id: 1)
 	  	@thread2 = ForumThread.create(title: "Michael Jackson is a very bad boy", id: 2)
 	  	@thread3 = ForumThread.create(title: "The Lion, the Witch, and Madeline Albright", id: 3)
-	  	@thread4 = ForumThread.create(title: "Hello and Goodbye, Phil")
+	  	@thread4 = ForumThread.create(title: "Hello and Goodbye, Phil", id: 4)
 
 	  	@post1 = ForumPost.create(content: "asdf", forum_user_id: 2, forum_thread_id: 1)
 	  	@post2 = ForumPost.create(content: "Hal, do you want to be the first to be banned?", forum_user_id: 1, forum_thread_id: 1)
