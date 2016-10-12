@@ -75,6 +75,13 @@ class Helper
 
 end
 
+def controller_login(user)
+    params = {
+      forum_user: { username: "#{user.username}", password: "#{user.password}" }
+    }
+    post '/login', params
+end
+
 def view_login(user)
     visit '/login'
     fill_in("username", with: "#{user.username}")
