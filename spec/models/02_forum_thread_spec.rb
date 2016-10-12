@@ -34,6 +34,11 @@ describe 'ForumThread' do
     expect(ForumThread.new(title: "I Can Read Good").save).to eq(true)
   end
 
+  it 'validates for the absence of forbidden characters in its title' do 
+    expect(ForumThread.new(title: "The`Great^Schism").save).to eq(false)
+    expect(ForumThread.new(title: "The-Great Schism").save).to eq(true)
+  end
+
   it 'has many users through posts' do 
     @user1 = ForumUser.create(username: "test 123", email: "test123@aol.com", password: "test", moderator: false, administrator: false)
     @user2 = ForumUser.create(username: "igor", email: "igor@aol.com", password: "yumyum", moderator: false, administrator: false)

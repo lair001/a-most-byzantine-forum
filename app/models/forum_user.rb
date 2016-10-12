@@ -1,5 +1,6 @@
 class ForumUser < ActiveRecord::Base
 
+	include Forbiddable::InstanceMethods
 	include Slugifiable::InstanceMethods
 	extend Slugifiable::ClassMethods
 
@@ -12,5 +13,6 @@ class ForumUser < ActiveRecord::Base
 	validates :password_digest, presence: true
 
 	validate :presence_of_unique_slug
+	validate { absence_of_forbidden_characters :username }
 
 end

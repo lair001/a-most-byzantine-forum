@@ -39,6 +39,11 @@ describe 'ForumUser' do
     expect(ForumUser.new(username: "I Can Read", email: "123@abc.com", password: "abc123").save).to eq(true)
   end
 
+  it 'validates for the absence of forbidden characters in its username' do 
+    expect(ForumUser.new(username: "peter~webs", email: "peter@peter.com", password: "peter").save).to eq(false)
+    expect(ForumUser.new(username: "peter_webs", email: "peter@peter.com", password: "peter").save).to eq(true)
+  end
+
   it 'knows whether it is a moderator' do 
     expect(@user1.moderator).to eq(false)
     expect(@user2.moderator).to eq(true)
