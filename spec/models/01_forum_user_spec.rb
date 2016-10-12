@@ -40,7 +40,7 @@ describe 'ForumUser' do
   end
 
   it 'validates for the absence of forbidden characters in its username' do 
-    expect(ForumUser.new(username: "peter~webs", email: "peter@peter.com", password: "peter").save).to eq(false)
+    expect(ForumUser.new(username: "peter⚔webs", email: "peter@peter.com", password: "peter").save).to eq(false)
     expect(ForumUser.new(username: "peter_webs", email: "peter@peter.com", password: "peter").save).to eq(true)
   end
 

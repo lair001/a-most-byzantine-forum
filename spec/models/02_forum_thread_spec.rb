@@ -35,7 +35,7 @@ describe 'ForumThread' do
   end
 
   it 'validates for the absence of forbidden characters in its title' do 
-    expect(ForumThread.new(title: "The`Great^Schism").save).to eq(false)
+    expect(ForumThread.new(title: "The⚒Great⚓Schism").save).to eq(false)
     expect(ForumThread.new(title: "The-Great Schism").save).to eq(true)
   end
 
