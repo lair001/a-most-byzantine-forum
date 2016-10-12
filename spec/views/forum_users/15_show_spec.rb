@@ -66,6 +66,14 @@ describe 'forum_users/show' do
     expect(page).to have_no_css('button[type="submit"]#edit')
   end
 
+  it "does not render a button to edit a user if logged as a moderator without administrator powers and visiting the show page of another user" do
+    view_login(@user3)
+    visit "/forum_users/#{@user6.slug}"
+
+    expect(page).to have_no_link('Edit', href: "/forum_users/#{@user6.slug}/edit")
+    expect(page).to have_no_css('button[type="submit"]#edit')
+  end
+
   it "shows a button to ban the user if logged in as a moderator and visiting the show page of a user who is not banned" do
     view_login(@user3)
     visit "/forum_users/#{@user2.slug}"
