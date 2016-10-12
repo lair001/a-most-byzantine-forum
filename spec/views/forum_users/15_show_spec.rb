@@ -23,11 +23,8 @@ describe 'forum_users/show' do
     @helper1 = Helper.new
   end
 
-  it "renders a user profile with a listing of the user's posts (recently edited posts come first)" do 
-  	visit '/login'
-    fill_in("username", with: "#{@user6.username}")
-    fill_in("password", with: "#{@user6.password}")
-    click_button 'login'
+  it "renders a user profile with a listing of the user's posts (recently edited posts come first)" do
+    view_login(@user6)
     visit "/forum_users/#{@user2.slug}"
 
     expect(page.body).to include(@user2.username)
@@ -45,33 +42,24 @@ describe 'forum_users/show' do
     page.assert_selector('div.row a', count: ForumPost.all.count)
   end
 
-  it "renders a button to edit a user if logged in as an administrator" do 
-    visit '/login'
-    fill_in("username", with: "#{@user4.username}")
-    fill_in("password", with: "#{@user4.password}")
-    click_button 'login'
+  it "renders a button to edit a user if logged in as an administrator" do
+    view_login(@user4)
     visit "/forum_users/#{@user2.slug}"
 
     expect(page).to have_link('Edit', href: "/forum_users/#{@user2.slug}/edit")
     expect(page).to have_css('button[type="submit"]#edit')
   end
 
-  it "renders a button to edit a user if logged as the user the page is for" do 
-    visit '/login'
-    fill_in("username", with: "#{@user2.username}")
-    fill_in("password", with: "#{@user2.password}")
-    click_button 'login'
+  it "renders a button to edit a user if logged as the user the page is for" do
+    view_login(@user2)
     visit "/forum_users/#{@user2.slug}"
 
     expect(page).to have_link('Edit', href: "/forum_users/#{@user2.slug}/edit")
     expect(page).to have_css('button[type="submit"]#edit')
   end
 
-  it "does not render a button to edit a user if logged as an ordinary user and visiting the show page of another user" do 
-    visit '/login'
-    fill_in("username", with: "#{@user2.username}")
-    fill_in("password", with: "#{@user2.password}")
-    click_button 'login'
+  it "does not render a button to edit a user if logged as an ordinary user and visiting the show page of another user" do
+    view_login(@user2)
     visit "/forum_users/#{@user6.slug}"
 
     expect(page).to have_no_link('Edit', href: "/forum_users/#{@user6.slug}/edit")
@@ -79,10 +67,7 @@ describe 'forum_users/show' do
   end
 
   it "shows a button to ban the user if logged in as a moderator and visiting the show page of a user who is not banned" do
-    visit '/login'
-    fill_in("username", with: "#{@user3.username}")
-    fill_in("password", with: "#{@user3.password}")
-    click_button 'login'
+    view_login(@user3)
     visit "/forum_users/#{@user2.slug}"
 
     expect(page).to have_css('form[method="post"][action="/forum_users"]')
@@ -93,10 +78,7 @@ describe 'forum_users/show' do
   end
 
   it "shows a button to unban the user if logged in as a moderator and visiting the show page of a user who is banned" do
-    visit '/login'
-    fill_in("username", with: "#{@user3.username}")
-    fill_in("password", with: "#{@user3.password}")
-    click_button 'login'
+    view_login(@user3)
     visit "/forum_users/#{@user7.slug}"
 
     expect(page).to have_css('form[method="post"][action="/forum_users"]')
@@ -107,10 +89,7 @@ describe 'forum_users/show' do
   end
 
   it "does not show the ban and unban buttons if logged in as an ordinary user" do
-    visit '/login'
-    fill_in("username", with: "#{@user6.username}")
-    fill_in("password", with: "#{@user6.password}")
-    click_button 'login'
+    view_login(@user6)
 
     visit "/forum_users/#{@user2.slug}"
     expect(page).to have_no_css('form[method="post"][action="/forum_users"]')
@@ -128,10 +107,7 @@ describe 'forum_users/show' do
   end
 
   it "does not show the ban and unban buttons if logged in as an administrator without moderator powers" do
-    visit '/login'
-    fill_in("username", with: "#{@user4.username}")
-    fill_in("password", with: "#{@user4.password}")
-    click_button 'login'
+    view_login(@user4)
 
     visit "/forum_users/#{@user2.slug}"
     expect(page).to have_no_css('form[method="post"][action="/forum_users"]')
