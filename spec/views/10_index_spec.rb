@@ -3,10 +3,10 @@ require 'spec_helper'
 describe 'index' do
 
   before do
-  	@user = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true)
+  	@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true)
   end
 
-  it 'displays links to sign up and login if not logged in' do S
+  it 'displays links to sign up and login if not logged in' do
   	visit '/'
     expect(page).to have_link('Sign Up', href: '/forum_users/new')
     expect(page).to have_link('Log In', href: '/login')
