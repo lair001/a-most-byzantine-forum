@@ -15,6 +15,7 @@ class ForumUser < ActiveRecord::Base
 	validate do
 		presence_of_unique_slug
 		absence_of_forbidden_characters :username
+		absence_of_forbidden_characters :password
 		absence_of_whitespace_in_password
 	end
 
