@@ -9,10 +9,7 @@ describe 'forum_users/edit' do
   end
 
   it 'renders a edit user form with fields for username, email, and password if logged in as an administrator' do
-    visit '/login'
-    fill_in("username", with: "wal")
-    fill_in("password", with: "wal")
-    click_button 'login'
+    use_view_to_login_as(@user4)
   	visit '/forum_users/wal/edit'
   	expect(page).to have_css('form[method="post"][action="/forum_users"]')
     expect(page).to have_css('input[type="hidden"][name="_method"][value="patch"]')
@@ -23,10 +20,7 @@ describe 'forum_users/edit' do
   end
 
   it 'renders a edit user form with fields for username, email, and password but not username if logged in as a moderator' do
-    visit '/login'
-    fill_in("username", with: "sal")
-    fill_in("password", with: "sal")
-    click_button 'login'
+    use_view_to_login_as(@user3)
     visit '/forum_users/sal/edit'
     expect(page).to have_css('form[method="post"][action="/forum_users"]')
     expect(page).to have_css('input[type="hidden"][name="_method"][value="patch"]')
@@ -37,10 +31,7 @@ describe 'forum_users/edit' do
   end
 
   it 'renders a edit user form with fields for username, email, and password but not username if logged in as an ordinary user' do
-    visit '/login'
-    fill_in("username", with: "hal")
-    fill_in("password", with: "hal")
-    click_button 'login'
+    use_view_to_login_as(@user2)
     visit '/forum_users/hal/edit'
     expect(page).to have_css('form[method="post"][action="/forum_users"]')
     expect(page).to have_css('input[type="hidden"][name="_method"][value="patch"]')

@@ -21,10 +21,7 @@ describe 'forum_threads/index' do
   end
 
   it 'renders a listing of all threads (threads updated recently come first)' do 
-  	visit '/login'
-    fill_in("username", with: "hal")
-    fill_in("password", with: "hal")
-    click_button 'login'
+  	use_view_to_login_as(@user2)
     visit '/forum_threads'
 
     #testing for order of threads using css selectors
@@ -39,10 +36,7 @@ describe 'forum_threads/index' do
   end
 
   it 'has a form to find a user by username' do 
-  	visit '/login'
-    fill_in("username", with: "hal")
-    fill_in("password", with: "hal")
-    click_button 'login'
+  	use_view_to_login_as(@user2)
     visit '/forum_threads'
     expect(page).to have_css('form[method="post"][action="/forum_threads/search"]')
     expect(page).to have_no_field("_method")
@@ -53,10 +47,7 @@ describe 'forum_threads/index' do
   end
 
   it 'renders buttons to edit and delete threads if logged in as a moderator' do 
-    visit '/login'
-    fill_in("username", with: "sal")
-    fill_in("password", with: "sal")
-    click_button 'login'
+    use_view_to_login_as(@user3)
     visit '/forum_threads'
     expect(page).to have_css('form[method="post"][action="/forum_threads"]')
     expect(page).to have_css('input[type="hidden"][name="_method"][value="delete"]')
@@ -67,10 +58,7 @@ describe 'forum_threads/index' do
   end
 
   it 'does not render buttons to edit and delete threads if not logged in as a moderator' do
-    visit '/login'
-    fill_in("username", with: "hal")
-    fill_in("password", with: "hal")
-    click_button 'login'
+    use_view_to_login_as(@user2)
     visit '/forum_threads'
     expect(page).to have_no_css('form[method="post"][action="/forum_threads"]')
     expect(page).to have_no_css('input[type="hidden"][name="_method"][value="delete"]')
