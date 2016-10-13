@@ -3,9 +3,9 @@ module Slugifiable
   module InstanceMethods
 
     def slug
-      unsafe_character_regex = /[#%}?{|^~\[\]`;:@"=&\/\\]+/
-      return self.username.strip.downcase.gsub(/[ ]+/, '-').gsub(unsafe_character_regex, '*') if self.class.attribute_method?(:username) && !self.username.nil?
-      return self.title.strip.downcase.gsub(/[ ]+/, '-').gsub(unsafe_character_regex, '*') if self.class.attribute_method?(:title) && !self.title.nil?
+      unsafe_character_regex = /[\s#%}?{$,|.^+\[\]`;><:@"=&\/\\]+/
+      return self.username.strip.downcase.gsub(unsafe_character_regex, '-') if self.class.attribute_method?(:username) && !self.username.nil?
+      return self.title.strip.downcase.gsub(unsafe_character_regex, '-') if self.class.attribute_method?(:title) && !self.title.nil?
       nil
     end
 
