@@ -19,7 +19,7 @@ describe 'ForumThreadsController' do
 		end
 
 		it "redirects to the thread's posts page if logged in and title is found" do
-			controller_login(@user1)
+			use_controller_to_login_as(@user1)
 			params = {
 		  		forum_thread: { title: "#{@thread1.title}" }
 		  	}
@@ -32,7 +32,7 @@ describe 'ForumThreadsController' do
 		end
 
 		it "redirects to the /forum_users with message 'Title not found.' if logged in and title is not found" do
-			controller_login(@user1)
+			use_controller_to_login_as(@user1)
 			params = {
 		  		forum_thread: { title: "Howdy Doo" }
 		  	}

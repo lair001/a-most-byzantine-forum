@@ -42,6 +42,24 @@ class Request
 
 end
 
+class Errors
+
+  attr_accessor :all
+
+  def initialize
+    self.all = []
+  end
+
+  def add(symbol, string)
+    all << [symbol, string]
+  end
+
+  def clear 
+    all.clear
+  end
+
+end
+
 class Helper
 
   include Helpable
@@ -75,7 +93,7 @@ class Helper
 
 end
 
-def controller_login(user)
+def use_controller_to_login_as(user)
     params = {
       forum_user: { username: "#{user.username}", password: "#{user.password}" }
     }
