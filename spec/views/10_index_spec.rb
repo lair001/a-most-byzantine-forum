@@ -14,10 +14,7 @@ describe 'index' do
   end
 
   it 'displays links to view threads if logged in' do 
-    visit '/login'
-    fill_in("username", with: "val")
-    fill_in("password", with: "val")
-    click_button 'login'
+    use_view_to_login_as(@user1)
   	visit '/'
     expect(page).to have_link('View Threads', href: '/forum_threads')
     expect(page).to have_no_link('Sign Up', href: '/forum_users/new')

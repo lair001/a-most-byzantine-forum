@@ -24,7 +24,7 @@ describe 'forum_users/show' do
   end
 
   it "renders a user profile with a listing of the user's posts (recently edited posts come first)" do
-    view_login(@user6)
+    use_view_to_login_as(@user6)
     visit "/forum_users/#{@user2.slug}"
 
     expect(page.body).to include(@user2.username)
@@ -43,7 +43,7 @@ describe 'forum_users/show' do
   end
 
   it "renders a button to edit a user if logged in as an administrator" do
-    view_login(@user4)
+    use_view_to_login_as(@user4)
     visit "/forum_users/#{@user2.slug}"
 
     expect(page).to have_link('Edit', href: "/forum_users/#{@user2.slug}/edit")
@@ -51,7 +51,7 @@ describe 'forum_users/show' do
   end
 
   it "renders a button to edit a user if logged as the user the page is for" do
-    view_login(@user2)
+    use_view_to_login_as(@user2)
     visit "/forum_users/#{@user2.slug}"
 
     expect(page).to have_link('Edit', href: "/forum_users/#{@user2.slug}/edit")
@@ -59,7 +59,7 @@ describe 'forum_users/show' do
   end
 
   it "does not render a button to edit a user if logged as an ordinary user and visiting the show page of another user" do
-    view_login(@user2)
+    use_view_to_login_as(@user2)
     visit "/forum_users/#{@user6.slug}"
 
     expect(page).to have_no_link('Edit', href: "/forum_users/#{@user6.slug}/edit")
@@ -67,7 +67,7 @@ describe 'forum_users/show' do
   end
 
   it "does not render a button to edit a user if logged as a moderator without administrator powers and visiting the show page of another user" do
-    view_login(@user3)
+    use_view_to_login_as(@user3)
     visit "/forum_users/#{@user6.slug}"
 
     expect(page).to have_no_link('Edit', href: "/forum_users/#{@user6.slug}/edit")
@@ -75,7 +75,7 @@ describe 'forum_users/show' do
   end
 
   it "shows a button to ban the user if logged in as a moderator and visiting the show page of a user who is not banned" do
-    view_login(@user3)
+    use_view_to_login_as(@user3)
     visit "/forum_users/#{@user2.slug}"
 
     expect(page).to have_css('form[method="post"][action="/forum_users"]')
@@ -86,7 +86,7 @@ describe 'forum_users/show' do
   end
 
   it "shows a button to unban the user if logged in as a moderator and visiting the show page of a user who is banned" do
-    view_login(@user3)
+    use_view_to_login_as(@user3)
     visit "/forum_users/#{@user7.slug}"
 
     expect(page).to have_css('form[method="post"][action="/forum_users"]')
@@ -97,7 +97,7 @@ describe 'forum_users/show' do
   end
 
   it "does not show the ban and unban buttons if logged in as an ordinary user" do
-    view_login(@user6)
+    use_view_to_login_as(@user6)
 
     visit "/forum_users/#{@user2.slug}"
     expect(page).to have_no_css('form[method="post"][action="/forum_users"]')
@@ -115,7 +115,7 @@ describe 'forum_users/show' do
   end
 
   it "does not show the ban and unban buttons if logged in as an administrator without moderator powers" do
-    view_login(@user4)
+    use_view_to_login_as(@user4)
 
     visit "/forum_users/#{@user2.slug}"
     expect(page).to have_no_css('form[method="post"][action="/forum_users"]')

@@ -8,10 +8,7 @@ describe 'forum_posts/create' do
   end
 
   it 'renders a create post form with a field for thread title' do
-    visit '/login'
-    fill_in("username", with: "val")
-    fill_in("password", with: "val")
-    click_button 'login'
+    use_view_to_login_as(@user1)
   	visit "/forum_posts/new/#{@thread1.slug}?cached_post=My+bad,+dude."
     expect(page.body).to include("#{@thread1.title}")
   	expect(page).to have_css('form[method="post"][action="/forum_posts"]')

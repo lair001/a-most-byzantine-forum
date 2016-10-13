@@ -14,7 +14,7 @@ describe 'layout' do
 	end
 
 	it 'links to forum.css if the current route is not / or /C9P' do 
-	  	view_login(@user1)
+	  	use_view_to_login_as(@user1)
 	  	expect(page.body).to include('<link rel="stylesheet" href="/stylesheets/forum.css">')
 	  	visit '/'
 	  	expect(page.body).not_to include('<link rel="stylesheet" href="/stylesheets/forum.css">')
@@ -43,7 +43,7 @@ describe 'layout' do
 		expect(page).to have_no_link('Logout', href: '/logout')
 		visit '/C9P'
 		expect(page).to have_no_link('Logout', href: '/logout')
-		view_login(@user1)
+		use_view_to_login_as(@user1)
 		expect(page).to have_link('Logout', href: '/logout')
 		visit '/'
 		expect(page).to have_link('Logout', href: '/logout')
@@ -52,7 +52,7 @@ describe 'layout' do
 	end
 
 	it "renders a navbar link to the current user's profile if logged in and the current route is neither /C9P or the current user's profile page" do 
-		view_login(@user1)
+		use_view_to_login_as(@user1)
 		visit '/C9P'
 		expect(page).to have_no_link('Profile', href: "/forum_users/#{@user1.slug}")
 		visit "/forum_users/#{@user1.slug}"
@@ -62,7 +62,7 @@ describe 'layout' do
 	end
 
 	it "renders a navbar link to /forum_users if logged in and the current route is neither /C9P or /forum_users" do 
-		view_login(@user1)
+		use_view_to_login_as(@user1)
 		visit '/C9P'
 		expect(page).to have_no_link('Users', href: "/forum_users")
 		visit "/forum_users"
@@ -72,7 +72,7 @@ describe 'layout' do
 	end
 
 	it "renders a navbar link to /forum_threads if logged in and the current route is neither /C9P or /forum_threads" do 
-		view_login(@user1)
+		use_view_to_login_as(@user1)
 		visit '/C9P'
 		expect(page).to have_no_link('Threads', href: "/forum_threads")
 		visit "/forum_users"
@@ -103,7 +103,7 @@ describe 'layout' do
 	end
 
 	it 'renders a navbar link to /forum_threads/new if the current route is /forum_threads' do 
-	  	view_login(@user1)
+	  	use_view_to_login_as(@user1)
 	  	visit '/forum_threads'
 	  	expect(page).to have_link('Create', href: '/forum_threads/new')
 	  	visit "/forum_threads/#{@thread1.slug}"
@@ -115,7 +115,7 @@ describe 'layout' do
 	end
 
 	it 'renders to navbar link to /forum_posts/new/:slug if the current route is /forum_threads/:slug' do 
-	  	view_login(@user1)
+	  	use_view_to_login_as(@user1)
 	  	visit "/forum_threads"
 	  	expect(page).to have_no_link('Create', href: "/forum_posts/new/#{@thread1.slug}")
 	  	expect(page).to have_no_link('Create', href: "/forum_posts/new/#{@thread2.slug}")
@@ -141,7 +141,7 @@ describe 'layout' do
 	end
 
 	it "renders a link to the author's homepage" do 
-		view_login(@user1)
+		use_view_to_login_as(@user1)
 		visit '/'
 		expect(page).to have_link('Samuel Lair', href: 'http://samlair.com')
 		visit '/C9P'

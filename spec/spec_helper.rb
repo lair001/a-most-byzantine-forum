@@ -100,7 +100,7 @@ def use_controller_to_login_as(user)
     post '/login', params
 end
 
-def view_login(user)
+def use_view_to_login_as(user)
     visit '/login'
     fill_in("username", with: "#{user.username}")
     fill_in("password", with: "#{user.password}")

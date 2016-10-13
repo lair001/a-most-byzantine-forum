@@ -8,10 +8,7 @@ describe 'forum_threads/edit' do
   end
 
   it 'renders a edit thread form with a field for thread title' do
-    visit '/login'
-    fill_in("username", with: "val")
-    fill_in("password", with: "val")
-    click_button 'login'
+    use_view_to_login_as(@user1)
   	visit "/forum_threads/#{@thread1.slug}/edit"
   	expect(page).to have_css('form[method="post"][action="/forum_threads"]')
     expect(page).to have_css('input[type="hidden"][name="_method"][value="patch"]')

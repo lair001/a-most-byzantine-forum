@@ -14,10 +14,7 @@ describe 'forum_users/index' do
   end
 
   it 'renders an alphabetical listing of all users' do 
-  	visit '/login'
-    fill_in("username", with: "val")
-    fill_in("password", with: "val")
-    click_button 'login'
+  	use_view_to_login_as(@user1)
     visit '/forum_users'
 
     #testing for order of users using css selectors
@@ -33,10 +30,7 @@ describe 'forum_users/index' do
   end
 
   it 'has a form to find a user by username' do 
-  	visit '/login'
-    fill_in("username", with: "val")
-    fill_in("password", with: "val")
-    click_button 'login'
+  	use_view_to_login_as(@user1)
     visit '/forum_users'
     expect(page).to have_css('form[method="post"][action="/forum_users/search"]')
     expect(page).to have_no_field("_method")

@@ -39,7 +39,7 @@ describe 'forum_users/show' do
     end
 
     it "renders a thread detail view with a listing of the thread's posts (posts are ordered in the order that they were created)" do
-        view_login(@user6)
+        use_view_to_login_as(@user6)
         visit "/forum_threads/#{@thread1.slug}"
 
         expect(page.body).to include(@thread1.title)
@@ -57,7 +57,7 @@ describe 'forum_users/show' do
     end
 
     it "renders a button to edit each post if logged in as a moderator" do
-        view_login(@user3)
+        use_view_to_login_as(@user3)
         visit "/forum_threads/#{@thread1.slug}"
         @thread1_posts_array.each do |post|
             expect(page).to have_link('Edit', href: "/forum_posts/#{post.id}/edit")
@@ -65,7 +65,7 @@ describe 'forum_users/show' do
     end
 
     it "renders a button to edit each of the user's posts in the thread if logged in as an ordinary user" do
-        view_login(@user2)
+        use_view_to_login_as(@user2)
         visit "/forum_threads/#{@thread1.slug}"
 
         @thread1_posts_array.each do |post|
@@ -78,7 +78,7 @@ describe 'forum_users/show' do
     end
 
     it "renders a button to edit each of the user's posts in the thread if logged in as an administrator without moderator powers" do
-        view_login(@user4)
+        use_view_to_login_as(@user4)
         visit "/forum_threads/#{@thread1.slug}"
 
         @thread1_posts_array.each do |post|
@@ -91,7 +91,7 @@ describe 'forum_users/show' do
     end
 
     it "renders a button to delete each post in a thread except for the first if logged in as a moderator" do 
-        view_login(@user3)
+        use_view_to_login_as(@user3)
         visit "/forum_threads/#{@thread1.slug}"
         expect(page).to have_css('form[method="post"][action="/forum_posts"]')
         expect(page).to have_css('input[type="hidden"][name="_method"][value="delete"]')
@@ -105,7 +105,7 @@ describe 'forum_users/show' do
     end
 
     it "renders a button to delete the first post in a thread if the thread has only one post and logged in as a moderator" do 
-        view_login(@user3)
+        use_view_to_login_as(@user3)
         visit "/forum_threads/#{@thread4.slug}"
         expect(page).to have_css('form[method="post"][action="/forum_posts"]')
         expect(page).to have_css('input[type="hidden"][name="_method"][value="delete"]')
@@ -113,7 +113,7 @@ describe 'forum_users/show' do
     end
 
     it "does not render a button to delete the posts of other users but does render a button to delete each of the current user's post in a thread except for the thread's first post if logged in as an ordinary user" do 
-        view_login(@user2)
+        use_view_to_login_as(@user2)
         visit "/forum_threads/#{@thread1.slug}"
         expect(page).to have_css('form[method="post"][action="/forum_posts"]')
         expect(page).to have_css('input[type="hidden"][name="_method"][value="delete"]')
@@ -127,7 +127,7 @@ describe 'forum_users/show' do
     end
 
     it "renders a button to delete the first post of a thread if the post belongs the user, the thread has only one post, and logged in as an ordinary user " do 
-        view_login(@user6)
+        use_view_to_login_as(@user6)
         visit "/forum_threads/#{@thread4.slug}"
         expect(page).to have_css('form[method="post"][action="/forum_posts"]')
         expect(page).to have_css('input[type="hidden"][name="_method"][value="delete"]')
@@ -135,7 +135,7 @@ describe 'forum_users/show' do
     end
 
     it "does not render a button to delete the posts of other users but does render a button to delete each of the current user's post in a thread except for the thread's first post if logged in as an administrator without moderator powers" do 
-        view_login(@user4)
+        use_view_to_login_as(@user4)
         visit "/forum_threads/#{@thread5.slug}"
         expect(page).to have_css('form[method="post"][action="/forum_posts"]')
         expect(page).to have_css('input[type="hidden"][name="_method"][value="delete"]')
@@ -149,7 +149,7 @@ describe 'forum_users/show' do
     end
 
     it "renders a button to delete the first post of a thread if the post belongs the user, the thread has only one post, and logged in as an administrator without moderator powers" do 
-        view_login(@user4)
+        use_view_to_login_as(@user4)
         visit "/forum_threads/#{@thread6.slug}"
         expect(page).to have_css('form[method="post"][action="/forum_posts"]')
         expect(page).to have_css('input[type="hidden"][name="_method"][value="delete"]')

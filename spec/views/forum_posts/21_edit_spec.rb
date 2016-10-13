@@ -9,10 +9,7 @@ describe 'forum_posts/edit' do
   end
 
   it 'renders a create post form with a field for thread title' do
-    visit '/login'
-    fill_in("username", with: "val")
-    fill_in("password", with: "val")
-    click_button 'login'
+    use_view_to_login_as(@user1)
   	visit "/forum_posts/#{@post1.id}/edit"
     expect(page.body).to include("Post ##{@post1.id}")
     expect(page.body).to include("#{@thread1.title}")
