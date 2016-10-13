@@ -8,11 +8,13 @@ class ForumUser < ActiveRecord::Base
 	has_many :forum_threads, through: :forum_posts
 
 	has_secure_password
-	validates :username, presence: true 
-	validates :email, presence: true 
+	validates :username, presence: true
+	validates :email, presence: true
 	validates :password_digest, presence: true
 
-	validate :presence_of_unique_slug
-	validate { absence_of_forbidden_characters :username }
+	validate do
+		presence_of_unique_slug
+		absence_of_forbidden_characters :username
+	end
 
 end
