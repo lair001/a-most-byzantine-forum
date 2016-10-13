@@ -44,6 +44,11 @@ describe 'ForumUser' do
     expect(ForumUser.new(username: "peter_webs", email: "peter@peter.com", password: "peter").save).to eq(true)
   end
 
+  it 'validates for the absence of whitespace in its password' do 
+expect(ForumUser.new(username: "peter_webs", email: "peter@peter.com", password: "\rpeter pan\t").save).to eq(false)
+    expect(ForumUser.new(username: "peter_webs", email: "peter@peter.com", password: "peter").save).to eq(true)
+  end
+
   it 'knows whether it is a moderator' do 
     expect(@user1.moderator).to eq(false)
     expect(@user2.moderator).to eq(true)
