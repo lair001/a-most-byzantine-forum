@@ -65,13 +65,13 @@ describe 'Slugifiable' do
 		describe '#slug' do 
 
 			it "slugifies an instance's username if it has a username" do 
-				expect(@slug4.slug).to eq("the-great-some1")
+				expect(@slug4.slug).to eq("great-some1")
 			end
 
 			it "slugifies an instance's title if it has a username" do 
 				@slug_title = SlugTitle.new
-				@slug_title.title = "catcher In-sOme Hay"
-				expect(@slug_title.slug).to eq("catcher-in-some-hay")
+				@slug_title.title = "a;catcher In-sOme Hay:zero"
+				expect(@slug_title.slug).to eq("catcher-some-hay")
 			end
 
 		end
