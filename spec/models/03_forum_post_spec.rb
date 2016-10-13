@@ -45,4 +45,9 @@ describe 'ForumPost' do
     expect(@post2.forum_thread).to eq(@thread)
   end
 
+  it 'validates for the absence of forbidden characters in its title' do 
+    expect(ForumPost.new(content: "The⚖rain⚕in⚗Spain⚘is⚙quite✀drenching.", forum_user_id: @user.id, forum_thread_id: @thread.id).save).to eq(false)
+    expect(ForumPost.new(content: "The rain in Spain is quite drenching.", forum_user_id: @user.id, forum_thread_id: @thread.id).save).to eq(true)
+  end
+
 end
