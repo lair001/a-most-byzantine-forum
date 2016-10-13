@@ -183,4 +183,22 @@ describe 'Helpable' do
 
   	end
 
+  	describe '#trim_whitespace' do 
+
+  		it 'trims whitespace in hash key values where the hash key is included in an array' do 
+  			params = { content: " A \t great \n\t time \nnow,\r then.\n", title: "  A  Great \t Time", password: " \tabc  dd \r c" }
+  			params = @helper1.trim_whitespace(params, [:content, :title])
+  			expect(params[:content]).to eq("A\tgreat\n\ttime\nnow,\rthen.")
+  			expect(params[:title]).to eq("A Great\tTime")
+  			expect(params[:password]).to eq(" \tabc  dd \r c")
+
+  			params = { "content" => " A \t great \n\t time \nnow,\r then.\n", "title" => "  A  Great \t Time", "password" => " \tabc  dd \r c" }
+  			params = @helper1.trim_whitespace(params, ["content", "title"])
+  			expect(params["content"]).to eq("A\tgreat\n\ttime\nnow,\rthen.")
+  			expect(params["title"]).to eq("A Great\tTime")
+  			expect(params["password"]).to eq(" \tabc  dd \r c")
+  		end
+
+  	end
+
 end
