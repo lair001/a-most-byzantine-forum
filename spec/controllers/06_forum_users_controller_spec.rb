@@ -19,10 +19,7 @@ describe 'ForumUsersController' do
 		end
 
 		it 'redirects to /forum_threads if logged in' do
-			params = {
-				forum_user: { username: "val", password: "val" }
-			}
-			post '/login', params
+			use_controller_to_login_as(@user1)
 			get '/login'
 			expect(last_response.status).to eq(302)
 			follow_redirect!
@@ -43,10 +40,7 @@ describe 'ForumUsersController' do
 	  	end
 
 		it 'redirects to /forum_threads if logged in' do
-		  	params = {
-		  		forum_user: { username: "val", password: "val" }
-		  	}
-		  	post '/login', params
+		  	use_controller_to_login_as(@user1)
 		  	get '/forum_users/new'
 			expect(last_response.status).to eq(302)
 		  	follow_redirect!
@@ -82,10 +76,7 @@ describe 'ForumUsersController' do
 		end
 
 		it "redirects to the /forum_users with message 'Username not found.' if logged in and username is not found" do
-			params = {
-		  		forum_user: { username: "val", password: "val" }
-		  	}
-		  	post '/login', params
+			use_controller_to_login_as(@user1)
 			params = { forum_user: { username: "billy" } }
 			post '/forum_users/search', params 
 			expect(last_response.status).to eq(302)
@@ -111,8 +102,7 @@ describe 'ForumUsersController' do
 		end
 
 		it "redirects to /forum_threads if login succeeds" do
-			params = { forum_user: { username: "val", password: "val" } }
-			post '/login', params
+			use_controller_to_login_as(@user1)
 			expect(last_response.status).to eq(302)
 		  	follow_redirect!
 			expect(last_response.status).to eq(200)
@@ -161,8 +151,7 @@ describe 'ForumUsersController' do
 		end
 
 		it "redirects to '/' and logs out if logged in" do
-			params = { forum_user: { username: "val", password: "val" } }
-			post '/login', params
+			use_controller_to_login_as(@user1)
 			get '/logout' 
 			expect(last_response.status).to eq(302)
 		  	follow_redirect!
@@ -187,8 +176,7 @@ describe 'ForumUsersController' do
 		end
 
 		it 'renders forum_user/index if logged in' do
-			params = { forum_user: { username: "val", password: "val" } }
-			post '/login', params
+			use_controller_to_login_as(@user1)
 			get '/forum_users'
 			expect(last_response.status).to eq(200)
 			expect(last_request.path).to include("/forum_users")
@@ -209,10 +197,7 @@ describe 'ForumUsersController' do
 		end
 
 		it "renders the user's profile page if logged in" do
-			params = {
-		  		forum_user: { username: "val", password: "val" }
-		  	}
-		  	post '/login', params
+			use_controller_to_login_as(@user1)
 			get '/forum_users/val'
 		  	expect(last_response.status).to eq(200)
 		  	expect(last_request.path).to include("/forum_users/val")
@@ -233,10 +218,7 @@ describe 'ForumUsersController' do
 		end
 
 		it "redirects to / if accessing another user's edit page when not an administrator" do 
-			params = {
-		  		forum_user: { username: "sal", password: "sal" }
-		  	}
-		  	post '/login', params
+			use_controller_to_login_as(@user3)
 			get '/forum_users/val/edit'
 			expect(last_response.status).to eq(302)
 		  	follow_redirect!
@@ -246,10 +228,7 @@ describe 'ForumUsersController' do
 		end
 
 		it "allows an administrator to access another user's edit page" do 
-			params = {
-		  		forum_user: { username: "wal", password: "wal" }
-		  	}
-		  	post '/login', params
+			use_controller_to_login_as(@user4)
 			get '/forum_users/sal/edit'
 			expect(last_response.status).to eq(200)
 			expect(last_request.path).to include("/forum_users/sal/edit")
@@ -257,10 +236,7 @@ describe 'ForumUsersController' do
 		end
 
 		it "allows a non-administrator to access his or her own edit page" do 
-			params = {
-		  		forum_user: { username: "hal", password: "hal" }
-		  	}
-		  	post '/login', params
+			use_controller_to_login_as(@user2)
 			get '/forum_users/hal/edit'
 			expect(last_response.status).to eq(200)
 			expect(last_request.path).to include("/forum_users/hal/edit")
@@ -294,10 +270,7 @@ describe 'ForumUsersController' do
 			end
 
 			it 'redirects to cached route if there is no user for the given user id' do 
-				params = {
-		  			forum_user: { username: "val", password: "val" }
-		  		}
-		  		post '/login', params
+				use_controller_to_login_as(@user1)
 		  		params = { cached_route: '/C9P', forum_user: { id: "255", email: "frank@gmail.com" } }
 		  		patch '/forum_users', params 
 		  		expect(last_response.status).to eq(302)
@@ -308,10 +281,7 @@ describe 'ForumUsersController' do
 			end
 
 			it 'redirects to / if there is no cached route and no user for the given user id' do 
-				params = {
-		  			forum_user: { username: "val", password: "val" }
-		  		}
-		  		post '/login', params
+				use_controller_to_login_as(@user1)
 		  		params = { forum_user: { id: "255", email: "frank@gmail.com" } }
 		  		patch '/forum_users', params 
 		  		expect(last_response.status).to eq(302)
@@ -324,10 +294,7 @@ describe 'ForumUsersController' do
 			it 'allows a moderator to ban a user but cannot change username, email or password' do 
 				@user = ForumUser.create(username: "frank", email: "frank@frank.com", password: "frank")
 				id = @user.id
-				params = {
-		  			forum_user: { username: "sal", password: "sal" }
-		  		}
-		  		post '/login', params
+				use_controller_to_login_as(@user3)
 		  		params = { forum_user: { id: @user.id, username: "hank", email: "hank@hank.com", password: "hank", banned: true } }
 		  		patch '/forum_users', params 
 			  	follow_redirect!
@@ -342,10 +309,7 @@ describe 'ForumUsersController' do
 			it 'allows a moderator to unban a user' do 
 				@user = ForumUser.create(username: "frank", email: "frank@frank.com", password: "frank", banned: true)
 				id = @user.id
-				params = {
-		  			forum_user: { username: "sal", password: "sal" }
-		  		}
-		  		post '/login', params
+				use_controller_to_login_as(@user3)
 		  		params = { forum_user: { id: @user.id, banned: false } }
 		  		patch '/forum_users', params 
 			  	follow_redirect!
@@ -356,10 +320,7 @@ describe 'ForumUsersController' do
 			it "allows an administrator to change a user's username, email and password but cannot ban the user" do 
 				@user = ForumUser.create(username: "frank", email: "frank@frank.com", password: "frank")
 				id = @user.id
-				params = {
-		  			forum_user: { username: "wal", password: "wal" }
-		  		}
-		  		post '/login', params
+				use_controller_to_login_as(@user4)
 		  		params = { forum_user: { id: @user.id, username: "hank", email: "hank@hank.com", password: "hank", banned: true } }
 		  		patch '/forum_users', params 
 			  	follow_redirect!
@@ -392,10 +353,7 @@ describe 'ForumUsersController' do
 			it "does not allow an ordinary user to change anything about another user" do 
 				@user = ForumUser.create(username: "frank", email: "frank@frank.com", password: "frank")
 				id = @user.id
-				params = {
-		  			forum_user: { id: @user.id, username: "hal", password: "hal" }
-		  		}
-		  		post '/login', params
+				use_controller_to_login_as(@user2)
 			  	follow_redirect!
 			  	@user = ForumUser.find(id)
 		  		params = { id: @user.id, forum_user: { username: "hank", email: "hank@hank.com", password: "hank", banned: true } }
