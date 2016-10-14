@@ -3,7 +3,7 @@ module Forbiddable
 
 		def absence_of_whitespace_in(attribute)
 		
-			errors.add(:base, "#{attribute} cannot contain whitespace.") if self.send(attribute).is_a?(String) && self.send(attribute).match(/\s/)
+			errors.add(:base, "#{attribute} cannot contain whitespace.") if self.send(attribute).is_a?(String) && self.send(attribute).match(/[\t\f\v\n\r \u00A0…]/)
 
 		end
 

@@ -34,6 +34,12 @@ describe 'ForumThread' do
     expect(ForumThread.new(title: "I Can Read Good").save).to eq(true)
   end
 
+    it 'validates that the only whitespace in its title is space' do 
+    expect(ForumThread.new(title: "The\vGreat Schism").save).to eq(false)
+    expect(ForumThread.new(title: "The Great\tSchism").save).to eq(false)
+    expect(ForumThread.new(title: "The Great Schism").save).to eq(true)
+  end
+
   it 'validates for the absence of forbidden characters in its title' do 
     expect(ForumThread.new(title: "The⚒Great⚓Schism").save).to eq(false)
     expect(ForumThread.new(title: "The-Great Schism").save).to eq(true)
