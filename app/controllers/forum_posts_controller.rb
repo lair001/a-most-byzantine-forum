@@ -67,13 +67,17 @@ class ForumPostsController < Controller
 
 	delete '/forum_posts' do
 		if logged_in?
-			@post = ForumPost.find(params[:forum_post][:id])
-			cached_route_or_home if @post.nil? || (@post.forum_user != current_user && !moderator?)
+			begin
+				@post = ForumPost.find(params[:forum_post][:id])
+			rescue ActiveRecord::RecordNotFound
+				cached_route_or_home
+			end
+			cached_route_or_home if @post.forum_user != current_user && !moderator?
 			@thread = @post.forum_thread
 			@post.delete
 			if @thread.forum_posts.count == 0
 				@thread.delete
-				redirect '/threads'
+				redirect '/forum_threads'
 			else
 				cached_route_or_home
 			end

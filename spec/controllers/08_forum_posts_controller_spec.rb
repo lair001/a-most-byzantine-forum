@@ -11,7 +11,7 @@ describe 'ForumUsersController' do
 
  	@thread1 = ForumThread.create(title: "the worst first", id: 1)
 
- 	@post1 = ForumPost.create(content: "asdf", forum_user_id: 2, forum_thread_id: 1)
+ 	@post1 = ForumPost.create(content: "asdf", forum_user_id: 2, forum_thread_id: 1, id: 1)
   end
 
   describe "get '/forum_posts/new/:slug'" do
@@ -376,6 +376,121 @@ describe 'ForumUsersController' do
 		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("I'm sorry, please don't ban me.")
+  	end
+
+  end
+
+  describe "delete 'forum_posts'" do
+
+  	it "redirects to '/' if not logged in" do 
+  		params = {
+  			cached_route: "/forum_threads/#{@thread1.slug}",
+  			forum_post: {
+  				id: "#{@post1.id}"
+  			}
+  		}
+  		delete "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/")
+		expect(last_response.body).to include("A Most Byzantine Forum")
+  	end
+
+  	it "redirects to cached route if logged in, a cached route is set, and attempting to delete a non-existent post" do 
+  		use_controller_to_login_as(@user2)
+  		params = {
+  			cached_route: "/forum_threads/#{@thread1.slug}",
+  			forum_post: {
+  				id: "#{@post1.id + 1}"
+  			}
+  		}
+  		delete "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_response.body).to include("#{@thread1.title}")
+		expect(last_response.body).to include("#{@post1.content}")
+  	end
+
+  	it "redirects to / if logged in, no cached route is set, and attempting to delete a non-existent post" do 
+  		use_controller_to_login_as(@user2)
+  		params = {
+  			forum_post: {
+  				id: "#{@post1.id + 1}"
+  			}
+  		}
+  		delete "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/")
+		expect(last_response.body).to include("A Most Byzantine Forum")
+  	end
+
+  	it "redirects to cached route if logged in as an ordinary user, a cached route is set, and attempting to delete a post that does not belong to the user" do 
+  		use_controller_to_login_as(@user6)
+  		params = {
+  			cached_route: "/forum_threads/#{@thread1.slug}",
+  			forum_post: {
+  				id: "#{@post1.id}"
+  			}
+  		}
+  		delete "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_response.body).to include("#{@thread1.title}")
+		expect(last_response.body).to include("#{@post1.content}")
+  	end
+
+  	it "redirects to / if logged in as an ordinary user, no cached route is set, and attempting to delete a post that does not belong to the user" do 
+  		use_controller_to_login_as(@user6)
+  		params = {
+  			forum_post: {
+  				id: "#{@post1.id}"
+  			}
+  		}
+  		delete "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/")
+		expect(last_response.body).to include("A Most Byzantine Forum")
+  	end
+
+  	it "redirects to cached route if logged in as an adminstrator without moderator powers, a cached route is set, and attempting to delete a post that does not belong to the user" do 
+  		use_controller_to_login_as(@user4)
+  		params = {
+  			cached_route: "/forum_threads/#{@thread1.slug}",
+  			forum_post: {
+  				id: "#{@post1.id}"
+  			}
+  		}
+  		delete "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_response.body).to include("#{@thread1.title}")
+		expect(last_response.body).to include("#{@post1.content}")
+  	end
+
+  	it "redirects to / if logged in as an adminstrator without moderator powers, no cached route is set, and attempting to delete a post that does not belong to the user" do 
+  		use_controller_to_login_as(@user4)
+  		params = {
+  			forum_post: {
+  				id: "#{@post1.id}"
+  			}
+  		}
+  		delete "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/")
+		expect(last_response.body).to include("A Most Byzantine Forum")
   	end
 
   end
