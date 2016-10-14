@@ -103,17 +103,6 @@ describe 'Helpable' do
 
   	end
 
-	describe '#to_slug' do 
-
-  		it 'slugifies strings and sets the result to @slug if @slug is not already set' do 
-  			expect(@helper1.to_slug("The Great")).to eq("great")
-  			expect(@helper1.to_slug("The-worst First")).to eq("great")
-  			@helper1.slug = nil
-  			expect(@helper1.to_slug("The-worst First")).to eq("worst-first")
-  		end
-
-  	end
-
   	describe '#cached_route_or_home' do 
 
   		it 'redirects to a cached path if set or home if there is no cached path' do 

@@ -63,10 +63,8 @@ describe 'ForumUsersController' do
 		end
 
 		it "redirects to the user's profile page if logged in and username is found" do
-			params = {
-		  		forum_user: { username: "val", password: "val" }
-		  	}
-		  	post '/login', params
+			use_controller_to_login_as(@user1)
+		  	params = { forum_user: { username: "val" } }
 			post '/forum_users/search', params 
 			expect(last_response.status).to eq(302)
 		  	follow_redirect!

@@ -46,10 +46,6 @@ module Helpable
 		end
 	end
 
-	def to_slug(string)
-		@slug ||= string.strip.downcase.gsub(UNSAFE_CHARACTER_REGEX, '-').gsub(STOP_WORD_REGEX, '-').gsub(STOP_WORD_REGEX_BEGINNING_AND_END, '')
-	end
-
 	def cached_route_or_home
 		params[:cached_route].nil? ? redirect('/') : redirect("#{params[:cached_route]}")
 	end

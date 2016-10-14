@@ -19,9 +19,9 @@ class ForumThreadsController < Controller
 
 	post '/forum_threads/search' do 
 		if logged_in?
-			@thread = ForumThread.find_by_slug(to_slug(params[:forum_thread][:title]))
+			@thread = ForumThread.find_by(params[:forum_thread])
 			if @thread 
-				redirect "/forum_threads/#{@slug}"
+				redirect "/forum_threads/#{@thread.slug}"
 			else
 				redirect '/forum_threads?message=Title+not+found.'
 			end
