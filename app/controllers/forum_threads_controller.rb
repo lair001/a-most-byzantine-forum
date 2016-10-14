@@ -33,7 +33,7 @@ class ForumThreadsController < Controller
 	post '/forum_threads' do 
 		if logged_in?
 			@thread = ForumThread.new 
-			set_attributes(@thread, params[:forum_thread], ["title"])
+			set_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
 			if @thread.save
 				@post = ForumPost.new 
 				set_attributes(@post, params[:forum_post], ["content", "forum_user_id"])
@@ -91,7 +91,7 @@ class ForumThreadsController < Controller
 		if moderator?
 			@thread = ForumThread.find(params[:forum_thread][:id])
 			cached_route_or_home if @thread.nil?
-			set_attributes(@thread, params[:forum_thread], ["title"])
+			set_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
 			if @thread.save
 				redirect '/forum_threads'
 			else

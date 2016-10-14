@@ -26,7 +26,7 @@ class ForumPostsController < Controller
 	post '/forum_posts' do
 		if logged_in?
 			@post = ForumPost.new
-			set_attributes(@post, params[:forum_post], ["content", "forum_user_id", "forum_thread_id"])
+			set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id", "forum_thread_id"])
 			if @post.save
 				route_array = params[:cached_route].split("/")
 				redirect "/forum_threads/#{route_array.last}"
@@ -42,7 +42,7 @@ class ForumPostsController < Controller
 		if logged_in?
 			@post = ForumPost.find(params[:forum_post][:id])
 			cached_route_or_home if @post.nil? || (@post.forum_user != current_user && !moderator?)
-			set_attributes(@post, params[:forum_post], ["content"])
+			set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content"])
 			if @post.save
 				redirect "/forum_threads/#{@post.forum_thread.slug}"
 			else
