@@ -17,7 +17,7 @@ class ForumPostsController < Controller
 			rescue ActiveRecord::RecordNotFound
 				redirect '/forum_threads'
 			end
-			if moderator? || (@post && @post.forum_user == current_user)
+			if moderator? || @post.forum_user == current_user
 				erb :'forum_posts/edit'
 			else
 				redirect '/forum_threads'
@@ -32,8 +32,12 @@ class ForumPostsController < Controller
 			@post = ForumPost.new
 			set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id", "forum_thread_id"])
 			if @post.save
-				route_array = params[:cached_route].split("/")
-				redirect "/forum_threads/#{route_array.last}"
+				if params[:cached_route]
+					route_array = params[:cached_route].split("/")
+					redirect "/forum_threads/#{route_array.last}"
+				else
+					redirect "/forum_threads"
+				end
 			else
 				cached_route_or_home
 			end
@@ -44,8 +48,12 @@ class ForumPostsController < Controller
 
 	patch '/forum_posts' do 
 		if logged_in?
-			@post = ForumPost.find(params[:forum_post][:id])
-			cached_route_or_home if @post.nil? || (@post.forum_user != current_user && !moderator?)
+			begin
+				@post = ForumPost.find(params[:forum_post][:id])
+			rescue ActiveRecord::RecordNotFound
+				cached_route_or_home
+			end
+			cached_route_or_home if @post.forum_user != current_user && !moderator?
 			set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content"])
 			if @post.save
 				redirect "/forum_threads/#{@post.forum_thread.slug}"
