@@ -14,4 +14,8 @@ class ForumThread < ActiveRecord::Base
 		absence_of_forbidden_characters :title
 	end
 
+	def slug
+		self.slugify(:title)
+	end
+
 end

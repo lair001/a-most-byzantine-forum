@@ -25,4 +25,8 @@ class ForumUser < ActiveRecord::Base
 		end
 	end
 
+	def slug
+		self.slugify(:username)
+	end
+
 end

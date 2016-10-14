@@ -17,8 +17,8 @@ class SlugUsername
 		self.class.all << self
 	end
 
-	def self.attribute_method?(symbol)
-		symbol == :username ? true : false
+	def slug
+		self.slugify(:username)
 	end
 
 end
@@ -30,8 +30,8 @@ class SlugTitle
 
 	attr_accessor :title
 
-	def self.attribute_method?(symbol)
-		symbol == :title ? true : false
+	def slug
+		self.slugify(:title)
 	end
 
 end
@@ -48,16 +48,14 @@ describe 'Slugifiable' do
 
 	describe 'InstanceMethods' do 
 
-		describe '#slug' do 
+		describe '#slugify' do 
 
-			it "slugifies an instance's username if it has a username" do 
-				expect(@slug4.slug).to eq("great-some1")
-			end
+			it "slugifies an instance's attribute" do 
+				expect(@slug4.slugify(:username)).to eq("great-some1")
 
-			it "slugifies an instance's title if it has a username" do 
 				@slug_title = SlugTitle.new
 				@slug_title.title = "a;catcher In-sOme Hay:zero"
-				expect(@slug_title.slug).to eq("catcher-some-hay")
+				expect(@slug_title.slugify(:title)).to eq("catcher-some-hay")
 			end
 
 		end
