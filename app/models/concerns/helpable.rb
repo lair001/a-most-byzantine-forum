@@ -50,10 +50,9 @@ module Helpable
 		params[:cached_route].nil? ? redirect('/') : redirect("#{params[:cached_route]}")
 	end
 
-	def trim_whitespace(input_hash, keys_whose_values_will_be_trimmed_array)
-		hash = {}
+	def trim_whitespace(hash, keys_whose_values_will_be_trimmed_array)
 		keys_whose_values_will_be_trimmed_array.each do |key|
-			hash[key.to_s] = input_hash[key.to_s].strip.gsub(/(?<foo>\s) /, '\k<foo>'  ).gsub(/ (?<foo>\s)/, '\k<foo>')
+			hash[key] = hash[key].strip.gsub(/(?<foo>\s) /, '\k<foo>'  ).gsub(/ (?<foo>\s)/, '\k<foo>')
 		end
 		hash
 	end
