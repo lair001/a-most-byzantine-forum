@@ -11,5 +11,9 @@ module Forbiddable
 			errors.add(:base, "#{attribute} cannot have forbidden characters.") if self.send(attribute).is_a?(String) && self.send(attribute).match(/[^\s!-ϿԱ-֏ἀ-῾₠-₾]+/)
 		end
 
+		def only_spaces_as_whitespace_in(attribute)
+			errors.add(:base, "#{attribute} can only contain spaces as whitespace.") if self.send(attribute).is_a?(String) && self.send(attribute).match(/[\t\f\v\n\r\u00A0…]/)
+		end
+
 	end
 end

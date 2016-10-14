@@ -16,15 +16,10 @@ class ForumUser < ActiveRecord::Base
 		presence_of_unique_slug
 		absence_of_forbidden_characters_in :username
 		absence_of_forbidden_characters_in :password
+		only_spaces_as_whitespace_in :username
 		absence_of_whitespace_in :email
 		absence_of_whitespace_in :password
 	end
-
-	# def absence_of_whitespace_in_password  
-	# 	if self.password && self.password.match(/\s/)
-	# 		errors.add(:base, 'password cannot contain whitespace.')
-	# 	end
-	# end
 
 	def slug
 		self.slugify(:username)
