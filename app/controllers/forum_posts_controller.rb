@@ -4,7 +4,7 @@ class ForumPostsController < Controller
 		if logged_in?
 			@thread = ForumThread.find_by_slug(params[:slug])
 			redirect '/forum_threads' if @thread.nil?
-			erb :'/forum_posts/create'
+			erb :'forum_posts/create'
 		else
 			redirect '/'
 		end
@@ -12,11 +12,15 @@ class ForumPostsController < Controller
 
 	get '/forum_posts/:id/edit' do 
 		if logged_in?
-			@post = ForumPost.find(params[:id])
+			begin
+				@post = ForumPost.find(params[:id])
+			rescue ActiveRecord::RecordNotFound
+				redirect '/forum_threads'
+			end
 			if moderator? || (@post && @post.forum_user == current_user)
 				erb :'forum_posts/edit'
 			else
-				redirect '/'
+				redirect '/forum_threads'
 			end
 		else
 			redirect '/'

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'ForumUsersController' do 
+describe 'ForumUsersController' do
 
   before do
   	@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
