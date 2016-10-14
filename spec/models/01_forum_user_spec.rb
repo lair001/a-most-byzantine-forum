@@ -49,6 +49,11 @@ describe 'ForumUser' do
     expect(ForumUser.new(username: "peter_webs", email: "peter@peter.com", password: "peter_great").save).to eq(true)
   end
 
+  it 'validates for the absence of whitespace in its email' do 
+    expect(ForumUser.new(username: "peter_webs", email: "peter@ peter.com", password: "peter").save).to eq(false)
+    expect(ForumUser.new(username: "peter_webs", email: "peter@peter.com", password: "peter").save).to eq(true)
+  end
+
   it 'validates for the absence of whitespace in its password' do 
     expect(ForumUser.new(username: "peter_webs", email: "peter@peter.com", password: "\rpeter pan\t").save).to eq(false)
     expect(ForumUser.new(username: "peter_webs", email: "peter@peter.com", password: "peter").save).to eq(true)

@@ -23,35 +23,35 @@ describe 'Forbiddable' do
 		describe '#absence_of_forbidden_characters' do 
 			it 'forbids the presence of forbidden characters in an attribute' do 
 				@forbidder1.title = "The⚑Great"
-				@forbidder1.absence_of_forbidden_characters :title
+				@forbidder1.absence_of_forbidden_characters_in :title
 				expect(@forbidder1.errors.all).to include([:base, "title cannot have forbidden characters."])
 				@forbidder1.username = "The⚐Great"
-				@forbidder1.absence_of_forbidden_characters "username"
+				@forbidder1.absence_of_forbidden_characters_in "username"
 				expect(@forbidder1.errors.all).to include([:base, "username cannot have forbidden characters."])
 				@forbidder1.attribute = "The⚉Great"
-				@forbidder1.absence_of_forbidden_characters :attribute
+				@forbidder1.absence_of_forbidden_characters_in :attribute
 				expect(@forbidder1.errors.all).to include([:base, "attribute cannot have forbidden characters."])
 				@forbidder1.errors.clear
 
 				@forbidder1.title = "The⚈Great"
-				@forbidder1.absence_of_forbidden_characters "title"
+				@forbidder1.absence_of_forbidden_characters_in "title"
 				expect(@forbidder1.errors.all).to include([:base, "title cannot have forbidden characters."])
 				@forbidder1.username = "The⚇Great"
-				@forbidder1.absence_of_forbidden_characters :username
+				@forbidder1.absence_of_forbidden_characters_in :username
 				expect(@forbidder1.errors.all).to include([:base, "username cannot have forbidden characters."])
 				@forbidder1.attribute = "The⚆Great"
-				@forbidder1.absence_of_forbidden_characters "attribute"
+				@forbidder1.absence_of_forbidden_characters_in "attribute"
 				expect(@forbidder1.errors.all).to include([:base, "attribute cannot have forbidden characters."])
 				@forbidder1.errors.clear
 
 				@forbidder1.title = "The-Biggest-Nobody"
-				@forbidder1.absence_of_forbidden_characters "title"
+				@forbidder1.absence_of_forbidden_characters_in "title"
 				expect(@forbidder1.errors.all).not_to include([:base, "title cannot have forbidden characters."])
 				@forbidder1.username = "peter_webs"
-				@forbidder1.absence_of_forbidden_characters :username
+				@forbidder1.absence_of_forbidden_characters_in :username
 				expect(@forbidder1.errors.all).not_to include([:base, "username cannot have forbidden characters."])
 				@forbidder1.attribute = "blue99"
-				@forbidder1.absence_of_forbidden_characters "attribute"
+				@forbidder1.absence_of_forbidden_characters_in "attribute"
 				expect(@forbidder1.errors.all).not_to include([:base, "attribute cannot have forbidden characters."])
 			end
 		end

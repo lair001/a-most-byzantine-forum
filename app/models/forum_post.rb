@@ -10,7 +10,7 @@ class ForumPost < ActiveRecord::Base
 	validates :forum_thread_id, presence: true
 
 	validate do
-		absence_of_forbidden_characters :content
+		absence_of_forbidden_characters_in :content
 	end
 
 end

@@ -11,7 +11,7 @@ class ForumThread < ActiveRecord::Base
 
 	validate do 
 		presence_of_unique_slug
-		absence_of_forbidden_characters :title
+		absence_of_forbidden_characters_in :title
 	end
 
 	def slug
