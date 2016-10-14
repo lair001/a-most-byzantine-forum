@@ -156,4 +156,16 @@ describe 'forum_users/show' do
         expect(page).to have_css("input#delete_post_#{@post12.id}")
     end
 
+    it "renders a button to quote any post that is not the user's" do
+        use_view_to_login_as(@user2)
+        visit "/forum_threads/#{@thread1.slug}"
+        @thread1_posts_array.each do |post|
+            if post.forum_user != @user2
+                expect(page.first("div##{post.id} button").text).to include("Quote")
+            else
+                expect(page).to have_no_css("div##{post.id} button")
+            end
+        end
+    end
+
 end
