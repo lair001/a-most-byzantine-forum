@@ -50,8 +50,11 @@ class ForumThreadsController < Controller
 				end
 			else
 				@current_route = "/forum_threads/new"
+				# grabbing any errors that the post may have
 				@post = ForumPost.new
 				set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id"])
+				@post.forum_thread = @thread
+				@post.delete if @post.save
 				erb :'forum_threads/create'
 				# redirect '/forum_threads/new'
 			end
