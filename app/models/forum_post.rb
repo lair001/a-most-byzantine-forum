@@ -14,7 +14,7 @@ class ForumPost < ActiveRecord::Base
 	end
 
 	def content_as_html
-		self.content.gsub(/\t/, "&emsp;&emsp;").gsub(/\u2003/, "&emsp;").gsub(/[\f\v\n\r]/, "<br>")
+		self.content.gsub(/\t/, "&emsp;&emsp;").gsub(/\u2003/, "&emsp;").gsub(/[\f\n\r]/, "<br>").gsub(/\v/, "<br><br>")
 	end
 
 end
