@@ -12,4 +12,14 @@
 			<i class="fa fa-pencil-square-o"></i> Edit
 		</button>
 	</form>
+		<% error_messages = ""
+		if @thread.errors.any?
+			@thread.errors.full_messages.each do |error|
+				error_messages += error + "&#13;&#10;"
+			end %>
+			<blockquote class='quote center-block half-width top-margin-10px'>
+				<p><%=error_messages%></p>
+				<footer><cite class="citation">The Basileus</cite></footer>
+			</blockquote>
+		<% end %>
 </div>
