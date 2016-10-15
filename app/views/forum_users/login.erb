@@ -1,6 +1,6 @@
-<div class="jumbotron text-center shadow">
-	<h2 class="forum-divider-bottom">Welcome back! Please login to join the intrigue!</h2>
-	<form method="post" action="/login" class="center-block quarter-width">
+<div class="jumbotron shadow">
+	<h2 class="forum-divider-bottom text-center">Welcome back! Please login to join the intrigue!</h2>
+	<form method="post" action="/login" class="center-block text-center quarter-width">
 		<div class="form-group">
 			<label for="username">Username:</label>
 			<input class="form-control forum-input" id="username" name="forum_user[username]" type="text">
@@ -16,7 +16,7 @@
 	<% error_messages = ""
 	if @user.errors.any?
 		@user.errors.full_messages.each do |error|
-			error_messages += error + "&#13;&#10;"
+			error_messages += error + "<br>"
 		end %>
 		<blockquote class='quote center-block half-width top-margin-10px'>
 			<p><%=error_messages%></p>

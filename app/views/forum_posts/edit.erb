@@ -1,8 +1,8 @@
-<div class="jumbotron text-center shadow">
+<div class="jumbotron shadow">
 	<h2 class="forum-divider-bottom">Editing Post #<%=@post.id%></h2>
 	<h4>Thread: <%=@post.forum_thread.title%></h4>
 	<h4>Author: <%=@post.forum_user.username%></h4>
-	<form method="post" action="/forum_posts" class="center-block half-width top-margin-20px">
+	<form method="post" action="/forum_posts" class="center-block text-center half-width top-margin-20px">
 		<input type="hidden" name="_method" value="patch">
 		<div class="form-group">
 			<label for="content">Content:</label>

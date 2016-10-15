@@ -1,8 +1,8 @@
 
-<div class="jumbotron text-center shadow">
+<div class="jumbotron shadow">
 	<h1>Posting to Thread:</h1>
 	<h2 class="forum-divider-bottom"><%=@thread.title%></h2>
-	<form method="post" action="/forum_posts" class="center-block half-width">
+	<form method="post" action="/forum_posts" class="center-block text-center half-width">
 		<div class="form-group">
 			<label for="content">Content:</label>
 			<textarea rows="20" class="form-control forum-textarea" id="content" name="forum_post[content]" type="text"><%=params[:cached_post] if params[:cached_post]%></textarea>
