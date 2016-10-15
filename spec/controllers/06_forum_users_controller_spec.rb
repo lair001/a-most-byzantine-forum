@@ -92,8 +92,6 @@ describe 'ForumUsersController' do
 		it "redirects to the login page if login fails" do 
 			params = { forum_user: { username: "val", password: "willy" } }
 			post '/login', params
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
 			expect(last_response.status).to eq(200)
 			expect(last_request.path).to include("/login")
 			expect(last_response.body).to include("Welcome back!")
@@ -115,10 +113,8 @@ describe 'ForumUsersController' do
 		it 'redirects to /forum_users/new if it fails to create a new user' do
 			params = { forum_user: { username: "val", email: "willy@willy.com", password: "willy" } }
 			post '/forum_users', params
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
 		  	expect(last_response.status).to eq(200)
-		  	expect(last_request.path).to include("/forum_users/new")
+		  	expect(last_request.path).to include("/forum_users")
 		  	expect(last_response.body).to include("Enroll in the Basileus's")
 		end
 
