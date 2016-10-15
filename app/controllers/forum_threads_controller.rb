@@ -80,8 +80,10 @@ class ForumThreadsController < Controller
 			rescue ActiveRecord::RecordNotFound
 				redirect '/forum_threads'
 			end
-			@thread.forum_posts.each do |post|
-				post.delete
+			if @thread.forum_posts
+				@thread.forum_posts.each do |post|
+					post.delete
+				end
 			end
 			@thread.delete
 			redirect '/forum_threads'
