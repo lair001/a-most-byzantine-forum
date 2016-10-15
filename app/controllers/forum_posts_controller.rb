@@ -40,7 +40,9 @@ class ForumPostsController < Controller
 					redirect "/forum_threads"
 				end
 			else
-				cached_route_or_home
+				@thread = ForumThread.find(params[:forum_post][:forum_thread_id])
+				erb :'forum_posts/create'
+				# cached_route_or_home
 			end
 		else
 			redirect '/'
