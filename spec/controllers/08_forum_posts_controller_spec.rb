@@ -119,7 +119,7 @@ describe 'ForumUsersController' do
 		expect(last_response.body).to include("A Most Byzantine Forum")
   	end
 
-  	it "redirects to cached route if logged in, a cached route is set, and the new post fails to save to the database" do 
+  	it "renders forum_posts/create if logged in, a cached route is set, and the new post fails to save to the database" do 
   		use_controller_to_login_as(@user2)
   		params = {
   			cached_route: "/forum_posts/new/#{@thread1.slug}",

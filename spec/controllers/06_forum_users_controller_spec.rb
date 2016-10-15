@@ -89,7 +89,7 @@ describe 'ForumUsersController' do
 
 	describe "post '/login'" do 
 
-		it "redirects to the login page if login fails" do 
+		it "renders the login page if login fails" do 
 			params = { forum_user: { username: "val", password: "willy" } }
 			post '/login', params
 			expect(last_response.status).to eq(200)
@@ -110,7 +110,7 @@ describe 'ForumUsersController' do
 
 	describe "post '/forum_users'" do 
 
-		it 'redirects to /forum_users/new if it fails to create a new user' do
+		it 'renders /forum_users/new if it fails to create a new user' do
 			params = { forum_user: { username: "val", email: "willy@willy.com", password: "willy" } }
 			post '/forum_users', params
 		  	expect(last_response.status).to eq(200)
