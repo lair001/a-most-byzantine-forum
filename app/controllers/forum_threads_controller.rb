@@ -44,7 +44,8 @@ class ForumThreadsController < Controller
 					redirect "/forum_threads/#{@thread.slug}"
 				else
 					@thread.delete
-					redirect '/forum_threads/new'
+					erb :'forum_threads/create'
+					# redirect '/forum_threads/new'
 				end
 			else
 				@post = ForumPost.new

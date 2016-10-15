@@ -175,15 +175,15 @@ describe 'ForumThreadsController' do
 			expect(last_response.body).to include("A Most Byzantine Forum")
 		end
 
-		it "redirects to /forum_threads/new without persisting a thread or a post if logged in and thread fails to save to database" do 
+		it "renders forum_threads/create without persisting a thread or a post if logged in and thread fails to save to database" do 
 			use_controller_to_login_as(@user2)
 			params = {
 				forum_thread: { title: "" },
 				forum_post: { content: "He should've conquered Persia instead.", forum_user_id: 2 }
 			}
 			post "/forum_threads", params
-			expect_redirect
-			expect(last_request.path).to include("/forum_threads/new")
+			expect(last_response.status).to eq(200)
+			expect(last_request.path).to include("/forum_threads")
 			expect(last_response.body).to include("Create")
 			expect(last_response.body).to include("Thread")
 
@@ -201,15 +201,15 @@ describe 'ForumThreadsController' do
 			expect(@post).to be(nil)
 		end
 
-		it "redirects to /forum_threads/new without persisting a thread or a post if logged in and post fails to save to database" do 
+		it "renders forum_threads/create without persisting a thread or a post if logged in and post fails to save to database" do 
 			use_controller_to_login_as(@user2)
 			params = {
 				forum_thread: { title: "On Justinian" },
 				forum_post: { content: "", forum_user_id: 2 }
 			}
 			post "/forum_threads", params
-			expect_redirect
-			expect(last_request.path).to include("/forum_threads/new")
+			expect(last_response.status).to eq(200)
+			expect(last_request.path).to include("/forum_threads")
 			expect(last_response.body).to include("Create")
 			expect(last_response.body).to include("Thread")
 
@@ -305,17 +305,16 @@ describe 'ForumThreadsController' do
 			expect(last_response.body).to include("A Most Byzantine Forum")
 		end
 
-		it "redirects to a cached route if a cached route is provided, logged in as a moderator, and the thread fails to save to the database." do
+		it "renders forum_threads/edit if a cached route is provided, logged in as a moderator, and the thread fails to save to the database." do
 			use_controller_to_login_as(@user3)
 			params = {
 				forum_thread: { title: "the\vworst\tfirst", id: @thread1.id },
 				cached_route: "/forum_threads/#{@thread1.slug}/edit"
 			}
 			patch '/forum_threads', params
-			expect_redirect
-		  	expect(last_request.path).to include("/forum_threads/#{@thread1.slug}/edit")
+			expect(last_response.status).to eq(200)
+		  	expect(last_request.path).to include("/forum_threads")
 			expect(last_response.body).to include("Edit")
-			expect(last_response.body).to include("#{@thread1.title}")
 		end
 
 		it "redirects to / if no cached route is provided, logged in as a moderator, and the thread fails to save to the database." do
@@ -324,7 +323,7 @@ describe 'ForumThreadsController' do
 				forum_thread: { title: "the\vworst\tfirst", id: @thread1.id  }
 			}
 			patch '/forum_threads', params
-			expect_redirect
+			expect(last_response.status).to eq(200)
 		  	expect(last_request.path).to include("/")
 			expect(last_response.body).to include("A Most Byzantine Forum")
 		end
