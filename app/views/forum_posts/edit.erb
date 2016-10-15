@@ -1,7 +1,7 @@
 <div class="jumbotron shadow">
-	<h2 class="forum-divider-bottom">Editing Post #<%=@post.id%></h2>
-	<h4>Thread: <%=@post.forum_thread.title%></h4>
-	<h4>Author: <%=@post.forum_user.username%></h4>
+	<h2 class="forum-divider-bottom text-center">Editing Post #<%=@post.id%></h2>
+	<h4 class="text-center">Thread: <%=@post.forum_thread.title%></h4>
+	<h4 class="text-center">Author: <%=@post.forum_user.username%></h4>
 	<form method="post" action="/forum_posts" class="center-block text-center half-width top-margin-20px">
 		<input type="hidden" name="_method" value="patch">
 		<div class="form-group">
@@ -17,7 +17,7 @@
 	<% error_messages = ""
 	if @post.errors.any?
 		@post.errors.full_messages.each do |error|
-			error_messages += error + "&#13;&#10;"
+			error_messages += error + "<br>"
 		end %>
 		<blockquote class='quote center-block half-width top-margin-10px'>
 			<p><%=error_messages%></p>

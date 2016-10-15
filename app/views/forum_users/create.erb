@@ -17,7 +17,7 @@
 			<i class="fa fa-paper-plane"></i> Signup
 		</button>
 	</form>
-		<% error_messages = ""
+	<% error_messages = ""
 	if @user.errors.any?
 		@user.errors.full_messages.each do |error|
 			error_messages += error + "<br>"
