@@ -14,6 +14,11 @@ describe 'ForumPost' do
     expect(@post2.content).to eq("blah blah")
   end
 
+  it 'can convert its content into html' do 
+    @post3 = ForumPost.create(content: "ipsum|\t|\u2003|\r\n|\f|\n|\r|\v|lorem")
+    expect(@post3.content_as_html).to eq("ipsum|&emsp;&emsp;|&emsp;|<br>|<br>|<br>|<br>|<br><br>|lorem")
+  end
+
   it 'validates for the presence of content, user, and thread' do 
     expect(ForumPost.new.save).to eq(false)
     expect(ForumPost.new(content: "Ipsum lorem is so cool!!!").save).to eq(false)
