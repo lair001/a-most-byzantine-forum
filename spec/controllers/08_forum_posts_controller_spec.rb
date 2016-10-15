@@ -129,10 +129,8 @@ describe 'ForumUsersController' do
   			}
   		}
   		post "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_posts/new/#{@thread1.slug}")
+		expect(last_request.path).to include("/forum_posts")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Posting")
   	end
@@ -146,8 +144,6 @@ describe 'ForumUsersController' do
   			}
   		}
   		post "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
 		expect(last_response.body).to include("A Most Byzantine Forum")
