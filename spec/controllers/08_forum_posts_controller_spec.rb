@@ -135,7 +135,7 @@ describe 'ForumUsersController' do
 		expect(last_response.body).to include("Posting")
   	end
 
-  	it "redirects to home if logged in, no cached route is set, and the new post fails to save to the database" do
+  	it "renders forum_posts/create if logged in, no cached route is set, and the new post fails to save to the database" do
   		use_controller_to_login_as(@user2)
   		params = {
   			forum_post: {
@@ -145,8 +145,9 @@ describe 'ForumUsersController' do
   		}
   		post "/forum_posts", params
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_request.path).to include("/forum_posts")
+		expect(last_response.body).to include("#{@thread1.title}")
+		expect(last_response.body).to include("Posting")
   	end
 
   	it "redirects to the show page of the new post's thread if logged in, a cached route is set, and the new post saves to the database" do 
