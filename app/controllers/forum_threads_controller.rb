@@ -103,6 +103,7 @@ class ForumThreadsController < Controller
 			if @thread.save
 				redirect '/forum_threads'
 			else
+				binding.pry
 				cached_route_or_home
 			end
 		else

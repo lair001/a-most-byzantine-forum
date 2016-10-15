@@ -1,10 +1,17 @@
+<% error_messages = ""
+	if @post.errors.any?
+		@post.errors.full_messages.each do |error|
+			error_messages += error + "/n"
+		end
+	end
+%>
 <div class="jumbotron text-center shadow">
 	<h1>Posting to Thread:</h1>
 	<h2 class="forum-divider-bottom"><%=@thread.title%></h2>
 	<form method="post" action="/forum_posts" class="center-block half-width">
 		<div class="form-group">
 			<label for="content">Content:</label>
-			<textarea rows="20" class="form-control forum-textarea" id="content" name="forum_post[content]" type="text"><%=params[:cached_post] if params[:cached_post]%></textarea>
+			<textarea rows="20" class="form-control forum-textarea" id="content" name="forum_post[content]" type="text" placeholder="<%=error_messages%>"><%=params[:cached_post] if params[:cached_post]%></textarea>
 		</div>
 		<input type="hidden" name="forum_post[forum_user_id]" value=<%=current_user.id%>>
 		<input type="hidden" name="forum_post[forum_thread_id]" value=<%=@thread.id%>>
