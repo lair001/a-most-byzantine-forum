@@ -4,6 +4,7 @@ class ForumUsersController < Controller
 		if logged_in?
 			redirect '/forum_threads'
 		else
+			@user = ForumUser.new
 			erb :'forum_users/login'
 		end
 	end
@@ -12,6 +13,7 @@ class ForumUsersController < Controller
 		if logged_in?
 			redirect '/forum_threads'
 		else
+			@user = ForumUser.new
 			erb :'forum_users/create'
 		end
 	end
@@ -30,12 +32,22 @@ class ForumUsersController < Controller
 	end
 
 	post '/login' do
+		begin
 		@user = ForumUser.find_by(trim_whitespace({username: params[:forum_user][:username]}, [:username]))
+		rescue ActiveRecord::RecordNotFound 
+			@user = nil
+		end
 		if @user && !@user.banned && @user.authenticate(params[:forum_user][:password])
 			session[:forum_user_id] = @user.id
 			redirect '/forum_threads'
 		else
-			redirect '/login'
+			if @user.nil?
+				@user = ForumUser.new if @user.nil?
+				@user.errors.add(:base, "username not found.")
+			end
+			@user.errors.add(:base, "user is banned.") if @user.banned
+			erb :'forum_users/login'
+			# redirect '/login'
 		end
 	end
 
@@ -46,7 +58,8 @@ class ForumUsersController < Controller
 			session[:forum_user_id] = @user.id 
 			redirect '/forum_threads'
 		else
-			redirect '/forum_users/new'
+			erb :'forum_users/create'
+			# redirect '/forum_users/new'
 		end
 	end
 
@@ -106,7 +119,8 @@ class ForumUsersController < Controller
 			if @user.save
 				redirect '/forum_users'
 			else
-				cached_route_or_home
+				erb :'forum_users/edit'
+				# cached_route_or_home
 			end
 		else
 			redirect '/'
