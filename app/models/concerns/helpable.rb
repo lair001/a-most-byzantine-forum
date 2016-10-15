@@ -52,7 +52,7 @@ module Helpable
 
 	def trim_whitespace(hash, keys_whose_values_will_be_trimmed_array)
 		keys_whose_values_will_be_trimmed_array.each do |key|
-			hash[key] = hash[key].strip.gsub(/(?<foo>\s) /, '\k<foo>'  ).gsub(/ (?<foo>\s)/, '\k<foo>') if hash[key].is_a?(String)
+			hash[key] = hash[key].strip.gsub(/(?<foo>(\s|\u00A0|\u2003))( |\u00A0)/, '\k<foo>'  ).gsub(/( |\u00A0)(?<foo>(\s|\u00A0|\u2003))/, '\k<foo>') if hash[key].is_a?(String)
 		end
 		hash
 	end
