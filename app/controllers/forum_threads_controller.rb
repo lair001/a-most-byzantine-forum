@@ -43,11 +43,13 @@ class ForumThreadsController < Controller
 				if @post.save 
 					redirect "/forum_threads/#{@thread.slug}"
 				else
+					@current_route = "/forum_threads/new"
 					@thread.delete
 					erb :'forum_threads/create'
 					# redirect '/forum_threads/new'
 				end
 			else
+				@current_route = "/forum_threads/new"
 				@post = ForumPost.new
 				set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id"])
 				erb :'forum_threads/create'
@@ -109,6 +111,7 @@ class ForumThreadsController < Controller
 			if @thread.save
 				redirect '/forum_threads'
 			else
+				@current_route = "/forum_threads/#{@thread.slug}/edit"
 				erb :'forum_threads/edit'
 				# cached_route_or_home
 			end

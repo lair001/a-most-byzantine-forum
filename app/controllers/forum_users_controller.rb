@@ -58,6 +58,7 @@ class ForumUsersController < Controller
 			session[:forum_user_id] = @user.id 
 			redirect '/forum_threads'
 		else
+			@current_route = "/forum_users/new"
 			erb :'forum_users/create'
 			# redirect '/forum_users/new'
 		end
@@ -119,6 +120,7 @@ class ForumUsersController < Controller
 			if @user.save
 				redirect '/forum_users'
 			else
+				@current_route = "/forum_users/#{@user.slug}/edit"
 				erb :'forum_users/edit'
 				# cached_route_or_home
 			end

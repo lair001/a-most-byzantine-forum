@@ -40,6 +40,7 @@ class ForumPostsController < Controller
 					redirect "/forum_threads"
 				end
 			else
+				@current_route = "/forum_posts/new"
 				@thread = ForumThread.find(params[:forum_post][:forum_thread_id])
 				erb :'forum_posts/create'
 				# cached_route_or_home
@@ -61,6 +62,7 @@ class ForumPostsController < Controller
 			if @post.save
 				redirect "/forum_threads/#{@post.forum_thread.slug}"
 			else
+				@current_route = "/forum_posts/#{@post.id}/edit"
 				erb :'forum_posts/edit'
 				# cached_route_or_home
 			end
