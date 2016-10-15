@@ -47,7 +47,7 @@ class ForumUsersController < Controller
 			elsif !@user.authenticate(params[:forum_user][:password])
 				@user.errors.add(:base, "Your credentials are invalid.")
 			end
-			@user.errors.add(:base, "user is banned.") if @user.banned
+			@user.errors.add(:base, "User is banned.") if @user.banned
 			erb :'forum_users/login'
 			# redirect '/login'
 		end

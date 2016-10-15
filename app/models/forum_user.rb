@@ -23,7 +23,7 @@ class ForumUser < ActiveRecord::Base
 	end
 
 	def email_format
-		errors.add(:base, "email must have proper format") if self.email.is_a?(String) && self.email.match(/^[^.]+@(.)+\.[^.\d]+$/).nil?
+		errors.add(:base, "Email must have proper format.") if self.email.is_a?(String) && self.email.match(/^[^.]+@(.)+\.[^.\d]+$/).nil?
 	end
 
 	def slug
