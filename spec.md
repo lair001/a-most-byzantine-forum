@@ -21,6 +21,7 @@ Specs:
 - [x] Include user input validations
       There are a ton of validations for the models including stock ActiveRecord validations and custom validations.
       ForumUser validates:
+      
         validates :username, presence: true
         validates :email, presence: true
         validates :password_digest, presence: true
@@ -36,6 +37,7 @@ Specs:
         end
         
      ForumThread validates:
+     
         validates :title, presence: true
 
         validate do 
@@ -45,6 +47,7 @@ Specs:
         end
         
      ForumPost validates:
+     
         validates :content, presence: true
         validates :forum_user_id, presence: true
         validates :forum_thread_id, presence: true
