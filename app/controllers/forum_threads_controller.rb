@@ -11,6 +11,8 @@ class ForumThreadsController < Controller
 
 	get '/forum_threads/new' do 
 		if logged_in?
+			@thread = ForumThread.new
+			@post = ForumPost.new
 			erb :'forum_threads/create'
 		else
 			redirect '/'
@@ -45,7 +47,10 @@ class ForumThreadsController < Controller
 					redirect '/forum_threads/new'
 				end
 			else
-				redirect '/forum_threads/new'
+				@post = ForumPost.new
+				set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id"])
+				erb :'forum_threads/create'
+				# redirect '/forum_threads/new'
 			end
 		else
 			redirect '/'
@@ -103,8 +108,8 @@ class ForumThreadsController < Controller
 			if @thread.save
 				redirect '/forum_threads'
 			else
-				binding.pry
-				cached_route_or_home
+				erb :'forum_threads/edit'
+				# cached_route_or_home
 			end
 		else
 			redirect '/'
