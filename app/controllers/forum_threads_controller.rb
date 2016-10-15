@@ -36,7 +36,7 @@ class ForumThreadsController < Controller
 			set_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
 			if @thread.save
 				@post = ForumPost.new 
-				set_attributes(@post, params[:forum_post], ["content", "forum_user_id"])
+				set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id"])
 				@post.forum_thread = @thread 
 				if @post.save 
 					redirect "/forum_threads/#{@thread.slug}"

@@ -93,16 +93,22 @@ class Helper
 
 end
 
+def expect_redirect
+  expect(last_response.status).to eq(302)
+  follow_redirect!
+  expect(last_response.status).to eq(200)
+end
+
 def use_controller_to_login_as(user)
-    params = {
-      forum_user: { username: "#{user.username}", password: "#{user.password}" }
-    }
-    post '/login', params
+  params = {
+    forum_user: { username: "#{user.username}", password: "#{user.password}" }
+  }
+  post '/login', params
 end
 
 def use_view_to_login_as(user)
-    visit '/login'
-    fill_in("username", with: "#{user.username}")
-    fill_in("password", with: "#{user.password}")
-    click_button 'login'
+  visit '/login'
+  fill_in("username", with: "#{user.username}")
+  fill_in("password", with: "#{user.password}")
+  click_button 'login'
 end
