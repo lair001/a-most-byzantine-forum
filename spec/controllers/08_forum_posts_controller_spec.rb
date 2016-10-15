@@ -615,30 +615,6 @@ describe 'ForumUsersController' do
 		expect(@post).to be(nil)
   	end
 
-  # 	it "redirects to cached route if a cached route is provided and an adminstrator without moderator powers attempts to delete the post of another user" do 
-  # 		use_controller_to_login_as(@user4)
-  # 		params = {
-  # 			cached_route: "/forum_threads/#{@thread1.slug}",
-  # 			forum_post: {
-  # 				id: "#{@post1.id}"
-  # 			}
-  # 		}
-  # 		delete "/forum_posts", params
-  # 		expect(last_response.status).to eq(302)
-		# follow_redirect!
-		# expect(last_response.status).to eq(200)
-		# expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
-		# expect(last_response.body).to include("#{@thread1.title}")
-		# expect(last_response.body).to include("#{@post1.content}")
-		# expect(last_response.body).to include("#{@post2.content}")
-		# begin
-		# 	@post = ForumPost.find(@post1.id)
-		# rescue ActiveRecord::RecordNotFound
-		# 	@post = nil
-		# end
-		# expect(@post.id).to eq(@post1.id)
-  	# end
-
   	it "deletes a post's thread and redirects to /forum_threads if the last post of the thread is deleted" do 
   		use_controller_to_login_as(@user4)
   		params = {
