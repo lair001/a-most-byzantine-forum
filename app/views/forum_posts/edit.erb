@@ -1,3 +1,10 @@
+<% error_messages = ""
+	if @post.errors.any?
+		@post.errors.full_messages.each do |error|
+			error_messages += error + "&#13;&#10;"
+		end
+	end
+%>
 <div class="jumbotron text-center shadow">
 	<h2 class="forum-divider-bottom">Editing Post #<%=@post.id%></h2>
 	<h4>Thread: <%=@post.forum_thread.title%></h4>
@@ -6,7 +13,7 @@
 		<input type="hidden" name="_method" value="patch">
 		<div class="form-group">
 			<label for="content">Content:</label>
-			<textarea rows="20" class="form-control forum-textarea" id="content" name="forum_post[content]" type="text"><%=@post.content%></textarea>
+			<textarea rows="20" class="form-control forum-textarea" id="content" name="forum_post[content]" type="text" placeholder="<%=error_messages%>"><%=@post.content%></textarea>
 		</div>
 		<input type="hidden" name="forum_post[id]" value="<%=@post.id%>">
 		<input type="hidden" name="cached_route" value="<%=current_route%>">

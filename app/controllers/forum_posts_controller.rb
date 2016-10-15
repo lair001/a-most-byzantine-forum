@@ -61,7 +61,8 @@ class ForumPostsController < Controller
 			if @post.save
 				redirect "/forum_threads/#{@post.forum_thread.slug}"
 			else
-				cached_route_or_home
+				erb :'forum_posts/edit'
+				# cached_route_or_home
 			end
 		else
 			redirect '/'
