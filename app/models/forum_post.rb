@@ -13,4 +13,8 @@ class ForumPost < ActiveRecord::Base
 		absence_of_forbidden_characters_in :content
 	end
 
+	def content_as_html
+		self.title.gsub(/\t\u2003/, "&emsp;").gsub(/\f\v\n\r/, "<br>")
+	end
+
 end
