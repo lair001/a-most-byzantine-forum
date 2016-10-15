@@ -75,8 +75,11 @@ class ForumThreadsController < Controller
 
 	delete '/forum_threads' do
 		if moderator?
-			@thread = ForumThread.find(params[:forum_thread][:id])
-			redirect '/forum_threads' if @thread.nil?
+			begin
+				@thread = ForumThread.find(params[:forum_thread][:id])
+			rescue ActiveRecord::RecordNotFound
+				redirect '/forum_threads'
+			end
 			@thread.forum_posts.each do |post|
 				post.delete
 			end
@@ -89,8 +92,11 @@ class ForumThreadsController < Controller
 
 	patch '/forum_threads' do
 		if moderator?
-			@thread = ForumThread.find(params[:forum_thread][:id])
-			cached_route_or_home if @thread.nil?
+			begin
+				@thread = ForumThread.find(params[:forum_thread][:id])
+			rescue ActiveRecord::RecordNotFound
+				cached_route_or_home
+			end
 			set_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
 			if @thread.save
 				redirect '/forum_threads'

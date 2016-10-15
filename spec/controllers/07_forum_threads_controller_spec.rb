@@ -259,7 +259,10 @@ describe 'ForumThreadsController' do
 
 		it "redirects to home if logged in as an ordinary user" do
 			use_controller_to_login_as(@user2)
-			params = { forum_thread: { title: "I'm sorry.", forum_thread_id: @thread1.id } }
+			params = {
+				forum_thread: { title: "I'm sorry.", forum_thread_id: @thread1.id },
+				cached_route: "/forum_threads/#{@thread1.slug}/edit"
+			}
 			patch '/forum_threads', params
 			expect_redirect
 		  	expect(last_request.path).to include("/")
@@ -268,7 +271,34 @@ describe 'ForumThreadsController' do
 
 		it "redirects to home if logged in as an administrator without moderator powers" do
 			use_controller_to_login_as(@user4)
-			params = { forum_thread: { title: "I'm sorry.", forum_thread_id: @thread1.id } }
+			params = {
+				forum_thread: { title: "I'm sorry.", forum_thread_id: @thread1.id },
+				cached_route: "/forum_threads/#{@thread1.slug}/edit"
+			}
+			patch '/forum_threads', params
+			expect_redirect
+		  	expect(last_request.path).to include("/")
+			expect(last_response.body).to include("A Most Byzantine Forum")
+		end
+
+		it "redirects to a cached route if a cached route is provided, logged in as a moderator, and attempting to edit a non-existent thread" do
+			use_controller_to_login_as(@user3)
+			params = {
+				forum_thread: { title: "I'm sorry.", forum_thread_id: @thread1.id + 100 },
+				cached_route: "/forum_threads/#{@thread1.slug}/edit"
+			}
+			patch '/forum_threads', params
+			expect_redirect
+		  	expect(last_request.path).to include("/forum_threads/#{@thread1.slug}/edit")
+			expect(last_response.body).to include("Edit")
+			expect(last_response.body).to include("#{@thread1.title}")
+		end
+
+		it "redirects to / if no cached route is provided, logged in as a moderator, and attempting to edit a non-existent thread" do
+			use_controller_to_login_as(@user3)
+			params = {
+				forum_thread: { title: "I'm sorry.", forum_thread_id: @thread1.id + 100 },
+			}
 			patch '/forum_threads', params
 			expect_redirect
 		  	expect(last_request.path).to include("/")
@@ -281,7 +311,7 @@ describe 'ForumThreadsController' do
 
 		it "redirects to home if logged in as an ordinary user" do
 			use_controller_to_login_as(@user2)
-			params = { forum_thread: { title: "I'm sorry.", forum_thread_id: @thread1.id } }
+			params = { forum_thread: { forum_thread_id: @thread1.id } }
 			delete '/forum_threads', params
 			expect_redirect
 		  	expect(last_request.path).to include("/")
@@ -290,11 +320,20 @@ describe 'ForumThreadsController' do
 
 		it "redirects to home if logged in as an administrator without moderator powers" do
 			use_controller_to_login_as(@user4)
-			params = { forum_thread: { title: "I'm sorry.", forum_thread_id: @thread1.id } }
+			params = { forum_thread: { forum_thread_id: @thread1.id } }
 			delete '/forum_threads', params
 			expect_redirect
 		  	expect(last_request.path).to include("/")
 			expect(last_response.body).to include("A Most Byzantine Forum")
+		end
+
+		it "redirects to /forum_threads if logged in as a moderator and attempting to delete a non-existent thread" do
+			use_controller_to_login_as(@user3)
+			params = { forum_thread: { forum_thread_id: @thread1.id + 100 } }
+			delete '/forum_threads', params
+			expect_redirect
+		  	expect(last_request.path).to include("/forum_threads")
+			expect(last_response.body).to include("Threads")
 		end
 
 	end
