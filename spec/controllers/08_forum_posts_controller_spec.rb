@@ -10,8 +10,11 @@ describe 'ForumUsersController' do
 	@user6 = ForumUser.create(username: "zack", email: "zack@zack.com", password: "zack", id: 6)
 
  	@thread1 = ForumThread.create(title: "the worst first", id: 1)
+ 	@thread5 = ForumThread.create(title: "The Great Schism", id: 5)
 
  	@post1 = ForumPost.create(content: "asdf", forum_user_id: 2, forum_thread_id: 1, id: 1)
+ 	@post2 = ForumPost.create(content: "Hal, do you want to be the first to be banned?", forum_user_id: 1, forum_thread_id: 1, id: 2)
+	@post10 = ForumPost.create(content: "I am the first to create an on topic thread.", forum_user_id: 4, forum_thread_id: 5, id: 10)
   end
 
   describe "get '/forum_posts/new/:slug'" do
@@ -59,7 +62,7 @@ describe 'ForumUsersController' do
 
   	it "redirects to /forum_threads if attempting to edit a non-existent post while logged_in" do 
   		use_controller_to_login_as(@user1)
-  		get "/forum_posts/#{@post1.id + 1}/edit"
+  		get "/forum_posts/#{@post1.id + 100}/edit"
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
@@ -217,7 +220,7 @@ describe 'ForumUsersController' do
   				content: "I'm sorry, please don't ban me.",
   				forum_user_id: "2",
   				forum_thread_id: "1",
-  				id: "#{@post1.id + 1}"
+  				id: "#{@post1.id + 100}"
   			}
   		}
   		patch "/forum_posts", params
@@ -236,7 +239,7 @@ describe 'ForumUsersController' do
   				content: "I'm sorry, please don't ban me.",
   				forum_user_id: "2",
   				forum_thread_id: "1",
-  				id: "#{@post1.id + 1}"
+  				id: "#{@post1.id + 100}"
   			}
   		}
   		patch "/forum_posts", params
@@ -378,6 +381,26 @@ describe 'ForumUsersController' do
 		expect(last_response.body).to include("I'm sorry, please don't ban me.")
   	end
 
+  	it "allows moderators to edit the posts of other users" do 
+  		use_controller_to_login_as(@user3)
+  		params = {
+  			cached_route: "/forum_posts/#{@post1.id}/edit",
+  			forum_post: {
+  				content: "Sorry buddy, you're banned!",
+  				forum_user_id: "2",
+  				forum_thread_id: "1",
+  				id: "#{@post1.id}"
+  			}
+  		}
+  		patch "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_response.body).to include("#{@thread1.title}")
+		expect(last_response.body).to include("Sorry buddy, you're banned!")
+  	end
+
   end
 
   describe "delete 'forum_posts'" do
@@ -395,6 +418,12 @@ describe 'ForumUsersController' do
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
 		expect(last_response.body).to include("A Most Byzantine Forum")
+		begin
+			@post = ForumPost.find(@post1.id)
+		rescue ActiveRecord::RecordNotFound
+			@post = nil
+		end
+		expect(@post.id).to eq(@post1.id)
   	end
 
   	it "redirects to cached route if logged in, a cached route is set, and attempting to delete a non-existent post" do 
@@ -402,7 +431,7 @@ describe 'ForumUsersController' do
   		params = {
   			cached_route: "/forum_threads/#{@thread1.slug}",
   			forum_post: {
-  				id: "#{@post1.id + 1}"
+  				id: "#{@post1.id + 100}"
   			}
   		}
   		delete "/forum_posts", params
@@ -418,7 +447,7 @@ describe 'ForumUsersController' do
   		use_controller_to_login_as(@user2)
   		params = {
   			forum_post: {
-  				id: "#{@post1.id + 1}"
+  				id: "#{@post1.id + 100}"
   			}
   		}
   		delete "/forum_posts", params
@@ -444,6 +473,12 @@ describe 'ForumUsersController' do
 		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("#{@post1.content}")
+		begin
+			@post = ForumPost.find(@post1.id)
+		rescue ActiveRecord::RecordNotFound
+			@post = nil
+		end
+		expect(@post.id).to eq(@post1.id)
   	end
 
   	it "redirects to / if logged in as an ordinary user, no cached route is set, and attempting to delete a post that does not belong to the user" do 
@@ -459,6 +494,12 @@ describe 'ForumUsersController' do
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
 		expect(last_response.body).to include("A Most Byzantine Forum")
+		begin
+			@post = ForumPost.find(@post1.id)
+		rescue ActiveRecord::RecordNotFound
+			@post = nil
+		end
+		expect(@post.id).to eq(@post1.id)
   	end
 
   	it "redirects to cached route if logged in as an adminstrator without moderator powers, a cached route is set, and attempting to delete a post that does not belong to the user" do 
@@ -476,6 +517,12 @@ describe 'ForumUsersController' do
 		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("#{@post1.content}")
+		begin
+			@post = ForumPost.find(@post1.id)
+		rescue ActiveRecord::RecordNotFound
+			@post = nil
+		end
+		expect(@post.id).to eq(@post1.id)
   	end
 
   	it "redirects to / if logged in as an adminstrator without moderator powers, no cached route is set, and attempting to delete a post that does not belong to the user" do 
@@ -491,6 +538,132 @@ describe 'ForumUsersController' do
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
 		expect(last_response.body).to include("A Most Byzantine Forum")
+		begin
+			@post = ForumPost.find(@post1.id)
+		rescue ActiveRecord::RecordNotFound
+			@post = nil
+		end
+		expect(@post.id).to eq(@post1.id)
+  	end
+
+  	it "redirects to cached route if a cached routed is provided, the post is successfully deleted and the thread still has posts" do 
+  		use_controller_to_login_as(@user2)
+  		params = {
+  			cached_route: "/forum_threads/#{@thread1.slug}",
+  			forum_post: {
+  				id: "#{@post1.id}"
+  			}
+  		}
+  		delete "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_response.body).to include("#{@thread1.title}")
+		expect(last_response.body).not_to include("#{@post1.content}")
+		expect(last_response.body).to include("#{@post2.content}")
+		begin
+			@post = ForumPost.find(@post1.id)
+		rescue ActiveRecord::RecordNotFound
+			@post = nil
+		end
+		expect(@post).to be(nil)
+  	end
+
+  	it "redirects to / if no cached routed is provided, the post is successfully deleted and the thread still has posts" do 
+  		use_controller_to_login_as(@user2)
+  		params = {
+  			forum_post: {
+  				id: "#{@post1.id}"
+  			}
+  		}
+  		delete "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/")
+		expect(last_response.body).to include("A Most Byzantine Forum")
+		begin
+			@post = ForumPost.find(@post1.id)
+		rescue ActiveRecord::RecordNotFound
+			@post = nil
+		end
+		expect(@post).to be(nil)
+  	end
+
+  	it "allows moderators to delete the posts of other users" do 
+  		use_controller_to_login_as(@user3)
+  		params = {
+  			cached_route: "/forum_threads/#{@thread1.slug}",
+  			forum_post: {
+  				id: "#{@post1.id}"
+  			}
+  		}
+  		delete "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_response.body).to include("#{@thread1.title}")
+		expect(last_response.body).not_to include("#{@post1.content}")
+		expect(last_response.body).to include("#{@post2.content}")
+		begin
+			@post = ForumPost.find(@post1.id)
+		rescue ActiveRecord::RecordNotFound
+			@post = nil
+		end
+		expect(@post).to be(nil)
+  	end
+
+  # 	it "redirects to cached route if a cached route is provided and an adminstrator without moderator powers attempts to delete the post of another user" do 
+  # 		use_controller_to_login_as(@user4)
+  # 		params = {
+  # 			cached_route: "/forum_threads/#{@thread1.slug}",
+  # 			forum_post: {
+  # 				id: "#{@post1.id}"
+  # 			}
+  # 		}
+  # 		delete "/forum_posts", params
+  # 		expect(last_response.status).to eq(302)
+		# follow_redirect!
+		# expect(last_response.status).to eq(200)
+		# expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		# expect(last_response.body).to include("#{@thread1.title}")
+		# expect(last_response.body).to include("#{@post1.content}")
+		# expect(last_response.body).to include("#{@post2.content}")
+		# begin
+		# 	@post = ForumPost.find(@post1.id)
+		# rescue ActiveRecord::RecordNotFound
+		# 	@post = nil
+		# end
+		# expect(@post.id).to eq(@post1.id)
+  	# end
+
+  	it "deletes a post's thread and redirects to /forum_threads if the last post of the thread is deleted" do 
+  		use_controller_to_login_as(@user4)
+  		params = {
+  			forum_post: {
+  				id: "#{@post10.id}"
+  			}
+  		}
+  		delete "/forum_posts", params
+  		expect(last_response.status).to eq(302)
+		follow_redirect!
+		expect(last_response.status).to eq(200)
+		expect(last_request.path).to include("/forum_threads")
+		expect(last_response.body).to include("Threads")
+		begin
+			@post = ForumPost.find(@post10.id)
+		rescue ActiveRecord::RecordNotFound
+			@post = nil
+		end
+		expect(@post).to be(nil)
+		begin
+			@thread = ForumThread.find(@thread5.id)
+		rescue ActiveRecord::RecordNotFound
+			@thread = nil
+		end
+		expect(@thread).to be(nil)
   	end
 
   end
