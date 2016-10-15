@@ -66,7 +66,7 @@ class ForumThreadsController < Controller
 	get '/forum_threads/:slug/edit' do 
 		if logged_in?
 			@thread = ForumThread.find_by_slug(params[:slug])
-			redirect '/forum_threads' if @thread.nil?
+			redirect '/forum_threads' if @thread.nil? || !moderator?
 			erb :'forum_threads/edit'
 		else
 			redirect '/'
