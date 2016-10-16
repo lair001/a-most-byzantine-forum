@@ -27,7 +27,16 @@
 					<a href="/forum_users/<%=user.slug%>">
 						<h3><%=user.username%></h3>
 					</a>
-					<h4><em><%=user.email%></em></h4>
+					<% if user.administrator && user.moderator %>
+						<%= "<h4><em>Superuser</em></h4>" %>
+					<% elsif user.administrator %>
+						<%= "<h4><em>Administrator</em></h4>" %>
+					<% elsif user.moderator %>
+						<%= "<h4><em>Moderator</em></h4>" %>
+					<% else %>
+						<%= "<h4><em>Courtier</em></h4>" %>
+					<% end %>
+					<h5><%=user.email%></h5>
 					<br>
 				</div>
 			</div>
