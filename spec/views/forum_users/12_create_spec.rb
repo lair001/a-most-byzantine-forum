@@ -16,5 +16,10 @@ describe 'forum_users/create' do
   	expect(page).to have_field('forum_user[password]')
   end
 
+  it 'shows errors if user creation is unsuccessful' do
+    visit '/forum_users/new'
+    click_button 'signup'
+    expect(page.first("blockquote footer").text).to eq("The Basileus")
+  end
 
 end

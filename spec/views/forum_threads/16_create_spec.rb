@@ -16,4 +16,11 @@ describe 'forum_threads/create' do
   	expect(page).to have_field('forum_post[content]')
   end
 
+  it 'shows errors if thread creation is unsuccessful' do
+    use_view_to_login_as(@user1)
+    visit '/forum_threads/new'
+    click_button 'create_thread'
+    expect(page.first("blockquote footer").text).to eq("The Basileus")
+  end
+
 end

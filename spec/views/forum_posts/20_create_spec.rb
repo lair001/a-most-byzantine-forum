@@ -21,4 +21,11 @@ describe 'forum_posts/create' do
     expect(page).to have_css("input[type='hidden'][name='cached_route'][value='/forum_posts/new/#{@thread1.slug}']")
   end
 
+  it 'shows errors if post creation is unsuccessful' do
+    use_view_to_login_as(@user1)
+    visit "/forum_posts/new/#{@thread1.slug}"
+    click_button 'create_post'
+    expect(page.first("blockquote footer").text).to eq("The Basileus")
+  end
+
 end
