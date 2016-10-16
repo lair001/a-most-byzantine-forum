@@ -24,7 +24,7 @@ describe 'ForumThreadsController' do
   		it "redirects to / if not logged in" do
 			get '/forum_threads'
 			expect_redirect
-		  	expect(last_request.path).to include("/")
+		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
@@ -32,7 +32,7 @@ describe 'ForumThreadsController' do
 			use_controller_to_login_as(@user1)
 			get "/forum_threads"
 			expect(last_response.status).to eq(200)
-			expect(last_request.path).to include("/forum_threads")
+			expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Threads")
 		end
 
@@ -43,7 +43,7 @@ describe 'ForumThreadsController' do
   		it "redirects to / if not logged in" do
 			get '/forum_threads/new'
 			expect_redirect
-		  	expect(last_request.path).to include("/")
+		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
@@ -51,7 +51,7 @@ describe 'ForumThreadsController' do
 			use_controller_to_login_as(@user1)
 			get "/forum_threads/new"
 			expect(last_response.status).to eq(200)
-			expect(last_request.path).to include("/forum_threads/new")
+			expect(last_request.path).to eq("/forum_threads/new")
 			expect(last_response.body).to include("Create")
 			expect(last_response.body).to include("Thread")
 		end
@@ -63,7 +63,7 @@ describe 'ForumThreadsController' do
 		it 'redirects to / if not logged in' do
 			post '/forum_threads/search'
 			expect_redirect
-		  	expect(last_request.path).to include("/")
+		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
@@ -74,7 +74,7 @@ describe 'ForumThreadsController' do
 		  	}
 			post '/forum_threads/search', params
 			expect_redirect
-		  	expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		  	expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		  	expect(last_response.body).to include("#{@thread1.title}")
 		end
 
@@ -85,7 +85,7 @@ describe 'ForumThreadsController' do
 		  	}
 			post '/forum_threads/search', params
 			expect_redirect
-		  	expect(last_request.path).to include("/forum_threads")
+		  	expect(last_request.path).to eq("/forum_threads")
 		  	expect(last_response.body).to include("Threads")
 		  	expect(last_response.body).to include("Title not found.")
 		end
@@ -97,7 +97,7 @@ describe 'ForumThreadsController' do
 		it "redirects to / if not logged in" do
 			get "/forum_threads/#{@thread1.slug}"
 			expect_redirect
-		  	expect(last_request.path).to include("/")
+		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
@@ -105,7 +105,7 @@ describe 'ForumThreadsController' do
 			use_controller_to_login_as(@user1)
 			get "/forum_threads/weasel-paradise"
 			expect_redirect
-		  	expect(last_request.path).to include("/forum_threads")
+		  	expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Threads")
 		end
 
@@ -113,7 +113,7 @@ describe 'ForumThreadsController' do
 			use_controller_to_login_as(@user1)
 			get "/forum_threads/#{@thread1.slug}"
 		  	expect(last_response.status).to eq(200)
-		  	expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		  	expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 			expect(last_response.body).to include("#{@thread1.title}")
 		end
 
@@ -124,7 +124,7 @@ describe 'ForumThreadsController' do
 		it "redirects to / if not logged in" do
 			get "/forum_threads/#{@thread1.slug}/edit"
 			expect_redirect
-		  	expect(last_request.path).to include("/")
+		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
@@ -132,7 +132,7 @@ describe 'ForumThreadsController' do
 			use_controller_to_login_as(@user2)
 			get "/forum_threads/#{@thread1.slug}/edit"
 			expect_redirect
-		  	expect(last_request.path).to include("/forum_threads")
+		  	expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Threads")
 		end
 
@@ -140,7 +140,7 @@ describe 'ForumThreadsController' do
 			use_controller_to_login_as(@user4)
 			get "/forum_threads/#{@thread1.slug}/edit"
 			expect_redirect
-		  	expect(last_request.path).to include("/forum_threads")
+		  	expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Threads")
 		end
 
@@ -148,7 +148,7 @@ describe 'ForumThreadsController' do
 			use_controller_to_login_as(@user3)
 			get "/forum_threads/weasel-paradise"
 			expect_redirect
-		  	expect(last_request.path).to include("/forum_threads")
+		  	expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Threads")
 		end
 
@@ -156,7 +156,7 @@ describe 'ForumThreadsController' do
 			use_controller_to_login_as(@user3)
 			get "/forum_threads/#{@thread1.slug}/edit"
 		  	expect(last_response.status).to eq(200)
-		  	expect(last_request.path).to include("/forum_threads/#{@thread1.slug}/edit")
+		  	expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}/edit")
 			expect(last_response.body).to include("#{@thread1.title}")
 			expect(last_response.body).to include("Edit")
 		end
@@ -171,7 +171,7 @@ describe 'ForumThreadsController' do
 			}
 			post "/forum_threads", params
 			expect_redirect
-		  	expect(last_request.path).to include("/")
+		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
@@ -183,7 +183,7 @@ describe 'ForumThreadsController' do
 			}
 			post "/forum_threads", params
 			expect(last_response.status).to eq(200)
-			expect(last_request.path).to include("/forum_threads")
+			expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Create")
 			expect(last_response.body).to include("Thread")
 
@@ -209,7 +209,7 @@ describe 'ForumThreadsController' do
 			}
 			post "/forum_threads", params
 			expect(last_response.status).to eq(200)
-			expect(last_request.path).to include("/forum_threads")
+			expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Create")
 			expect(last_response.body).to include("Thread")
 
@@ -248,7 +248,7 @@ describe 'ForumThreadsController' do
 			end
 			expect(@post.forum_thread_id).to eq(@thread.id)
 
-			expect(last_request.path).to include("/forum_threads/#{@thread.slug}")
+			expect(last_request.path).to eq("/forum_threads/#{@thread.slug}")
 			expect(last_response.body).to include("#{@thread.title}")
 			expect(last_response.body).to include("#{@post.content}")
 		end
@@ -265,7 +265,7 @@ describe 'ForumThreadsController' do
 			}
 			patch '/forum_threads', params
 			expect_redirect
-		  	expect(last_request.path).to include("/")
+		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
@@ -277,7 +277,7 @@ describe 'ForumThreadsController' do
 			}
 			patch '/forum_threads', params
 			expect_redirect
-		  	expect(last_request.path).to include("/")
+		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
@@ -289,7 +289,7 @@ describe 'ForumThreadsController' do
 			}
 			patch '/forum_threads', params
 			expect_redirect
-		  	expect(last_request.path).to include("/forum_threads/#{@thread1.slug}/edit")
+		  	expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}/edit")
 			expect(last_response.body).to include("Edit")
 			expect(last_response.body).to include("#{@thread1.title}")
 		end
@@ -301,7 +301,7 @@ describe 'ForumThreadsController' do
 			}
 			patch '/forum_threads', params
 			expect_redirect
-		  	expect(last_request.path).to include("/")
+		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
@@ -313,7 +313,7 @@ describe 'ForumThreadsController' do
 			}
 			patch '/forum_threads', params
 			expect(last_response.status).to eq(200)
-		  	expect(last_request.path).to include("/forum_threads")
+		  	expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Edit")
 		end
 
@@ -336,7 +336,7 @@ describe 'ForumThreadsController' do
 			}
 			patch '/forum_threads', params
 			expect_redirect
-		  	expect(last_request.path).to include("/forum_threads")
+		  	expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Threads")
 		end
 
@@ -349,7 +349,7 @@ describe 'ForumThreadsController' do
 			params = { forum_thread: { id: @thread1.id } }
 			delete '/forum_threads', params
 			expect_redirect
-		  	expect(last_request.path).to include("/")
+		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
@@ -358,7 +358,7 @@ describe 'ForumThreadsController' do
 			params = { forum_thread: { id: @thread1.id } }
 			delete '/forum_threads', params
 			expect_redirect
-		  	expect(last_request.path).to include("/")
+		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
@@ -367,7 +367,7 @@ describe 'ForumThreadsController' do
 			params = { forum_thread: { id: @thread1.id + 100 } }
 			delete '/forum_threads', params
 			expect_redirect
-		  	expect(last_request.path).to include("/forum_threads")
+		  	expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Threads")
 		end
 
@@ -376,7 +376,7 @@ describe 'ForumThreadsController' do
 			params = { forum_thread: { id: @thread1.id } }
 			delete '/forum_threads', params
 			expect_redirect
-			expect(last_request.path).to include("/forum_threads")
+			expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Threads")
 			begin
 				@thread = ForumThread.find_by(title: "#{@thread1.title}")
