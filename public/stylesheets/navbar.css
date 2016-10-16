@@ -16,6 +16,7 @@
 
 #myNavbar a:hover {
 	color: #f0ae0e;
+	background-color: #8D2963;
 }
 
 #myNavbar .dropdown-menu {
@@ -28,14 +29,6 @@
 	background-color: #400125;
 }
 
-#myNavbar .open>a:hover {
-	background-color: #400125;
-}
-
-#myNavbar a:hover {
-	background-color: #8D2963;
-}
-
 .navbar-inverse .submit-btn,
 .navbar-inverse .submit-btn:active {
   color: #B8860B;
@@ -46,8 +39,7 @@
 .navbar-inverse .submit-btn:hover, 
 .navbar-inverse .submit-btn:focus {
   color: #f0ae0e;
-  background-color: transparent;
-  border-color: transparent;
+  background-color: #8D2963;
 }
 
 #brand_image {
