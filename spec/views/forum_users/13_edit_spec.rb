@@ -41,4 +41,14 @@ describe 'forum_users/edit' do
     expect(page).to have_field('forum_user[password]')
   end
 
+  it 'shows errors if user editing is unsuccessful' do
+    use_view_to_login_as(@user4)
+    visit "/forum_users/#{@user2.username}/edit"
+    fill_in("username", with: "⥐")
+    fill_in("password", with: "⥐")
+    fill_in("password", with: "⥐")
+    click_button 'edit_user'
+    expect(page.first("blockquote footer").text).to eq("The Basileus")
+  end
+
 end

@@ -23,4 +23,12 @@ describe 'forum_posts/edit' do
     expect(page).to have_css("input[type='hidden'][name='cached_route'][value='/forum_posts/#{@post1.id}/edit']")
   end
 
+  it 'shows errors if post editing is unsuccessful' do
+    use_view_to_login_as(@user1)
+    visit "/forum_posts/#{@post1.id}/edit"
+    fill_in("content", with: "⥐")
+    click_button 'edit_post'
+    expect(page.first("blockquote footer").text).to eq("The Basileus")
+  end
+
 end

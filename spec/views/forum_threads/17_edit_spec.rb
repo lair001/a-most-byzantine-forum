@@ -19,4 +19,12 @@ describe 'forum_threads/edit' do
     expect(page).to have_css("input[type='hidden'][name='cached_route'][value='/forum_threads/#{@thread1.slug}/edit']")
   end
 
+  it 'shows errors if thread editing is unsuccessful' do
+    use_view_to_login_as(@user1)
+    visit "/forum_threads/#{@thread1.slug}/edit"
+    fill_in("title", with: "⥐")
+    click_button 'edit_thread'
+    expect(page.first("blockquote footer").text).to eq("The Basileus")
+  end
+
 end
