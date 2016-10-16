@@ -3,7 +3,7 @@
 }
 
 .navbar-inverse {
-  color: #B8860B;
+  color: #dda10d;
   background-color: #400125;
   border-bottom: 5px solid #B8860B;
 }
@@ -11,7 +11,7 @@
 #myNavbar a:link,
 #myNavbar a:visited,
 #myNavbar a:active {
-	color: #B8860B;
+	color: #dda10d;
 }
 
 #myNavbar a:hover {
@@ -31,7 +31,7 @@
 
 .navbar-inverse .submit-btn,
 .navbar-inverse .submit-btn:active {
-  color: #B8860B;
+  color: #dda10d;
   background-color: #400125;
   border-color: #400125;
 }
