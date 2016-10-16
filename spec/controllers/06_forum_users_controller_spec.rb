@@ -21,9 +21,7 @@ describe 'ForumUsersController' do
 		it 'redirects to /forum_threads if logged in' do
 			use_controller_to_login_as(@user1)
 			get '/login'
-			expect(last_response.status).to eq(302)
-			follow_redirect!
-			expect(last_response.status).to eq(200)
+			expect_redirect
 			expect(last_request.path).to eq("/forum_threads")
 			expect(last_response.body).to include("Threads")
 		end
@@ -42,9 +40,7 @@ describe 'ForumUsersController' do
 		it 'redirects to /forum_threads if logged in' do
 		  	use_controller_to_login_as(@user1)
 		  	get '/forum_users/new'
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-		  	expect(last_response.status).to eq(200)
+			expect_redirect
 		  	expect(last_request.path).to eq("/forum_threads")
 		  	expect(last_response.body).to include("Threads")
 		end
@@ -55,9 +51,7 @@ describe 'ForumUsersController' do
 
 		it 'redirects to / if not logged in' do 
 			post '/forum_users/search'
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-		  	expect(last_response.status).to eq(200)
+			expect_redirect
 		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
@@ -66,9 +60,7 @@ describe 'ForumUsersController' do
 			use_controller_to_login_as(@user1)
 		  	params = { forum_user: { username: "val" } }
 			post '/forum_users/search', params 
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-		  	expect(last_response.status).to eq(200)
+			expect_redirect
 		  	expect(last_request.path).to eq("/forum_users/val")
 		  	expect(last_response.body).to include("val")
 		end
@@ -77,9 +69,7 @@ describe 'ForumUsersController' do
 			use_controller_to_login_as(@user1)
 			params = { forum_user: { username: "billy" } }
 			post '/forum_users/search', params 
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-		  	expect(last_response.status).to eq(200)
+			expect_redirect
 		  	expect(last_request.path).to eq("/forum_users")
 		  	expect(last_response.body).to include("Users")
 		  	expect(last_response.body).to include("Username not found.")
@@ -99,9 +89,7 @@ describe 'ForumUsersController' do
 
 		it "redirects to /forum_threads if login succeeds" do
 			use_controller_to_login_as(@user1)
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-			expect(last_response.status).to eq(200)
+			expect_redirect
 			expect(last_request.path).to eq("/forum_threads")
 		  	expect(last_response.body).to include("Threads")
 		end
@@ -121,9 +109,7 @@ describe 'ForumUsersController' do
 		it 'redirects to /forum_threads if it creates a new user' do
 			params = { forum_user: { username: "willy", email: "willy@willy.com", password: "willy" } }
 			post '/forum_users', params
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-		  	expect(last_response.status).to eq(200)
+			expect_redirect
 		  	expect(last_request.path).to eq("/forum_threads")
 		  	expect(last_response.body).to include("Threads")
 		  	expect(ForumUser.find_by_slug("willy").username).to eq("willy")
@@ -135,9 +121,7 @@ describe 'ForumUsersController' do
 
 		it "redirects to '/' in not logged in" do 
 			get '/logout' 
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-		  	expect(last_response.status).to eq(200)
+			expect_redirect
 		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 			expect(last_response.body).to include("Sign Up")
@@ -147,9 +131,7 @@ describe 'ForumUsersController' do
 		it "redirects to '/' and logs out if logged in" do
 			use_controller_to_login_as(@user1)
 			get '/logout' 
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-		  	expect(last_response.status).to eq(200)
+			expect_redirect
 		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 			expect(last_response.body).to include("Sign Up")
@@ -162,9 +144,7 @@ describe 'ForumUsersController' do
 
 		it 'redirects to / if not logged in' do 
 			get '/forum_users'
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-		  	expect(last_response.status).to eq(200)
+			expect_redirect
 		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
@@ -183,9 +163,7 @@ describe 'ForumUsersController' do
 
 		it 'redirects to / if not logged in' do 
 			get '/forum_users/val'
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-		  	expect(last_response.status).to eq(200)
+			expect_redirect
 		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
@@ -204,9 +182,7 @@ describe 'ForumUsersController' do
 
 		it 'redirects to / if not logged in' do 
 			get '/forum_users/val/edit'
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-		  	expect(last_response.status).to eq(200)
+			expect_redirect
 		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
@@ -214,9 +190,7 @@ describe 'ForumUsersController' do
 		it "redirects to / if accessing another user's edit page when not an administrator" do 
 			use_controller_to_login_as(@user3)
 			get '/forum_users/val/edit'
-			expect(last_response.status).to eq(302)
-		  	follow_redirect!
-		  	expect(last_response.status).to eq(200)
+			expect_redirect
 		  	expect(last_request.path).to eq("/")
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
@@ -241,9 +215,7 @@ describe 'ForumUsersController' do
 
 			it 'redirects to / if not logged in' do 
 				patch '/forum_users'
-				expect(last_response.status).to eq(302)
-			  	follow_redirect!
-			  	expect(last_response.status).to eq(200)
+				expect_redirect
 			  	expect(last_request.path).to eq("/")
 				expect(last_response.body).to include("Chat About All Things Roman")
 			end
@@ -256,9 +228,7 @@ describe 'ForumUsersController' do
 		  		post '/login', params
 		  		params = { forum_user: { id: @user.id, email: "frank@gmail.com" } }
 		  		patch '/forum_users', params 
-		  		expect(last_response.status).to eq(302)
-			  	follow_redirect!
-			  	expect(last_response.status).to eq(200)
+		  		expect_redirect
 			  	expect(last_request.path).to eq("/forum_users")
 				expect(last_response.body).to include("Users")
 			end
@@ -267,9 +237,7 @@ describe 'ForumUsersController' do
 				use_controller_to_login_as(@user1)
 		  		params = { cached_route: '/C9P', forum_user: { id: "255", email: "frank@gmail.com" } }
 		  		patch '/forum_users', params 
-		  		expect(last_response.status).to eq(302)
-			  	follow_redirect!
-			  	expect(last_response.status).to eq(200)
+		  		expect_redirect
 			  	expect(last_request.path).to eq("/C9P")
 				expect(last_response.body).to include("Constantine XI Palaiologos")
 			end
@@ -278,9 +246,7 @@ describe 'ForumUsersController' do
 				use_controller_to_login_as(@user1)
 		  		params = { forum_user: { id: "255", email: "frank@gmail.com" } }
 		  		patch '/forum_users', params 
-		  		expect(last_response.status).to eq(302)
-			  	follow_redirect!
-			  	expect(last_response.status).to eq(200)
+		  		expect_redirect
 			  	expect(last_request.path).to eq("/")
 				expect(last_response.body).to include("Chat About All Things Roman")
 			end
