@@ -7,7 +7,7 @@
 			<div class="row" id="<%=post.id%>">
 				<% if post.forum_user != current_user %>
 					<form method="get" action="/forum_posts/new/<%=@thread.slug%>" class=" quarter-width center-block top-margin-10px">
-					<input type="hidden" name="cached_post" value="<blockquote class='quote'>&#13;&#10;<%=post.content%>&#13;&#10;<footer><cite class='citation'><%=post.forum_user.username%> @ <%=format_time(post.updated_at)%></cite></footer></blockquote>&#13;&#10;&#13;&#10;">
+					<input type="hidden" name="cached_post" value="<blockquote class='quote inline-block'>&#13;&#10;<%=post.content%>&#13;&#10;<footer><cite class='citation'><%=post.forum_user.username%> @ <%=format_time(post.updated_at)%></cite></footer></blockquote>&#13;&#10;&#13;&#10;">
 					<button type="submit" id="quote" class="btn btn-primary btn-forum shadow">
 						<i class="fa fa-quote-left"></i> Quote
 		 			</button>
@@ -26,7 +26,7 @@
 				</div>
 				<div class="col-xs-8">
 					<br>
-					<p><%=post.content_as_html%></p>
+					<div id="post_content"><%=post.content_as_html%></div>
 					<br>
 				</div>
 			</div>
