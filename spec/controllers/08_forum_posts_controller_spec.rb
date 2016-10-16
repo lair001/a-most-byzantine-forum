@@ -24,7 +24,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
@@ -34,7 +34,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads")
+		expect(last_request.path).to eq("/forum_threads")
 		expect(last_response.body).to include("Threads")
   	end
 
@@ -42,7 +42,7 @@ describe 'ForumUsersController' do
   		use_controller_to_login_as(@user1)
   		get "/forum_posts/new/#{@thread1.slug}"
   		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_posts/new/#{@thread1.slug}")
+		expect(last_request.path).to eq("/forum_posts/new/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Posting")
   	end
@@ -56,7 +56,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
@@ -66,7 +66,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads")
+		expect(last_request.path).to eq("/forum_threads")
 		expect(last_response.body).to include("Threads")
   	end
 
@@ -74,7 +74,7 @@ describe 'ForumUsersController' do
   		use_controller_to_login_as(@user3)
   		get "/forum_posts/#{@post1.id}/edit"
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_posts/#{@post1.id}/edit")
+		expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
 		expect(last_response.body).to include("#{@post1.id}")
 		expect(last_response.body).to include("Editing")
   	end
@@ -83,7 +83,7 @@ describe 'ForumUsersController' do
   		use_controller_to_login_as(@user2)
   		get "/forum_posts/#{@post1.id}/edit"
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_posts/#{@post1.id}/edit")
+		expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
 		expect(last_response.body).to include("#{@post1.id}")
 		expect(last_response.body).to include("Editing")
   	end
@@ -94,7 +94,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads")
+		expect(last_request.path).to eq("/forum_threads")
 		expect(last_response.body).to include("Threads")
   	end
 
@@ -115,7 +115,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
@@ -130,7 +130,7 @@ describe 'ForumUsersController' do
   		}
   		post "/forum_posts", params
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_posts")
+		expect(last_request.path).to eq("/forum_posts")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Posting")
   	end
@@ -145,7 +145,7 @@ describe 'ForumUsersController' do
   		}
   		post "/forum_posts", params
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_posts")
+		expect(last_request.path).to eq("/forum_posts")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Posting")
   	end
@@ -164,7 +164,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Please don't ban me!")
   	end
@@ -183,8 +183,9 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads")
-		expect(last_response.body).to include("Threads")
+		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
+		expect(last_response.body).to include("#{@thread1.title}")
+		expect(last_response.body).to include("Please don't ban me!")
   	end
 
   end
@@ -205,7 +206,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
@@ -224,7 +225,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_posts/#{@post1.id}/edit")
+		expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
 		expect(last_response.body).to include("#{@post1.id}")
 		expect(last_response.body).to include("Editing")
   	end
@@ -243,7 +244,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
@@ -262,7 +263,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_posts/new/#{@thread1.slug}")
+		expect(last_request.path).to eq("/forum_posts/new/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Posting")
   	end
@@ -281,7 +282,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
@@ -300,7 +301,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_posts/new/#{@thread1.slug}")
+		expect(last_request.path).to eq("/forum_posts/new/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Posting")
   	end
@@ -319,7 +320,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
@@ -371,7 +372,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("I'm sorry, please don't ban me.")
   	end
@@ -391,7 +392,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Sorry buddy, you're banned!")
   	end
@@ -411,7 +412,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
 			@post = ForumPost.find(@post1.id)
@@ -433,7 +434,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("#{@post1.content}")
   	end
@@ -449,7 +450,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
@@ -465,7 +466,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("#{@post1.content}")
 		begin
@@ -487,7 +488,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
 			@post = ForumPost.find(@post1.id)
@@ -509,7 +510,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("#{@post1.content}")
 		begin
@@ -531,7 +532,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
 			@post = ForumPost.find(@post1.id)
@@ -553,7 +554,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).not_to include("#{@post1.content}")
 		expect(last_response.body).to include("#{@post2.content}")
@@ -576,7 +577,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
+		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
 			@post = ForumPost.find(@post1.id)
@@ -598,7 +599,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads/#{@thread1.slug}")
+		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).not_to include("#{@post1.content}")
 		expect(last_response.body).to include("#{@post2.content}")
@@ -621,7 +622,7 @@ describe 'ForumUsersController' do
   		expect(last_response.status).to eq(302)
 		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/forum_threads")
+		expect(last_request.path).to eq("/forum_threads")
 		expect(last_response.body).to include("Threads")
 		begin
 			@post = ForumPost.find(@post10.id)
