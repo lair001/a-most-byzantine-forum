@@ -39,7 +39,7 @@ class ForumUsersController < Controller
 		end
 		if @user && !@user.banned && @user.authenticate(params[:forum_user][:password])
 			session[:forum_user_id] = @user.id
-			@post.forum_user.update(updated_at: Time.now)
+			@user.update(updated_at: Time.now)
 			redirect '/forum_threads'
 		else
 			if @user.nil?
