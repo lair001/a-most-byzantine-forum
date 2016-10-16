@@ -21,10 +21,21 @@
 		<% end %>
 	<% end %>
 	<h1><%=@user.username%></h1>
-	<h2><em><%=@user.email%></em></h2>
+	<% if @user.administrator && @user.moderator %>
+		<%= "<h2><em>Superuser</em></h2>" %>
+	<% elsif @user.administrator %>
+		<%= "<h2><em>Administrator</em></h2>" %>
+	<% elsif @user.moderator %>
+		<%= "<h2><em>Moderator</em></h2>" %>
+	<% else %>
+		<%= "<h2><em>Courtier</em></h2>" %>
+	<% end %>
+	<h3>Last Seen: <%=format_time(@user.updated_at)%></h3>
+	<h3>Joined: <%=format_time(@user.created_at)%></h3>
+	<h3><%=@user.email%></h3>
 	<% if administrator? || @user == current_user %>
 		<a href="/forum_users/<%=@user.slug%>/edit">
-			<button type="submit" id="edit" class="btn btn-primary btn-forum quarter-width top-margin-40px shadow">
+			<button type="submit" id="edit" class="btn btn-primary btn-forum quarter-width top-margin-20px shadow">
 			<i class="fa fa-pencil-square-o"></i> Edit
 			</button>
 		</a>
