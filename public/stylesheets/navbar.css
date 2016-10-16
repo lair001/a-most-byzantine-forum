@@ -20,7 +20,20 @@
 
 #myNavbar .dropdown-menu {
 	background-color: #66023C;
+	border-radius: 5px;
 	border: 5px solid #B8860B;
+}
+
+#myNavbar .open>a {
+	background-color: #400125;
+}
+
+#myNavbar .open>a:hover {
+	background-color: #400125;
+}
+
+#myNavbar a:hover {
+	background-color: #8D2963;
 }
 
 .navbar-inverse .submit-btn,
