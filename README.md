@@ -42,9 +42,9 @@ The bottom of the profile page includes a listing of the user's posts.  This lis
 
 For security reasons, it is only possible to set adminstrator and moderator permissions through `Tux` or a database editor.  To do it with `Tux`, navigate to the directory where the respository is cloned and run `tux`.  This takes you to Tux's command line.  
 
-To set moderator permissions, run `ForumUser.find_by(username: [username]).moderator = true`.  To remove moderator permissions, run `ForumUser.find_by(username: [username]).moderator = false`.
+To set moderator permissions, run `ForumUser.find_by(username: "[username]").update(moderator: true)`.  To remove moderator permissions, run `ForumUser.find_by(username: "[username]").update(moderator: false)`.
 
-To set administrator permissions, run `ForumUser.find_by(username: [username]).administrator = true`.  To remove moderator permissions, run `ForumUser.find_by(username: [username]).administrator = false`.
+To set administrator permissions, run `ForumUser.find_by(username: "[username]").update(administrator: true)`.  To remove moderator permissions, run `ForumUser.find_by(username: "[username]").update(administrator: false)`.
 
 For example, `ForumUser.find_by(username: "The One").moderator = true` will grant moderator permissions to the user whose username is `The One`.
 
