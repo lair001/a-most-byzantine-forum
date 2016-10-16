@@ -41,6 +41,7 @@ class ForumThreadsController < Controller
 				set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id"])
 				@post.forum_thread = @thread 
 				if @post.save 
+					@post.forum_user.update(updated_at: Time.now)
 					redirect "/forum_threads/#{@thread.slug}"
 				else
 					@current_route = "/forum_threads/new"
@@ -112,6 +113,7 @@ class ForumThreadsController < Controller
 			end
 			set_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
 			if @thread.save
+				current_user.update(updated_at: Time.now)
 				redirect '/forum_threads'
 			else
 				@current_route = "/forum_threads/#{@thread.slug}/edit"
