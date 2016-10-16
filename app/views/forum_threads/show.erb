@@ -2,10 +2,11 @@
 	<h1><%=@thread.title%></h1>
 </div>
 <div class="jumbotron shadow">
-	<% @thread_posts.each do |post| %>
+	<% @thread_posts.each do |post|
+		user = post.forum_user %>
 		<div class="forum-divider-top clearfix <%="forum-divider-bottom" if post == @thread_posts.last%>">
 			<div class="row" id="<%=post.id%>">
-				<% if post.forum_user != current_user %>
+				<% if user != current_user %>
 					<form method="get" action="/forum_posts/new/<%=@thread.slug%>" class=" quarter-width center-block top-margin-10px">
 					<input type="hidden" name="cached_post" value="<blockquote class='quote inline-block'>&#13;&#10;<%=post.content%>&#13;&#10;<footer><cite class='citation'><%=post.forum_user.username%> @ <%=format_time(post.updated_at)%></cite></footer></blockquote>&#13;&#10;&#13;&#10;">
 					<button type="submit" id="quote" class="btn btn-primary btn-forum shadow">
@@ -16,12 +17,21 @@
 				<div class="col-xs-4">
 					<br>
 					<a href="/forum_users/<%=post.forum_user.slug%>">
-						<h3><%=post.forum_user.username%></h3>
+						<h3><%=user.username%></h3>
 					</a>
-					<h4>Updated:</h4>
-					<h5><%=format_time(post.updated_at)%></h5>
-					<h4>Created:</h4>
-					<h5><%=format_time(post.created_at)%></h5>
+					<% if user.administrator && user.moderator %>
+						<%= "<h4><em>Superuser</em></h4>" %>
+					<% elsif user.administrator %>
+						<%= "<h4><em>Administrator</em></h4>" %>
+					<% elsif user.moderator %>
+						<%= "<h4><em>Moderator</em></h4>" %>
+					<% else %>
+						<%= "<h4><em>Courtier</em></h4>" %>
+					<% end %>
+					<h5>Updated:</h5>
+					<h6><%=format_time(post.updated_at)%></h6>
+					<h5>Created:</h5>
+					<h6><%=format_time(post.created_at)%></h6>
 					<br>
 				</div>
 				<div class="col-xs-8">
@@ -30,7 +40,7 @@
 					<br>
 				</div>
 			</div>
-			<% if moderator? || post.forum_user == current_user %>
+			<% if moderator? || user == current_user %>
 				<a href="/forum_posts/<%=post.id%>/edit">
 				<button type="submit" id="edit" class="btn btn-primary btn-forum pull-right quarter-width shadow">
 					<i class="fa fa-pencil-square-o"></i> Edit
