@@ -46,7 +46,7 @@ To set moderator permissions, run `ForumUser.find_by(username: "[username]").upd
 
 To set administrator permissions, run `ForumUser.find_by(username: "[username]").update(administrator: true)`.  To remove moderator permissions, run `ForumUser.find_by(username: "[username]").update(administrator: false)`.
 
-For example, `ForumUser.find_by(username: "The One").moderator = true` will grant moderator permissions to the user whose username is `The One`.
+For example, `ForumUser.find_by(username: "The One").update(moderator: true)`will grant moderator permissions to the user whose username is `The One`.
 
 You may exit the `Tux` command line by running `exit`.
 
