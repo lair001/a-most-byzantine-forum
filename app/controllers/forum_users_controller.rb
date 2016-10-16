@@ -33,7 +33,7 @@ class ForumUsersController < Controller
 
 	post '/login' do
 		begin
-		@user = ForumUser.find_by(trim_whitespace({username: params[:forum_user][:username]}, [:username]))
+			@user = ForumUser.find_by(trim_whitespace({username: params[:forum_user][:username]}, [:username]))
 		rescue ActiveRecord::RecordNotFound 
 			@user = nil
 		end

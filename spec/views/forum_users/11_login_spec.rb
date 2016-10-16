@@ -16,5 +16,11 @@ describe 'forum_users/login' do
   	expect(page).to have_field('forum_user[password]')
   end
 
+  it 'shows errors if login is unsuccessful' do
+    visit '/login'
+    click_button 'login'
+    expect(page.first("blockquote footer").text).to eq("The Basileus")
+  end
+
 
 end
