@@ -120,20 +120,36 @@ describe 'Helpable' do
 			@user5 = ForumUser.create(username: "phil", email: "phil@phil.com", password: "phil", moderator: true, administrator: true, id: 5)
 			attr_hash = { username: "bill", email: "bill@bill.com", password: "bill", banned: true }
 			settable_attr_array = ["username", "email", "password"]
-			@helper1.set_attributes(@user1, attr_hash, settable_attr_array)
-			expect(@user1.username).to eq("bill")
-			expect(@user1.email).to eq("bill@bill.com")
-			expect(@user1.password).to eq("bill")
-			expect(@user1.banned).to eq(false)
+			@helper1.set_attributes(@user5, attr_hash, settable_attr_array)
+			expect(@user5.username).to eq("bill")
+			expect(@user5.email).to eq("bill@bill.com")
+			expect(@user5.password).to eq("bill")
+			expect(@user5.banned).to eq(false)
 			attr_hash = { username: "will", email: "will@will.com", password: "will", banned: true }
 			settable_attr_array = [:email, :password, :banned]
-			@helper1.set_attributes(@user1, attr_hash, settable_attr_array)
-			expect(@user1.username).to eq("bill")
-			expect(@user1.email).to eq("will@will.com")
-			expect(@user1.password).to eq("will")
-			expect(@user1.banned).to eq(true)
+			@helper1.set_attributes(@user5, attr_hash, settable_attr_array)
+			expect(@user5.username).to eq("bill")
+			expect(@user5.email).to eq("will@will.com")
+			expect(@user5.password).to eq("will")
+			expect(@user5.banned).to eq(true)
 		end
 
+	end
+
+	describe "#set_and_save_attributes" do 
+
+		it "it sets attributes of an object that are permitted to be set using values in a hash and then persists the altered object to the database" do
+			@user5 = ForumUser.create(username: "phil", email: "phil@phil.com", password: "phil", moderator: true, administrator: true, id: 5)
+			attr_hash = { username: "bill", email: "bill@bill.com", password: "bill", banned: true }
+			settable_attr_array = ["username", "email", "password"]
+			@helper1.set_and_save_attributes(@user5, attr_hash, settable_attr_array)
+			expect(@user5.username).to eq("bill")
+			expect(@user5.email).to eq("bill@bill.com")
+			expect(@user5.password).to eq("bill")
+			expect(@user5.banned).to eq(false)
+			@user6 = ForumUser.find_by(username: "bill")
+			expect(@user6.id).to eq(@user5.id)
+		end
 	end
 
 	describe '#sort_users' do 

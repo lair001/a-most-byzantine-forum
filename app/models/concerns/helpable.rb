@@ -46,6 +46,11 @@ module Helpable
 		end
 	end
 
+	def set_and_save_attributes(object, attr_hash, settable_attr_array)
+		set_attributes(object, attr_hash, settable_attr_array)
+		object.save
+	end
+
 	def cached_route_or_home
 		params[:cached_route].nil? ? redirect('/') : redirect("#{params[:cached_route]}")
 	end
