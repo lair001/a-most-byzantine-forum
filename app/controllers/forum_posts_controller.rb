@@ -31,8 +31,7 @@ class ForumPostsController < Controller
 	post '/forum_posts' do
 		if logged_in?
 			@post = ForumPost.new
-			set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id", "forum_thread_id"])
-			if @post.save
+			if set_and_save_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id", "forum_thread_id"])
 				@post.forum_user.update(updated_at: Time.now)
 				@post.forum_thread.update(updated_at: Time.now)
 				if params[:cached_route]
@@ -60,8 +59,7 @@ class ForumPostsController < Controller
 				cached_route_or_home
 			end
 			cached_route_or_home if @post.forum_user != current_user && !moderator?
-			set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content"])
-			if @post.save
+			if set_and_save_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content"])
 				@post.forum_user.update(updated_at: Time.now)
 				@post.forum_thread.update(updated_at: Time.now)
 				redirect "/forum_threads/#{@post.forum_thread.slug}"

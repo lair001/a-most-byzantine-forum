@@ -150,6 +150,7 @@ describe 'Helpable' do
 			@user6 = ForumUser.find_by(username: "bill")
 			expect(@user6.id).to eq(@user5.id)
 		end
+		
 	end
 
 	describe '#sort_users' do 
