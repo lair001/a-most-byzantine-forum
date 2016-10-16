@@ -25,7 +25,7 @@ describe 'ForumThreadsController' do
 			get '/forum_threads'
 			expect_redirect
 		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
 		it "renders forum_threads/index view if logged in" do
@@ -44,7 +44,7 @@ describe 'ForumThreadsController' do
 			get '/forum_threads/new'
 			expect_redirect
 		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
 		it "renders forum_threads/new view if logged in" do
@@ -64,7 +64,7 @@ describe 'ForumThreadsController' do
 			post '/forum_threads/search'
 			expect_redirect
 		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
 		it "redirects to the thread's posts page if logged in and title is found" do
@@ -98,7 +98,7 @@ describe 'ForumThreadsController' do
 			get "/forum_threads/#{@thread1.slug}"
 			expect_redirect
 		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
 		it "redirects to /forum_threads if logged in and thread does not exist" do
@@ -125,7 +125,7 @@ describe 'ForumThreadsController' do
 			get "/forum_threads/#{@thread1.slug}/edit"
 			expect_redirect
 		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
 		it "redirects to /forum_threads if logged in as an ordinary user" do
@@ -172,7 +172,7 @@ describe 'ForumThreadsController' do
 			post "/forum_threads", params
 			expect_redirect
 		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
 		it "renders forum_threads/create without persisting a thread or a post if logged in and thread fails to save to database" do 
@@ -266,7 +266,7 @@ describe 'ForumThreadsController' do
 			patch '/forum_threads', params
 			expect_redirect
 		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
 		it "redirects to home if logged in as an administrator without moderator powers" do
@@ -278,7 +278,7 @@ describe 'ForumThreadsController' do
 			patch '/forum_threads', params
 			expect_redirect
 		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
 		it "redirects to a cached route if a cached route is provided, logged in as a moderator, and attempting to edit a non-existent thread" do
@@ -302,7 +302,7 @@ describe 'ForumThreadsController' do
 			patch '/forum_threads', params
 			expect_redirect
 		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
 		it "renders forum_threads/edit if a cached route is provided, logged in as a moderator, and the thread fails to save to the database." do
@@ -317,15 +317,15 @@ describe 'ForumThreadsController' do
 			expect(last_response.body).to include("Edit")
 		end
 
-		it "redirects to / if no cached route is provided, logged in as a moderator, and the thread fails to save to the database." do
+		it "renders forum_threads/edit / if no cached route is provided, logged in as a moderator, and the thread fails to save to the database." do
 			use_controller_to_login_as(@user3)
 			params = {
 				forum_thread: { title: "the\vworst\tfirst", id: @thread1.id  }
 			}
 			patch '/forum_threads', params
 			expect(last_response.status).to eq(200)
-		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+		  	expect(last_request.path).to eq("/forum_threads")
+			expect(last_response.body).to include("Edit")
 		end
 
 		it "redirects to a /forum_threads if logged in as a moderator and the thread successfully saves to the database." do
@@ -350,7 +350,7 @@ describe 'ForumThreadsController' do
 			delete '/forum_threads', params
 			expect_redirect
 		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
 		it "redirects to home if logged in as an administrator without moderator powers" do
@@ -359,7 +359,7 @@ describe 'ForumThreadsController' do
 			delete '/forum_threads', params
 			expect_redirect
 		  	expect(last_request.path).to include("/")
-			expect(last_response.body).to include("A Most Byzantine Forum")
+			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
 		it "redirects to /forum_threads if logged in as a moderator and attempting to delete a non-existent thread" do

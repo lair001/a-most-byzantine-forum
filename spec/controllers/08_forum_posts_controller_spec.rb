@@ -25,7 +25,7 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to /forum_threads if attempting to post to a non-existent thread while logged in" do 
@@ -57,7 +57,7 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to /forum_threads if attempting to edit a non-existent post while logged_in" do 
@@ -116,7 +116,7 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "renders forum_posts/create if logged in, a cached route is set, and the new post fails to save to the database" do 
@@ -206,7 +206,7 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to cached route if logged in, a cached route is set, and attempting to edit a non-existent post" do 
@@ -244,7 +244,7 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to cached route if logged in as an ordinary user, a cached route is set, and attempting to edit a post that does not belong to the user" do 
@@ -282,7 +282,7 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to cached route if logged in as an adminstrator without moderator powers, a cached route is set, and attempting to edit a post that does not belong to the user" do 
@@ -320,42 +320,40 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
-  	it "redirects to cached route if logged in, a cached route is provided, and the post fails to save to the database" do 
+  	it "renders forum_posts/edit if logged in, a cached route is provided, and the post fails to save to the database" do 
   		use_controller_to_login_as(@user2)
   		params = {
   			cached_route: "/forum_posts/#{@post1.id}/edit",
   			forum_post: {
-  				content: "I'm sorry, please don't ban me.",
+  				content: "I'm⥐sorry, please don't ban me.",
   				forum_user_id: "2",
   				id: "#{@post1.id}"
   			}
   		}
   		patch "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_request.path).to eq("/forum_posts")
+		expect(last_response.body).to include("Edit")
+		expect(last_response.body).to include("#{@post1.id}")
   	end
 
-  	it "redirects to home if logged in, no cached route is provided, and the post fails to save to the database" do 
+  	it "forum_posts/edit if logged in, no cached route is provided, and the post fails to save to the database" do 
   		use_controller_to_login_as(@user2)
   		params = {
   			forum_post: {
-  				content: "I'm sorry, please don't ban me.",
+  				content: "I'm⥐sorry, please don't ban me.",
   				forum_user_id: "2",
   				id: "#{@post1.id}"
   			}
   		}
   		patch "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_request.path).to eq("/forum_posts")
+		expect(last_response.body).to include("Edit")
+		expect(last_response.body).to include("#{@post1.id}")
   	end
 
   	it "redirects to the show page of the edited post's thread if the post is successfully saved" do 
@@ -414,7 +412,7 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
 			@post = ForumPost.find(@post1.id)
 		rescue ActiveRecord::RecordNotFound
@@ -452,7 +450,7 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to cached route if logged in as an ordinary user, a cached route is set, and attempting to delete a post that does not belong to the user" do 
@@ -490,7 +488,7 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
 			@post = ForumPost.find(@post1.id)
 		rescue ActiveRecord::RecordNotFound
@@ -534,7 +532,7 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
 			@post = ForumPost.find(@post1.id)
 		rescue ActiveRecord::RecordNotFound
@@ -579,7 +577,7 @@ describe 'ForumUsersController' do
 		follow_redirect!
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to include("/")
-		expect(last_response.body).to include("A Most Byzantine Forum")
+		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
 			@post = ForumPost.find(@post1.id)
 		rescue ActiveRecord::RecordNotFound
