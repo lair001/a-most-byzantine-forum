@@ -1,17 +1,19 @@
 .btn-forum,
 .btn-forum:active {
-  background-color: #222;
-  border-color: #222;
-  color: #9d9d9d;
+  background-color: #400125;
+  border-color: #B8860B;
+  color: #B8860B;
   width: 100%;
+  border-width: 3px;
+  border-radius: 5px;
   margin-bottom: 5px;
 }
 
 .btn-forum:hover,
 .btn-forum:focus {
-  background-color: #222;
-  border-color: #222;
-  color: #fff;
+  background-color: #400125;
+  border-color: #B8860B;
+  color: #f0ae0e;
 }
 
 .forum-divider-bottom {
@@ -30,7 +32,7 @@
 .forum-input:focus {
   background-color: #8D2963;
   border-width: 3px;
-  border-radius: px;
+  border-radius: 5px;
   border-color: #B8860B;
   color: #dda10d;
   box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.2);
