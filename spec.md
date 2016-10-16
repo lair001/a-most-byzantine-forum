@@ -57,6 +57,7 @@ Specs:
         end
 
 - [x] Display validation failures to user with error message (example form URL e.g. /posts/new)
+      Error messages are shown at the bottom of every form.
 - [x] Your README.md includes a short description, install instructions, a contributors guide and a link to the license for your code
 
 Confirm
