@@ -98,6 +98,7 @@ class ForumThreadsController < Controller
 				end
 			end
 			@thread.delete
+			current_user.update(updated_at: Time.now)
 			redirect '/forum_threads'
 		else
 			redirect '/'

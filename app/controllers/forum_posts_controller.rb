@@ -85,6 +85,7 @@ class ForumPostsController < Controller
 			cached_route_or_home if @post.forum_user != current_user && !moderator?
 			@thread = @post.forum_thread
 			@post.delete
+			current_user.update(updated_at: Time.now)
 			if @thread.forum_posts.count == 0
 				@thread.delete
 				redirect '/forum_threads'
