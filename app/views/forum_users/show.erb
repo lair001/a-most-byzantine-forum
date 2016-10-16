@@ -47,7 +47,7 @@
 				<div class="col-xs-8">
 					<br>
 					<a href="/forum_threads/<%=post.forum_thread.slug%>#<%=post.id%>"><h3 class="text-center"><%=post.forum_thread.title%></h3></a>
-					<p><%=post.content%></p>
+					<div id="post_content"><%=post.content_as_html%></p></div>
 					<br>
 				</div>
 			</div>
