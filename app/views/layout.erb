@@ -109,8 +109,13 @@
       </div>
     </div>
 
+    
     <script src='/javascripts/jquery-2.2.4.min.js'></script>
     <script src='/javascripts/bootstrap.min.js'></script>
+    <% if current_route.match(/\/(forum_posts\/(\d)+\/edit|forum_(posts|threads)\/new)/) %>
+      <script src='/javascripts/taboverride.min.js'></script>
+      <script src='/javascripts/enable-taboverride.js'></script>
+    <% end %>
 
   </body>
 </html>
