@@ -21,9 +21,7 @@ describe 'ForumUsersController' do
 
   	it "redirects to / if not logged in" do
   		get "/forum_posts/new/#{@thread1.slug}"
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
@@ -31,9 +29,7 @@ describe 'ForumUsersController' do
   	it "redirects to /forum_threads if attempting to post to a non-existent thread while logged in" do 
   		use_controller_to_login_as(@user1)
   		get "/forum_posts/new/alexander-great"
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads")
 		expect(last_response.body).to include("Threads")
   	end
@@ -53,9 +49,7 @@ describe 'ForumUsersController' do
 
   	it "redirects to / if not logged in" do 
   		get "/forum_posts/#{@post1.id}/edit"
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
@@ -63,9 +57,7 @@ describe 'ForumUsersController' do
   	it "redirects to /forum_threads if attempting to edit a non-existent post while logged_in" do 
   		use_controller_to_login_as(@user1)
   		get "/forum_posts/#{@post1.id + 100}/edit"
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads")
 		expect(last_response.body).to include("Threads")
   	end
@@ -91,9 +83,7 @@ describe 'ForumUsersController' do
   	it "redirects to /forum_threads if attempting to edit an existent post while logged in as an adminstrator without moderator powers if the post does not belong to the user" do 
   		use_controller_to_login_as(@user4)
   		get "/forum_posts/#{@post1.id}/edit"
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads")
 		expect(last_response.body).to include("Threads")
   	end
@@ -112,9 +102,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		post "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
@@ -161,9 +149,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		post "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Please don't ban me!")
@@ -180,9 +166,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		post "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Please don't ban me!")
@@ -203,9 +187,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		patch "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
@@ -222,9 +204,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		patch "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
 		expect(last_response.body).to include("#{@post1.id}")
 		expect(last_response.body).to include("Editing")
@@ -241,9 +221,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		patch "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
@@ -260,9 +238,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		patch "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_posts/new/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Posting")
@@ -279,9 +255,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		patch "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
@@ -298,9 +272,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		patch "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_posts/new/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Posting")
@@ -317,9 +289,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		patch "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
@@ -369,9 +339,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		patch "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("I'm sorry, please don't ban me.")
@@ -389,9 +357,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		patch "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("Sorry buddy, you're banned!")
@@ -409,9 +375,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		delete "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
@@ -431,9 +395,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		delete "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("#{@post1.content}")
@@ -447,9 +409,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		delete "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
   	end
@@ -463,9 +423,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		delete "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("#{@post1.content}")
@@ -485,9 +443,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		delete "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
@@ -507,9 +463,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		delete "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).to include("#{@post1.content}")
@@ -529,9 +483,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		delete "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
@@ -551,9 +503,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		delete "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).not_to include("#{@post1.content}")
@@ -574,9 +524,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		delete "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/")
 		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
@@ -596,9 +544,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		delete "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
 		expect(last_response.body).to include("#{@thread1.title}")
 		expect(last_response.body).not_to include("#{@post1.content}")
@@ -619,9 +565,7 @@ describe 'ForumUsersController' do
   			}
   		}
   		delete "/forum_posts", params
-  		expect(last_response.status).to eq(302)
-		follow_redirect!
-		expect(last_response.status).to eq(200)
+  		expect_redirect
 		expect(last_request.path).to eq("/forum_threads")
 		expect(last_response.body).to include("Threads")
 		begin
