@@ -1,3 +1,46 @@
+
+@media only screen and (max-width : 480px) {
+        .quarter-width {
+          width: 32%;
+    }
+
+    .seventh-width {
+      width: 23%
+    }
+}
+
+@media only screen and (min-width: 480.01px) and (max-width : 768px) {
+    .quarter-width {
+      width: 28%;
+    }
+
+    .seventh-width {
+      width: 21%
+    }
+}
+
+@media only screen and (min-width : 768.01px) and (max-width: 992px ) {
+    .quarter-width {
+      width: 25%;
+    }
+
+    .seventh-width {
+      width: 18%
+    }
+}
+
+@media only screen and (min-width : 992.01px) {
+    .quarter-width {
+      width: 20%;
+    }
+
+    .seventh-width {
+      width: 14.28571%
+    }
+}
+
+
+
 .citation {
   color: #B8860B;
 }
@@ -20,14 +63,6 @@
 
 .half-width {
 	width: 50%;
-}
-
-.quarter-width {
-	width: 25%;
-}
-
-.seventh-width {
-  width: 14.28571%
 }
 
 .shadow {
