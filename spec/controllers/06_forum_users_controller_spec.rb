@@ -235,10 +235,10 @@ describe 'ForumUsersController' do
 
 			it 'redirects to cached route if there is no user for the given user id' do 
 				use_controller_to_login_as(@user1)
-		  		params = { cached_route: '/C9P', forum_user: { id: "255", email: "frank@gmail.com" } }
+		  		params = { cached_route: '/C11P', forum_user: { id: "255", email: "frank@gmail.com" } }
 		  		patch '/forum_users', params 
 		  		expect_redirect
-			  	expect(last_request.path).to eq("/C9P")
+			  	expect(last_request.path).to eq("/C11P")
 				expect(last_response.body).to include("Constantine XI Palaiologos")
 			end
 

@@ -13,47 +13,47 @@ describe 'layout' do
 		expect(page.first('title').text).to eq('A Most Byzantine Forum')
 	end
 
-	it 'links to forum.css if the current route is not / or /C9P' do 
+	it 'links to forum.css if the current route is not / or /C11P' do 
 	  	use_view_to_login_as(@user1)
 	  	expect(page.body).to include('<link rel="stylesheet" href="/stylesheets/forum.css">')
 	  	visit '/'
 	  	expect(page.body).not_to include('<link rel="stylesheet" href="/stylesheets/forum.css">')
-	  	visit '/C9P'
+	  	visit '/C11P'
 	  	expect(page.body).not_to include('<link rel="stylesheet" href="/stylesheets/forum.css">')
 	end
 
-	it 'links to C9P.css if the current route is /C9P' do 
-	  	visit '/C9P'
-	  	expect(page.body).to include('<link rel="stylesheet" href="/stylesheets/C9P.css">')
+	it 'links to C11P.css if the current route is /C11P' do 
+	  	visit '/C11P'
+	  	expect(page.body).to include('<link rel="stylesheet" href="/stylesheets/C11P.css">')
 	  	visit '/'
-	  	expect(page.body).not_to include('<link rel="stylesheet" href="/stylesheets/C9P.css">')
+	  	expect(page.body).not_to include('<link rel="stylesheet" href="/stylesheets/C11P.css">')
 	end
 
-	it 'renders a navbar brand with a link to / if the current route is /C9P and to /C9P otherwise' do 
-		visit '/C9P'
+	it 'renders a navbar brand with a link to / if the current route is /C11P and to /C11P otherwise' do 
+		visit '/C11P'
 		expect(page).to have_link('', href: '/')
-		expect(page).to have_no_link('', href: '/C9P')
+		expect(page).to have_no_link('', href: '/C11P')
 		visit '/'
 		expect(page).to have_no_link('', href: '/')
-		expect(page).to have_link('', href: '/C9P')
+		expect(page).to have_link('', href: '/C11P')
 	end
 
-	it 'renders a navbar link to logout if logged in and current route is not /C9P' do 
+	it 'renders a navbar link to logout if logged in and current route is not /C11P' do 
 		visit '/'
 		expect(page).to have_no_link('Logout', href: '/logout')
-		visit '/C9P'
+		visit '/C11P'
 		expect(page).to have_no_link('Logout', href: '/logout')
 		use_view_to_login_as(@user1)
 		expect(page).to have_link('Logout', href: '/logout')
 		visit '/'
 		expect(page).to have_link('Logout', href: '/logout')
-		visit '/C9P'
+		visit '/C11P'
 		expect(page).to have_no_link('Logout', href: '/logout')
 	end
 
-	it "renders a navbar link to the current user's profile if logged in and the current route is neither /C9P or the current user's profile page" do 
+	it "renders a navbar link to the current user's profile if logged in and the current route is neither /C11P or the current user's profile page" do 
 		use_view_to_login_as(@user1)
-		visit '/C9P'
+		visit '/C11P'
 		expect(page).to have_no_link('Profile', href: "/forum_users/#{@user1.slug}")
 		visit "/forum_users/#{@user1.slug}"
 		expect(page).to have_no_link('Profile', href: "/forum_users/#{@user1.slug}")
@@ -61,9 +61,9 @@ describe 'layout' do
 		expect(page).to have_link('Profile', href: "/forum_users/#{@user1.slug}")
 	end
 
-	it "renders a navbar link to /forum_users if logged in and the current route is neither /C9P or /forum_users" do 
+	it "renders a navbar link to /forum_users if logged in and the current route is neither /C11P or /forum_users" do 
 		use_view_to_login_as(@user1)
-		visit '/C9P'
+		visit '/C11P'
 		expect(page).to have_no_link('Users', href: "/forum_users")
 		visit "/forum_users"
 		expect(page).to have_no_link('Users', href: "/forum_users")
@@ -71,9 +71,9 @@ describe 'layout' do
 		expect(page).to have_link('Users', href: "/forum_users")
 	end
 
-	it "renders a navbar link to /forum_threads if logged in and the current route is neither /C9P or /forum_threads" do 
+	it "renders a navbar link to /forum_threads if logged in and the current route is neither /C11P or /forum_threads" do 
 		use_view_to_login_as(@user1)
-		visit '/C9P'
+		visit '/C11P'
 		expect(page).to have_no_link('Threads', href: "/forum_threads")
 		visit "/forum_users"
 		expect(page).to have_link('Threads', href: "/forum_threads")
@@ -81,8 +81,8 @@ describe 'layout' do
 		expect(page).to have_no_link('Threads', href: "/forum_threads")
 	end
 
-	it 'has extra navigation links if the path is /C9P' do 
-	  	visit '/C9P'
+	it 'has extra navigation links if the path is /C11P' do 
+	  	visit '/C11P'
 	  	expect(page).to have_link('Statue', href: '#Statue')
 	  	expect(page).to have_link('Timeline', href: '#Timeline')
 	  	expect(page).to have_link('Painting', href: '#Painting')
@@ -93,8 +93,8 @@ describe 'layout' do
 	  	expect(page).to have_no_link('Painting', href: '#Painting')
 	end
 
-	it 'has dropdown menus for Places and People if the path is /C9P' do
-	  	visit '/C9P'
+	it 'has dropdown menus for Places and People if the path is /C11P' do
+	  	visit '/C11P'
 	  	expect(page.first('li.dropdown+li.dropdown').text).to include('Places')
 	  	expect(page.first('li.dropdown+li.dropdown+li.dropdown').text).to include('People')
 	  	visit '/'
@@ -130,8 +130,8 @@ describe 'layout' do
 	  	expect(page).to have_no_link('Create', href: "/forum_posts/new/#{@thread2.slug}")
 	end
 
-	it 'it renders Facebook and tumblr. links if current route is /C9P' do 
-		visit '/C9P'
+	it 'it renders Facebook and tumblr. links if current route is /C11P' do 
+		visit '/C11P'
 	  	expect(page).to have_link('Facebook', href: 'https://www.facebook.com/pages/Constantine-XI-Palaiologos/103225189731462?fref=ts')
 	  	expect(page).to have_link('tumblr.', href: 'https://www.tumblr.com/search/constantine-xi-palaiologos')
 
@@ -144,7 +144,7 @@ describe 'layout' do
 		use_view_to_login_as(@user1)
 		visit '/'
 		expect(page).to have_link('Samuel Lair', href: 'http://samlair.com')
-		visit '/C9P'
+		visit '/C11P'
 		expect(page).to have_link('Samuel Lair', href: 'http://samlair.com')
 		visit '/forum_threads'
 		expect(page).to have_link('Samuel Lair', href: 'http://samlair.com')

@@ -17,12 +17,12 @@ describe 'ApplicationController' do
 
 	end
 
-	describe "get '/C9P'" do
+	describe "get '/C11P'" do
 
 	  it 'loads a tribute page' do
-	    get '/C9P'
+	    get '/C11P'
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to eq("/C9P")
+		expect(last_request.path).to eq("/C11P")
       	expect(last_response.body).to include("Constantine XI Palaiologos")
 	  end
 
