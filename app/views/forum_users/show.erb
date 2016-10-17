@@ -22,9 +22,9 @@
 	<% end %>
 	<h1><%=@user.username%></h1>
 	<h2><em><%=@user.title%></em></h2>
-	<h3>Last Seen: <%=format_time(@user.updated_at)%></h3>
-	<h3>Joined: <%=format_time(@user.created_at)%></h3>
-	<h3><%=@user.email%></h3>
+	<h4><%=@user.email%></h4>
+	<h5>Last Seen: <%=format_time(@user.updated_at)%></h5>
+	<h5>Joined: <%=format_time(@user.created_at)%></h5>
 	<% if administrator? || @user == current_user %>
 		<a href="/forum_users/<%=@user.slug%>/edit">
 			<button type="submit" id="edit" class="btn btn-primary btn-forum quarter-width top-margin-20px shadow">
