@@ -30,4 +30,18 @@ class ForumUser < ActiveRecord::Base
 		self.slugify(:username)
 	end
 
+	def title
+		if self.banned
+			"Banned"
+		elsif self.administrator && self.moderator
+			"Superuser"
+		elsif self.administrator
+			"Administrator"
+		elsif self.moderator
+			"Moderator"
+		else
+			"Courtier"
+		end
+	end
+
 end

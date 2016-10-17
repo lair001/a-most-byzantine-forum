@@ -7,6 +7,8 @@ describe 'ForumUser' do
     @user2 = ForumUser.create(username: "Top Gun", email: "tops@aol.com", password: "thebest", moderator: true, administrator: true)
     @user3 = ForumUser.create(username: "billy bob", email: "bb@gmail.com", password: "bobs", banned: false)
     @user4 = ForumUser.create(username: "hackzor", email: "hackzor@gmail.com", password: "1337", banned: true)
+    @user5 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true)
+    @user6 = ForumUser.create(username: "wal", email: "wal@wal.com", password: "wal", administrator: true)
   end
   
   it 'can slug the username' do
@@ -117,6 +119,14 @@ describe 'ForumUser' do
 
   it 'is not banned by default' do 
     expect(@user1.banned).to eq(false)
+  end
+
+  it "knows its title" do 
+    expect(@user4.title).to eq("Banned")
+    expect(@user2.title).to eq("Superuser")
+    expect(@user6.title).to eq("Administrator")
+    expect(@user5.title).to eq("Moderator")
+    expect(@user1.title).to eq("Courtier")
   end
 
 end
