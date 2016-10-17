@@ -19,15 +19,7 @@
 					<a href="/forum_users/<%=post.forum_user.slug%>">
 						<h3><%=user.username%></h3>
 					</a>
-					<% if user.administrator && user.moderator %>
-						<%= "<h4><em>Superuser</em></h4>" %>
-					<% elsif user.administrator %>
-						<%= "<h4><em>Administrator</em></h4>" %>
-					<% elsif user.moderator %>
-						<%= "<h4><em>Moderator</em></h4>" %>
-					<% else %>
-						<%= "<h4><em>Courtier</em></h4>" %>
-					<% end %>
+					<h4><em><%=user.title%></em></h4>
 					<h5>Updated:</h5>
 					<h6><%=format_time(post.updated_at)%></h6>
 					<h5>Created:</h5>

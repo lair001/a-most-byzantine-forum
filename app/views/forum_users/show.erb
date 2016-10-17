@@ -21,15 +21,7 @@
 		<% end %>
 	<% end %>
 	<h1><%=@user.username%></h1>
-	<% if @user.administrator && @user.moderator %>
-		<%= "<h2><em>Superuser</em></h2>" %>
-	<% elsif @user.administrator %>
-		<%= "<h2><em>Administrator</em></h2>" %>
-	<% elsif @user.moderator %>
-		<%= "<h2><em>Moderator</em></h2>" %>
-	<% else %>
-		<%= "<h2><em>Courtier</em></h2>" %>
-	<% end %>
+	<h2><em><%=@user.title%></em></h2>
 	<h3>Last Seen: <%=format_time(@user.updated_at)%></h3>
 	<h3>Joined: <%=format_time(@user.created_at)%></h3>
 	<h3><%=@user.email%></h3>
