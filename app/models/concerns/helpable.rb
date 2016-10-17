@@ -40,15 +40,15 @@ module Helpable
 		time.strftime("%Y/%m/%d %H:%M:%S")
 	end
 
-	def set_attributes(object, attr_hash, settable_attr_array)
+	def set_attributes(model, attr_hash, settable_attr_array)
 		settable_attr_array.each do |attr|
-			object.send("#{attr}=", attr_hash[attr.to_sym]) if !attr_hash[attr.to_sym].nil? && attr_hash[attr.to_sym] != ""
+			model.send("#{attr}=", attr_hash[attr.to_sym]) if !attr_hash[attr.to_sym].nil? && attr_hash[attr.to_sym] != ""
 		end
 	end
 
-	def set_and_save_attributes(object, attr_hash, settable_attr_array)
-		set_attributes(object, attr_hash, settable_attr_array)
-		object.save
+	def set_and_save_attributes(model, attr_hash, settable_attr_array)
+		set_attributes(model, attr_hash, settable_attr_array)
+		model.save
 	end
 
 	def cached_route_or_home
