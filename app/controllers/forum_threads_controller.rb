@@ -35,8 +35,7 @@ class ForumThreadsController < Controller
 	post '/forum_threads' do 
 		if logged_in?
 			@thread = ForumThread.new 
-			set_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
-			if @thread.save
+			if set_and_save_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
 				@post = ForumPost.new 
 				set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id"])
 				@post.forum_thread = @thread 
@@ -112,8 +111,7 @@ class ForumThreadsController < Controller
 			rescue ActiveRecord::RecordNotFound
 				cached_route_or_home
 			end
-			set_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
-			if @thread.save
+			if set_and_save_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
 				current_user.update(updated_at: Time.now)
 				redirect '/forum_threads'
 			else
