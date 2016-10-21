@@ -7,7 +7,7 @@ class ForumThread < ActiveRecord::Base
 	has_many :forum_posts
 	has_many :forum_users, through: :forum_posts
 
-	validates :title, length: { in: 10..100 }
+	validates :title, length: { in: 3..100 }
 
 	validate do 
 		presence_of_unique_slug
