@@ -5,7 +5,7 @@ class ForumPost < ActiveRecord::Base
 	belongs_to :forum_user
 	belongs_to :forum_thread
 
-	validates :content, length: { in: 3..1000 }
+	validates :content, length: { in: 2..1000 }
 	validates :forum_user_id, presence: true
 	validates :forum_thread_id, presence: true
 
