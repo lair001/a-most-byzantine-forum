@@ -11,6 +11,7 @@ class ForumUser < ActiveRecord::Base
 	validates :username, presence: true
 	validates :email, presence: true
 	validates :password_digest, presence: true
+	validates :email, format: { with: /\A[^.]+@(.)+\.[^.\d]+\z/, message: "must have proper format." }
 
 	validate do
 		presence_of_unique_slug
@@ -18,13 +19,13 @@ class ForumUser < ActiveRecord::Base
 		absence_of_forbidden_characters_in :password
 		only_spaces_as_whitespace_in :username
 		absence_of_whitespace_in :email
-		email_format
+		# email_format
 		absence_of_whitespace_in :password
 	end
 
-	def email_format
-		errors.add(:base, "Email must have proper format.") if self.email.is_a?(String) && self.email.match(/^[^.]+@(.)+\.[^.\d]+$/).nil?
-	end
+	# def email_format
+	# 	errors.add(:base, "Email must have proper format.") if self.email.is_a?(String) && self.email.match(/^[^.]+@(.)+\.[^.\d]+$/).nil?
+	# end
 
 	def slug
 		self.slugify(:username)
