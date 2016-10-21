@@ -227,7 +227,7 @@ describe 'ForumUsersController' do
 		  		}
 		  		post '/login', params
 		  		params = { forum_user: { id: @user.id, email: "frank@gmail.com" } }
-		  		patch '/forum_users', params 
+		  		patch '/forum_users', params
 		  		expect_redirect
 			  	expect(last_request.path).to eq("/forum_users")
 				expect(last_response.body).to include("Users")
