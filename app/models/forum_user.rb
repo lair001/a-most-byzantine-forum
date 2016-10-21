@@ -19,13 +19,8 @@ class ForumUser < ActiveRecord::Base
 		absence_of_forbidden_characters_in :password
 		only_spaces_as_whitespace_in :username
 		absence_of_whitespace_in :email
-		# email_format
 		absence_of_whitespace_in :password
 	end
-
-	# def email_format
-	# 	errors.add(:base, "Email must have proper format.") if self.email.is_a?(String) && self.email.match(/^[^.]+@(.)+\.[^.\d]+$/).nil?
-	# end
 
 	def slug
 		self.slugify(:username)
