@@ -31,6 +31,10 @@ class ForumUser < ActiveRecord::Base
 	end
 
 	def title
+		@title ||= self.grant_title
+	end
+
+	def grant_title
 		if self.banned
 			"Banned"
 		elsif self.administrator && self.moderator
