@@ -62,7 +62,7 @@ end
 
 class Helper
 
-  include Helpable
+  include ApplicationHelper
 
   ATTR_ARRAY = [ 
     :session,  

@@ -8,6 +8,6 @@ class Controller < Sinatra::Base
 		set :session_secret, "manzikert"
 	end
 
-	helpers Helpable
+	helpers ApplicationHelper
 
 end

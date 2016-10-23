@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Helpable' do 
+describe 'ApplicationHelper' do 
 
 	before do
 		@helper1 = Helper.new

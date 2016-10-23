@@ -1,4 +1,4 @@
-module Helpable
+module ApplicationHelper
 
 	def logged_in?
 		!!session[:forum_user_id]
