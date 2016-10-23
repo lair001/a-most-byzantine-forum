@@ -10,7 +10,7 @@ describe 'Controller' do
     get '/'
     session = {}
     session[:user_id] = 1
-    get '/C9P'
+    get '/C11P'
     expect(session[:user_id]).to eq(1)
   end
 
