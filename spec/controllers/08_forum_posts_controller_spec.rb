@@ -34,7 +34,7 @@ describe 'ForumUsersController' do
 		expect(last_response.body).to include("Threads")
   	end
 
-  	it "renders forum_posts/create if posting to an existent thread while logged in" do 
+  	it "renders forum_posts/new if posting to an existent thread while logged in" do 
   		use_controller_to_login_as(@user1)
   		get "/forum_posts/new/#{@thread1.slug}"
   		expect(last_response.status).to eq(200)
@@ -123,7 +123,7 @@ describe 'ForumUsersController' do
 		expect(last_response.body).to include("Posting")
   	end
 
-  	it "renders forum_posts/create if logged in, no cached route is set, and the new post fails to save to the database" do
+  	it "renders forum_posts/new if logged in, no cached route is set, and the new post fails to save to the database" do
   		use_controller_to_login_as(@user2)
   		params = {
   			forum_post: {

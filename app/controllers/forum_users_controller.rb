@@ -5,7 +5,7 @@ class ForumUsersController < Controller
 			redirect '/forum_threads'
 		else
 			@user = ForumUser.new
-			erb :'forum_users/login'
+			erb :'forum_users/login.html'
 		end
 	end
 
@@ -14,7 +14,7 @@ class ForumUsersController < Controller
 			redirect '/forum_threads'
 		else
 			@user = ForumUser.new
-			erb :'forum_users/create'
+			erb :'forum_users/new.html'
 		end
 	end
 
@@ -49,7 +49,7 @@ class ForumUsersController < Controller
 				@user.errors.add(:base, "Your credentials are invalid.")
 			end
 			@user.errors.add(:base, "User is banned.") if @user.banned
-			erb :'forum_users/login'
+			erb :'forum_users/login.html'
 			# redirect '/login'
 		end
 	end
@@ -61,7 +61,7 @@ class ForumUsersController < Controller
 			redirect '/forum_threads'
 		else
 			@current_route = "/forum_users/new"
-			erb :'forum_users/create'
+			erb :'forum_users/new.html'
 			# redirect '/forum_users/new'
 		end
 	end
@@ -78,7 +78,7 @@ class ForumUsersController < Controller
 	get '/forum_users' do 
 		if logged_in?
 			sort_users
-			erb :'forum_users/index'
+			erb :'forum_users/index.html'
 		else
 			redirect '/'
 		end
@@ -89,7 +89,7 @@ class ForumUsersController < Controller
 			@user = ForumUser.find_by_slug(params[:slug])
 			redirect '/threads' if @user.nil?
 			sort_user_posts(@user)
-			erb :'forum_users/show'
+			erb :'forum_users/show.html'
 		else
 			redirect '/'
 		end
@@ -99,7 +99,7 @@ class ForumUsersController < Controller
 		if logged_in?
 			@user = ForumUser.find_by_slug(params[:slug])
 			if administrator? || (@user && @user == current_user)
-				erb :'forum_users/edit'
+				erb :'forum_users/edit.html'
 			else
 				redirect '/'
 			end
@@ -123,7 +123,7 @@ class ForumUsersController < Controller
 				redirect '/forum_users'
 			else
 				@current_route = "/forum_users/#{@user.slug}/edit"
-				erb :'forum_users/edit'
+				erb :'forum_users/edit.html'
 				# cached_route_or_home
 			end
 		else

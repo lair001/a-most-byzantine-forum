@@ -3,7 +3,7 @@ class ForumThreadsController < Controller
 	get '/forum_threads' do 
 		if logged_in?
 			sort_threads
-			erb :'forum_threads/index'
+			erb :'forum_threads/index.html'
 		else
 			redirect '/'
 		end
@@ -13,7 +13,7 @@ class ForumThreadsController < Controller
 		if logged_in?
 			@thread = ForumThread.new
 			@post = ForumPost.new
-			erb :'forum_threads/create'
+			erb :'forum_threads/new.html'
 		else
 			redirect '/'
 		end
@@ -45,7 +45,7 @@ class ForumThreadsController < Controller
 				else
 					@current_route = "/forum_threads/new"
 					@thread.delete
-					erb :'forum_threads/create'
+					erb :'forum_threads/new.html'
 					# redirect '/forum_threads/new'
 				end
 			else
@@ -55,7 +55,7 @@ class ForumThreadsController < Controller
 				set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id"])
 				@post.forum_thread = @thread
 				@post.delete if @post.save
-				erb :'forum_threads/create'
+				erb :'forum_threads/new.html'
 				# redirect '/forum_threads/new'
 			end
 		else
@@ -68,7 +68,7 @@ class ForumThreadsController < Controller
 			@thread = ForumThread.find_by_slug(params[:slug])
 			redirect '/forum_threads' if @thread.nil?
 			sort_thread_posts
-			erb :'forum_threads/show'
+			erb :'forum_threads/show.html'
 		else
 			redirect '/'
 		end
@@ -78,7 +78,7 @@ class ForumThreadsController < Controller
 		if logged_in?
 			@thread = ForumThread.find_by_slug(params[:slug])
 			redirect '/forum_threads' if @thread.nil? || !moderator?
-			erb :'forum_threads/edit'
+			erb :'forum_threads/edit.html'
 		else
 			redirect '/'
 		end
@@ -116,7 +116,7 @@ class ForumThreadsController < Controller
 				redirect '/forum_threads'
 			else
 				@current_route = "/forum_threads/#{@thread.slug}/edit"
-				erb :'forum_threads/edit'
+				erb :'forum_threads/edit.html'
 				# cached_route_or_home
 			end
 		else

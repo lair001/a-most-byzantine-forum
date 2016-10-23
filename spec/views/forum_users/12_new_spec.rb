@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'forum_users/create' do
+describe 'forum_users/new' do
 
   before do
 

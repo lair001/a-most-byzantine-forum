@@ -175,7 +175,7 @@ describe 'ForumThreadsController' do
 			expect(last_response.body).to include("Chat About All Things Roman")
 		end
 
-		it "renders forum_threads/create without persisting a thread or a post if logged in and thread fails to save to database" do 
+		it "renders forum_threads/new without persisting a thread or a post if logged in and thread fails to save to database" do 
 			use_controller_to_login_as(@user2)
 			params = {
 				forum_thread: { title: "" },
@@ -201,7 +201,7 @@ describe 'ForumThreadsController' do
 			expect(@post).to be(nil)
 		end
 
-		it "renders forum_threads/create without persisting a thread or a post if logged in and post fails to save to database" do 
+		it "renders forum_threads/new without persisting a thread or a post if logged in and post fails to save to database" do 
 			use_controller_to_login_as(@user2)
 			params = {
 				forum_thread: { title: "On Justinian" },

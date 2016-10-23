@@ -5,7 +5,7 @@ class ForumPostsController < Controller
 			@thread = ForumThread.find_by_slug(params[:slug])
 			redirect '/forum_threads' if @thread.nil?
 			@post = ForumPost.new
-			erb :'forum_posts/create'
+			erb :'forum_posts/new.html'
 		else
 			redirect '/'
 		end
@@ -19,7 +19,7 @@ class ForumPostsController < Controller
 				redirect '/forum_threads'
 			end
 			if moderator? || @post.forum_user == current_user
-				erb :'forum_posts/edit'
+				erb :'forum_posts/edit.html'
 			else
 				redirect '/forum_threads'
 			end
@@ -43,7 +43,7 @@ class ForumPostsController < Controller
 			else
 				@current_route = "/forum_posts/new"
 				@thread = ForumThread.find(params[:forum_post][:forum_thread_id])
-				erb :'forum_posts/create'
+				erb :'forum_posts/new.html'
 				# cached_route_or_home
 			end
 		else
@@ -65,7 +65,7 @@ class ForumPostsController < Controller
 				redirect "/forum_threads/#{@post.forum_thread.slug}"
 			else
 				@current_route = "/forum_posts/#{@post.id}/edit"
-				erb :'forum_posts/edit'
+				erb :'forum_posts/edit.html'
 				# cached_route_or_home
 			end
 		else
