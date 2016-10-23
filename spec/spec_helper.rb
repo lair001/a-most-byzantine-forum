@@ -1,4 +1,4 @@
-$LOAD_PATH << 'spec/spec_helper'
+$LOAD_PATH.push('spec/spec_helper', 'spec/spec_helper/specialized')
 
 ENV["SINATRA_ENV"] = "test"
 
