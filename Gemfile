@@ -14,7 +14,7 @@ gem "tux", '~> 0.3'
 
 group :test do
   gem 'rspec', '~> 3.4'
-  gem 'capybara', '~> 2.5'
+  gem 'capybara', '~> 2.5', require: [ 'capybara/rspec', 'capybara/dsl' ]
   gem 'rack-test', '~> 0.6', '>= 0.6.3'
   gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner.git'
 end
