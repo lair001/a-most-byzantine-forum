@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'views_helper'
+require 'helpers_helper'
 
 describe 'forum_threads/index' do
 

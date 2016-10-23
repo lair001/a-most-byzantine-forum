@@ -1,20 +1,21 @@
 require 'spec_helper'
+require 'controllers_helper'
 
 describe 'ForumUsersController' do
 
   before do
-	@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
-	@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal", id: 2)
-	@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true, id: 3)
-	@user4 = ForumUser.create(username: "wal", email: "wal@wal.com", password: "wal", administrator: true, id: 4)
-	@user6 = ForumUser.create(username: "zack", email: "zack@zack.com", password: "zack", id: 6)
+  	@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
+  	@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal", id: 2)
+  	@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true, id: 3)
+  	@user4 = ForumUser.create(username: "wal", email: "wal@wal.com", password: "wal", administrator: true, id: 4)
+  	@user6 = ForumUser.create(username: "zack", email: "zack@zack.com", password: "zack", id: 6)
 
- 	@thread1 = ForumThread.create(title: "the worst first", id: 1)
- 	@thread5 = ForumThread.create(title: "The Great Schism", id: 5)
+   	@thread1 = ForumThread.create(title: "the worst first", id: 1)
+   	@thread5 = ForumThread.create(title: "The Great Schism", id: 5)
 
- 	@post1 = ForumPost.create(content: "asdf", forum_user_id: 2, forum_thread_id: 1, id: 1)
- 	@post2 = ForumPost.create(content: "Hal, do you want to be the first to be banned?", forum_user_id: 1, forum_thread_id: 1, id: 2)
-	@post10 = ForumPost.create(content: "I am the first to create an on topic thread.", forum_user_id: 4, forum_thread_id: 5, id: 10)
+   	@post1 = ForumPost.create(content: "asdf", forum_user_id: 2, forum_thread_id: 1, id: 1)
+   	@post2 = ForumPost.create(content: "Hal, do you want to be the first to be banned?", forum_user_id: 1, forum_thread_id: 1, id: 2)
+  	@post10 = ForumPost.create(content: "I am the first to create an on topic thread.", forum_user_id: 4, forum_thread_id: 5, id: 10)
   end
 
   describe "get '/forum_posts/new/:slug'" do

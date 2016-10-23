@@ -1,3 +1,5 @@
+$LOAD_PATH << 'spec/spec_helper'
+
 ENV["SINATRA_ENV"] = "test"
 
 require_relative '../config/environment'
@@ -35,80 +37,3 @@ end
 
 Capybara.ignore_hidden_elements = false
 Capybara.app = app
-
-class Request
-
-  attr_accessor :path_info
-
-end
-
-class Errors
-
-  attr_accessor :all
-
-  def initialize
-    self.all = []
-  end
-
-  def add(symbol, string)
-    all << [symbol, string]
-  end
-
-  def clear 
-    all.clear
-  end
-
-end
-
-class Helper
-
-  include ApplicationHelper
-
-  ATTR_ARRAY = [ 
-    :session,  
-    :user_posts,   
-    :threads,
-    :users,
-    :thread_posts,
-    :slug,
-    :params,
-    :request,
-    :thread 
-  ]
-
-  ATTR_ARRAY.each { |attr| attr_accessor attr }
-
-  def initialize
-    self.request = Request.new
-    self.params = {}
-  end
-
-  def redirect(string)
-    string
-  end
-
-  def view_current_user
-    @current_user.dup.freeze
-  end
-
-end
-
-def expect_redirect
-  expect(last_response.status).to eq(302)
-  follow_redirect!
-  expect(last_response.status).to eq(200)
-end
-
-def use_controller_to_login_as(user)
-  params = {
-    forum_user: { username: "#{user.username}", password: "#{user.password}" }
-  }
-  post '/login', params
-end
-
-def use_view_to_login_as(user)
-  visit '/login'
-  fill_in("username", with: "#{user.username}")
-  fill_in("password", with: "#{user.password}")
-  click_button 'login'
-end

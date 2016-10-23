@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'controllers_helper'
 
 describe 'ForumUsersController' do
 

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'views_helper'
 
 describe 'forum_users/edit' do
 

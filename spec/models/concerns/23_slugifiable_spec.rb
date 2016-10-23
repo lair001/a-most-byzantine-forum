@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'errors_helper'
 
 class SlugUsername
 
