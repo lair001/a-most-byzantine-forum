@@ -1,3 +1,5 @@
+require 'capybara_helper'
+
 def expect_redirect
   expect(last_response.status).to eq(302)
   follow_redirect!
