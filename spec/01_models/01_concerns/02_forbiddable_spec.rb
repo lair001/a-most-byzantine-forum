@@ -1,17 +1,5 @@
 require 'spec_helper'
-require 'errors_helper'
-
-class Forbidder
-
-	include Forbiddable::InstanceMethods
-
-	attr_accessor :errors, :username, :title, :attribute
-
-	def initialize
-		self.errors = Errors.new
-	end
-
-end
+require 'forbiddable_helper'
 
 describe 'Forbiddable' do 
 
