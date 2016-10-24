@@ -18,30 +18,30 @@ describe 'ForumUsersController' do
   	@post10 = ForumPost.create(content: "I am the first to create an on topic thread.", forum_user_id: 4, forum_thread_id: 5, id: 10)
   end
 
-  describe "get '/forum_posts/new/:slug'" do
+  describe "get '/forum_threads/:slug/forum_posts/new'" do
 
   	it "redirects to / if not logged in" do
-  		get "/forum_posts/new/#{@thread1.slug}"
+  		get "/forum_threads/#{@thread1.slug}/forum_posts/new"
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to /forum_threads if attempting to post to a non-existent thread while logged in" do 
   		use_controller_to_login_as(@user1)
-  		get "/forum_posts/new/alexander-great"
+  		get "/forum_threads/alexander-great/forum_posts/new"
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads")
-		expect(last_response.body).to include("Threads")
+  		expect(last_request.path).to eq("/forum_threads")
+  		expect(last_response.body).to include("Threads")
   	end
 
   	it "renders forum_posts/new if posting to an existent thread while logged in" do 
   		use_controller_to_login_as(@user1)
-  		get "/forum_posts/new/#{@thread1.slug}"
+  		get "/forum_threads/#{@thread1.slug}/forum_posts/new"
   		expect(last_response.status).to eq(200)
-		expect(last_request.path).to eq("/forum_posts/new/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("Posting")
+  		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}/forum_posts/new")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).to include("Posting")
   	end
 
   end
@@ -59,34 +59,34 @@ describe 'ForumUsersController' do
   		use_controller_to_login_as(@user1)
   		get "/forum_posts/#{@post1.id + 100}/edit"
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads")
-		expect(last_response.body).to include("Threads")
+  		expect(last_request.path).to eq("/forum_threads")
+  		expect(last_response.body).to include("Threads")
   	end
 
   	it "renders forum_posts/edit if editing an existent post while logged in as a moderator even if the post does not belong to the user" do 
   		use_controller_to_login_as(@user3)
   		get "/forum_posts/#{@post1.id}/edit"
-		expect(last_response.status).to eq(200)
-		expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
-		expect(last_response.body).to include("#{@post1.id}")
-		expect(last_response.body).to include("Editing")
+    	expect(last_response.status).to eq(200)
+    	expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
+    	expect(last_response.body).to include("#{@post1.id}")
+    	expect(last_response.body).to include("Editing")
   	end
 
   	it "renders forum_posts/edit if editing an existent post while logged in as an ordinary user if the post belongs to the user" do 
   		use_controller_to_login_as(@user2)
   		get "/forum_posts/#{@post1.id}/edit"
-		expect(last_response.status).to eq(200)
-		expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
-		expect(last_response.body).to include("#{@post1.id}")
-		expect(last_response.body).to include("Editing")
+  		expect(last_response.status).to eq(200)
+  		expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
+  		expect(last_response.body).to include("#{@post1.id}")
+  		expect(last_response.body).to include("Editing")
   	end
 
   	it "redirects to /forum_threads if attempting to edit an existent post while logged in as an adminstrator without moderator powers if the post does not belong to the user" do 
   		use_controller_to_login_as(@user4)
   		get "/forum_posts/#{@post1.id}/edit"
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads")
-		expect(last_response.body).to include("Threads")
+  		expect(last_request.path).to eq("/forum_threads")
+  		expect(last_response.body).to include("Threads")
   	end
 
   end
@@ -95,7 +95,7 @@ describe 'ForumUsersController' do
 
   	it "redirects to '/' if not logged in" do 
   		params = {
-  			cached_route: "/forum_posts/new/#{@thread1.slug}",
+  			cached_route: "/forum_threads/#{@thread1.slug}/forum_posts/new",
   			forum_post: {
   				content: "Please don't ban me!",
   				forum_user_id: "2",
@@ -104,24 +104,24 @@ describe 'ForumUsersController' do
   		}
   		post "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "renders forum_posts/create if logged in, a cached route is set, and the new post fails to save to the database" do 
   		use_controller_to_login_as(@user2)
   		params = {
-  			cached_route: "/forum_posts/new/#{@thread1.slug}",
+  			cached_route: "/forum_threads/#{@thread1.slug}/forum_posts/new",
   			forum_post: {
   				forum_user_id: "2",
   				forum_thread_id: "1"
   			}
   		}
   		post "/forum_posts", params
-		expect(last_response.status).to eq(200)
-		expect(last_request.path).to eq("/forum_posts")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("Posting")
+  		expect(last_response.status).to eq(200)
+  		expect(last_request.path).to eq("/forum_posts")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).to include("Posting")
   	end
 
   	it "renders forum_posts/new if logged in, no cached route is set, and the new post fails to save to the database" do
@@ -133,16 +133,16 @@ describe 'ForumUsersController' do
   			}
   		}
   		post "/forum_posts", params
-		expect(last_response.status).to eq(200)
-		expect(last_request.path).to eq("/forum_posts")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("Posting")
+  		expect(last_response.status).to eq(200)
+  		expect(last_request.path).to eq("/forum_posts")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).to include("Posting")
   	end
 
   	it "redirects to the show page of the new post's thread if logged in, a cached route is set, and the new post saves to the database" do 
   		use_controller_to_login_as(@user2)
   		params = {
-  			cached_route: "/forum_posts/new/#{@thread1.slug}",
+  			cached_route: "/forum_threads/#{@thread1.slug}/forum_posts/new",
   			forum_post: {
   				content: "Please don't ban me!",
   				forum_user_id: "2",
@@ -151,15 +151,15 @@ describe 'ForumUsersController' do
   		}
   		post "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("Please don't ban me!")
+  		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).to include("Please don't ban me!")
   	end
 
   	it "redirects to /forum_threads if logged in, no cached route is set, and the new post saves to the database" do 
   		use_controller_to_login_as(@user2)
   		params = {
-  			cached_route: "/forum_posts/new/#{@thread1.slug}",
+  			cached_route: "/forum_threads/#{@thread1.slug}/forum_posts/new",
   			forum_post: {
   				content: "Please don't ban me!",
   				forum_user_id: "2",
@@ -168,9 +168,9 @@ describe 'ForumUsersController' do
   		}
   		post "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("Please don't ban me!")
+  		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).to include("Please don't ban me!")
   	end
 
   end
@@ -189,8 +189,8 @@ describe 'ForumUsersController' do
   		}
   		patch "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to cached route if logged in, a cached route is set, and attempting to edit a non-existent post" do 
@@ -206,9 +206,9 @@ describe 'ForumUsersController' do
   		}
   		patch "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
-		expect(last_response.body).to include("#{@post1.id}")
-		expect(last_response.body).to include("Editing")
+  		expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
+  		expect(last_response.body).to include("#{@post1.id}")
+  		expect(last_response.body).to include("Editing")
   	end
 
   	it "redirects to / if logged in, no cached route is set, and attempting to edit a non-existent post" do 
@@ -223,14 +223,14 @@ describe 'ForumUsersController' do
   		}
   		patch "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to cached route if logged in as an ordinary user, a cached route is set, and attempting to edit a post that does not belong to the user" do 
   		use_controller_to_login_as(@user6)
   		params = {
-  			cached_route: "/forum_posts/new/#{@thread1.slug}",
+  			cached_route: "/forum_threads/#{@thread1.slug}/forum_posts/new",
   			forum_post: {
   				content: "I'm sorry, please don't ban me.",
   				forum_user_id: "2",
@@ -240,9 +240,9 @@ describe 'ForumUsersController' do
   		}
   		patch "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_posts/new/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("Posting")
+    	expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}/forum_posts/new")
+    	expect(last_response.body).to include("#{@thread1.title}")
+    	expect(last_response.body).to include("Posting")
   	end
 
   	it "redirects to / if logged in as an ordinary user, no cached route is set, and attempting to edit a post that does not belong to the user" do 
@@ -257,14 +257,14 @@ describe 'ForumUsersController' do
   		}
   		patch "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to cached route if logged in as an adminstrator without moderator powers, a cached route is set, and attempting to edit a post that does not belong to the user" do 
   		use_controller_to_login_as(@user4)
   		params = {
-  			cached_route: "/forum_posts/new/#{@thread1.slug}",
+  			cached_route: "/forum_threads/#{@thread1.slug}/forum_posts/new",
   			forum_post: {
   				content: "I'm sorry, please don't ban me.",
   				forum_user_id: "2",
@@ -274,9 +274,9 @@ describe 'ForumUsersController' do
   		}
   		patch "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_posts/new/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("Posting")
+  		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}/forum_posts/new")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).to include("Posting")
   	end
 
   	it "redirects to / if logged in as an adminstrator without moderator powers, no cached route is set, and attempting to edit a post that does not belong to the user" do 
@@ -291,8 +291,8 @@ describe 'ForumUsersController' do
   		}
   		patch "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "renders forum_posts/edit if logged in, a cached route is provided, and the post fails to save to the database" do 
@@ -306,10 +306,10 @@ describe 'ForumUsersController' do
   			}
   		}
   		patch "/forum_posts", params
-		expect(last_response.status).to eq(200)
-		expect(last_request.path).to eq("/forum_posts")
-		expect(last_response.body).to include("Edit")
-		expect(last_response.body).to include("#{@post1.id}")
+  		expect(last_response.status).to eq(200)
+  		expect(last_request.path).to eq("/forum_posts")
+  		expect(last_response.body).to include("Edit")
+  		expect(last_response.body).to include("#{@post1.id}")
   	end
 
   	it "forum_posts/edit if logged in, no cached route is provided, and the post fails to save to the database" do 
@@ -322,10 +322,10 @@ describe 'ForumUsersController' do
   			}
   		}
   		patch "/forum_posts", params
-		expect(last_response.status).to eq(200)
-		expect(last_request.path).to eq("/forum_posts")
-		expect(last_response.body).to include("Edit")
-		expect(last_response.body).to include("#{@post1.id}")
+  		expect(last_response.status).to eq(200)
+  		expect(last_request.path).to eq("/forum_posts")
+  		expect(last_response.body).to include("Edit")
+  		expect(last_response.body).to include("#{@post1.id}")
   	end
 
   	it "redirects to the show page of the edited post's thread if the post is successfully saved" do 
@@ -341,9 +341,9 @@ describe 'ForumUsersController' do
   		}
   		patch "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("I'm sorry, please don't ban me.")
+  		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).to include("I'm sorry, please don't ban me.")
   	end
 
   	it "allows moderators to edit the posts of other users" do 
@@ -359,9 +359,9 @@ describe 'ForumUsersController' do
   		}
   		patch "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("Sorry buddy, you're banned!")
+  		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).to include("Sorry buddy, you're banned!")
   	end
 
   end
@@ -377,14 +377,14 @@ describe 'ForumUsersController' do
   		}
   		delete "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
-		begin
-			@post = ForumPost.find(@post1.id)
-		rescue ActiveRecord::RecordNotFound
-			@post = nil
-		end
-		expect(@post.id).to eq(@post1.id)
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
+  		begin
+  			@post = ForumPost.find(@post1.id)
+  		rescue ActiveRecord::RecordNotFound
+  			@post = nil
+  		end
+  		expect(@post.id).to eq(@post1.id)
   	end
 
   	it "redirects to cached route if logged in, a cached route is set, and attempting to delete a non-existent post" do 
@@ -397,9 +397,9 @@ describe 'ForumUsersController' do
   		}
   		delete "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("#{@post1.content}")
+  		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).to include("#{@post1.content}")
   	end
 
   	it "redirects to / if logged in, no cached route is set, and attempting to delete a non-existent post" do 
@@ -411,8 +411,8 @@ describe 'ForumUsersController' do
   		}
   		delete "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to cached route if logged in as an ordinary user, a cached route is set, and attempting to delete a post that does not belong to the user" do 
@@ -425,9 +425,9 @@ describe 'ForumUsersController' do
   		}
   		delete "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("#{@post1.content}")
+  		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).to include("#{@post1.content}")
 		begin
 			@post = ForumPost.find(@post1.id)
 		rescue ActiveRecord::RecordNotFound
@@ -445,8 +445,8 @@ describe 'ForumUsersController' do
   		}
   		delete "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
 			@post = ForumPost.find(@post1.id)
 		rescue ActiveRecord::RecordNotFound
@@ -465,15 +465,15 @@ describe 'ForumUsersController' do
   		}
   		delete "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).to include("#{@post1.content}")
-		begin
-			@post = ForumPost.find(@post1.id)
-		rescue ActiveRecord::RecordNotFound
-			@post = nil
-		end
-		expect(@post.id).to eq(@post1.id)
+  		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).to include("#{@post1.content}")
+  		begin
+  			@post = ForumPost.find(@post1.id)
+  		rescue ActiveRecord::RecordNotFound
+  			@post = nil
+  		end
+  		expect(@post.id).to eq(@post1.id)
   	end
 
   	it "redirects to / if logged in as an adminstrator without moderator powers, no cached route is set, and attempting to delete a post that does not belong to the user" do 
@@ -485,8 +485,8 @@ describe 'ForumUsersController' do
   		}
   		delete "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
 			@post = ForumPost.find(@post1.id)
 		rescue ActiveRecord::RecordNotFound
@@ -505,10 +505,10 @@ describe 'ForumUsersController' do
   		}
   		delete "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).not_to include("#{@post1.content}")
-		expect(last_response.body).to include("#{@post2.content}")
+  		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).not_to include("#{@post1.content}")
+  		expect(last_response.body).to include("#{@post2.content}")
 		begin
 			@post = ForumPost.find(@post1.id)
 		rescue ActiveRecord::RecordNotFound
@@ -526,8 +526,8 @@ describe 'ForumUsersController' do
   		}
   		delete "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
 		begin
 			@post = ForumPost.find(@post1.id)
 		rescue ActiveRecord::RecordNotFound
@@ -546,16 +546,16 @@ describe 'ForumUsersController' do
   		}
   		delete "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
-		expect(last_response.body).to include("#{@thread1.title}")
-		expect(last_response.body).not_to include("#{@post1.content}")
-		expect(last_response.body).to include("#{@post2.content}")
-		begin
-			@post = ForumPost.find(@post1.id)
-		rescue ActiveRecord::RecordNotFound
-			@post = nil
-		end
-		expect(@post).to be(nil)
+  		expect(last_request.path).to eq("/forum_threads/#{@thread1.slug}")
+  		expect(last_response.body).to include("#{@thread1.title}")
+  		expect(last_response.body).not_to include("#{@post1.content}")
+  		expect(last_response.body).to include("#{@post2.content}")
+  		begin
+  			@post = ForumPost.find(@post1.id)
+  		rescue ActiveRecord::RecordNotFound
+  			@post = nil
+  		end
+  		expect(@post).to be(nil)
   	end
 
   	it "deletes a post's thread and redirects to /forum_threads if the last post of the thread is deleted" do 
@@ -567,20 +567,20 @@ describe 'ForumUsersController' do
   		}
   		delete "/forum_posts", params
   		expect_redirect
-		expect(last_request.path).to eq("/forum_threads")
-		expect(last_response.body).to include("Threads")
-		begin
-			@post = ForumPost.find(@post10.id)
-		rescue ActiveRecord::RecordNotFound
-			@post = nil
-		end
-		expect(@post).to be(nil)
-		begin
-			@thread = ForumThread.find(@thread5.id)
-		rescue ActiveRecord::RecordNotFound
-			@thread = nil
-		end
-		expect(@thread).to be(nil)
+  		expect(last_request.path).to eq("/forum_threads")
+  		expect(last_response.body).to include("Threads")
+  		begin
+  			@post = ForumPost.find(@post10.id)
+  		rescue ActiveRecord::RecordNotFound
+  			@post = nil
+  		end
+  		expect(@post).to be(nil)
+  		begin
+  			@thread = ForumThread.find(@thread5.id)
+  		rescue ActiveRecord::RecordNotFound
+  			@thread = nil
+  		end
+  		expect(@thread).to be(nil)
   	end
 
   end

@@ -1,6 +1,6 @@
 class ForumPostsController < Controller
 
-	get '/forum_posts/new/:slug' do
+	get '/forum_threads/:slug/forum_posts/new' do
 		if logged_in?
 			@thread = ForumThread.find_by_slug(params[:slug])
 			redirect '/forum_threads' if @thread.nil?
@@ -34,7 +34,7 @@ class ForumPostsController < Controller
 			if set_and_save_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id", "forum_thread_id"])
 				if params[:cached_route]
 					route_array = params[:cached_route].split("/")
-					redirect "/forum_threads/#{route_array.last}"
+					redirect "/forum_threads/#{route_array[2]}"
 				else
 					redirect "/forum_threads"
 				end

@@ -91,7 +91,7 @@
           </form>
           <ul class="nav navbar-nav navbar-right">
             <% if current_route == '/forum_threads' || ( current_route != '/forum_threads/new' && current_route.match(/\/forum_threads\/[^\/]+/)) %>
-              <li><a href="<%= current_route == '/forum_threads' ? '/forum_threads/new' : "/forum_posts/new/#{@thread.slug}" %>">Create</a></li>
+              <li><a href="<%= current_route == '/forum_threads' ? '/forum_threads/new' : "/forum_threads/#{@thread.slug}/forum_posts/new" %>">Create</a></li>
             <% end %>
             <% if current_route == '/C11P' %>
             <li><a href="https://www.facebook.com/pages/Constantine-XI-Palaiologos/103225189731462?fref=ts" target="_blank"><i class="fa fa-facebook-official"></i> Facebook</a></li>

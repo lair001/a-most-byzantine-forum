@@ -118,17 +118,17 @@ describe 'layouts/application' do
 	it 'renders to navbar link to /forum_posts/new/:slug if the current route is /forum_threads/:slug' do 
 	  	use_view_to_login_as(@user1)
 	  	visit "/forum_threads"
-	  	expect(page).to have_no_link('Create', href: "/forum_posts/new/#{@thread1.slug}")
+	  	expect(page).to have_no_link('Create', href: "/forum_threads/#{@thread1.slug}/forum_posts/new")
 	  	expect(page).to have_no_link('Create', href: "/forum_posts/new/#{@thread2.slug}")
 	  	visit "/forum_threads/#{@thread1.slug}"
-	  	expect(page).to have_link('Create', href: "/forum_posts/new/#{@thread1.slug}")
-	  	expect(page).to have_no_link('Create', href: "/forum_posts/new/#{@thread2.slug}")
+	  	expect(page).to have_link('Create', href: "/forum_threads/#{@thread1.slug}/forum_posts/new")
+	  	expect(page).to have_no_link('Create', href: "/forum_threads/#{@thread2.slug}/forum_posts/new")
 	  	visit "/forum_threads/#{@thread2.slug}"
-	  	expect(page).to have_no_link('Create', href: "/forum_posts/new/#{@thread1.slug}")
-	  	expect(page).to have_link('Create', href: "/forum_posts/new/#{@thread2.slug}")
+	  	expect(page).to have_no_link('Create', href: "/forum_threads/#{@thread1.slug}/forum_posts/new")
+	  	expect(page).to have_link('Create', href: "/forum_threads/#{@thread2.slug}/forum_posts/new")
 	  	visit "/"
-	  	expect(page).to have_no_link('Create', href: "/forum_posts/new/#{@thread1.slug}")
-	  	expect(page).to have_no_link('Create', href: "/forum_posts/new/#{@thread2.slug}")
+	  	expect(page).to have_no_link('Create', href: "/forum_threads/#{@thread1.slug}/forum_posts/new")
+	  	expect(page).to have_no_link('Create', href: "/forum_threads/#{@thread2.slug}/forum_posts/new")
 	end
 
 	it 'it renders Facebook and tumblr. links if current route is /C11P' do 
