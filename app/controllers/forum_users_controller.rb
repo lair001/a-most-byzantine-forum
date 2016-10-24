@@ -21,6 +21,7 @@ class ForumUsersController < Controller
 	post '/forum_users/search' do 
 		if logged_in?
 			@user = ForumUser.find_by(trim_whitespace(params[:forum_user], ["username"]))
+			current_user.update(last_active: Time.now)
 			if @user
 				redirect "/forum_users/#{@user.slug}"
 			else

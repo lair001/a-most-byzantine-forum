@@ -22,6 +22,7 @@ class ForumThreadsController < Controller
 	post '/forum_threads/search' do 
 		if logged_in?
 			@thread = ForumThread.find_by(trim_whitespace(params[:forum_thread], ["title"]))
+			current_user.update(last_active: Time.now)
 			if @thread 
 				redirect "/forum_threads/#{@thread.slug}"
 			else
