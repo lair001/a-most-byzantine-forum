@@ -17,6 +17,8 @@ class ForumThread < ActiveRecord::Base
 		only_spaces_as_whitespace_in :title
 	end
 
+	after_destroy :update_current_user_activity
+
 	after_update :update_current_user_activity
 
 	def slug

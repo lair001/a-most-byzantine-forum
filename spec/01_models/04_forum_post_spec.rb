@@ -63,6 +63,15 @@ describe 'ForumPost' do
     expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
   end
 
+  it "updates the current user's activity when told about the current user and destroyed" do
+    @helper1.session = { forum_user_id: @user.id }
+    @initial_activity = @helper1.current_user.last_active
+    @post1.tell_about_current_user_and_destroy(@helper1.current_user)
+    expect{ForumPost.find(@post1.id)}.to raise_error(ActiveRecord::RecordNotFound)
+    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
+  end
+
+
   it 'belongs to a user' do 
     expect(@post1.forum_user).to eq(@user)
     expect(@post2.forum_user).to eq(@user)

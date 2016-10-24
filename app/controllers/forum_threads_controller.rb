@@ -91,8 +91,7 @@ class ForumThreadsController < Controller
 				redirect '/forum_threads'
 			end
 			@thread.forum_posts.delete_all
-			@thread.destroy
-			current_user.update(last_active: Time.now)
+			@thread.tell_about_current_user_and_destroy(current_user)
 			redirect '/forum_threads'
 		else
 			redirect '/'

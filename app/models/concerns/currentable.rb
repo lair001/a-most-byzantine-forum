@@ -15,6 +15,11 @@ module Currentable
 			self.update(update_hash)
 		end
 
+		def tell_about_current_user_and_destroy(current_user)
+			self.current_user = current_user
+			self.destroy
+		end
+
 	private
 
 		def update_current_user_activity
