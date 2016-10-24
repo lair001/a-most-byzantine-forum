@@ -116,4 +116,12 @@ describe 'ApplicationHelper' do
 
 	end
 
+	describe 'whitespace_as_html' do
+
+		it 'converts whitespace into html entities' do
+			expect(@helper1.whitespace_as_html("ipsum|\t|\u2003|\r\n|\f|\n|\r|\v|lorem")).to eq("ipsum|&emsp;&emsp;|&emsp;|<br>|<br>|<br>|<br>|<br><br>|lorem")
+		end
+
+	end
+
 end

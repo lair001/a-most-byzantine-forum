@@ -13,8 +13,4 @@ class ForumPost < ActiveRecord::Base
 		absence_of_forbidden_characters_in :content
 	end
 
-	def content_as_html
-		self.content.gsub(/\t/, "&emsp;&emsp;").gsub(/\u2003/, "&emsp;").gsub(/\r\n/, "<br>").gsub(/[\f\n\r]/, "<br>").gsub(/\v/, "<br><br>")
-	end
-
 end

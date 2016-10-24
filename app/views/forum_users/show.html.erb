@@ -50,7 +50,7 @@
 				<div class="col-xs-8">
 					<br>
 					<a href="/forum_threads/<%=post.forum_thread.slug%>#<%=post.id%>"><h3 class="text-center"><%=post.forum_thread.title%></h3></a>
-					<div id="post_content"><%=post.content_as_html%></p></div>
+					<div id="post_content"><%=whitespace_as_html(post.content)%></p></div>
 					<br>
 				</div>
 			</div>
