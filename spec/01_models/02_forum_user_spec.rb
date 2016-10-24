@@ -108,10 +108,16 @@ describe 'ForumUser' do
     expect(@user1.last_active).to be_a(Time)
   end
 
-  it "updates the current user's activity when told about the current user and edited" do
+  it "updates the current user's activity when told about the current user and updated" do
     @helper1.session = { forum_user_id: @user6.id }
     @initial_activity = @helper1.current_user.last_active
     @user5.tell_about_current_user_and_update(@helper1.current_user, username: "sally")
+    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
+
+    @initial_activity = @helper1.current_user.last_active
+    params = { "forum_user" => { username: "sally" } }
+    params["forum_user"]["current_user"] = @helper1.current_user
+    @helper1.set_and_save_attributes(@user5, @helper1.trim_whitespace(params["forum_user"], ["username"]), ["username", "email", "password", "current_user"])
     expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
   end
 

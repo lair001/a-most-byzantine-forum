@@ -34,6 +34,12 @@ describe 'ForumThread' do
     @initial_activity = @helper1.current_user.last_active
     @thread1.tell_about_current_user_and_update(@helper1.current_user, title: "Spam")
     expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
+
+    @initial_activity = @helper1.current_user.last_active
+    params = { "forum_thread" => { title: "Spam and more spam" } }
+    params["forum_thread"]["current_user"] = @helper1.current_user
+    @helper1.set_and_save_attributes(@thread1, @helper1.trim_whitespace(params["forum_thread"], ["title"]), ["title", "current_user"])
+    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
   end
 
   it 'validates for the presence of title' do 
