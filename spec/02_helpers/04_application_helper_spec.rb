@@ -1,11 +1,11 @@
 require 'spec_helper'
 require 'helpers_helper'
 
-describe 'ApplicationHelper' do 
+describe 'ApplicationHelper' do
 
 	before do
 		@helper1 = Helper.new
-		
+
 		@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
 		@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal", id: 2)
 		@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true, id: 3)
@@ -31,91 +31,25 @@ describe 'ApplicationHelper' do
 		@thread1_posts_array = @thread1.forum_posts.sort { |a, b| a.created_at <=> b.created_at }
 	end
 
-	describe '#logged in' do 
+	describe '#current_route' do
 
-  	it 'returns true if session[:forum_user_id] is set' do 
-  		@helper1.session = { forum_user_id: 1 }
-  		expect(@helper1.logged_in?).to eq(true)
-  	end
-
-  	it 'returns false if session[:forum_user_id] is not set' do 
-  		@helper1.session = {}
-  		expect(@helper1.logged_in?).to eq(false)
-  	end
-
-	end
-
-	describe '#current_user' do 
-
-  	it 'returns the current user' do 
-  		@helper1.session = { forum_user_id: 2 }
-  		@helper1.current_user
-  		expect(@helper1.view_current_user.username).to eq("hal")
-  	end
-
-	end
-
-	describe '#moderator' do 
-
-  	it 'returns true if the current user is a moderator' do
-  		@helper1.session = { forum_user_id: 3 }
-  		@helper1.current_user
-  		expect(@helper1.moderator?).to eq(true)
-  	end
-
-  	it 'returns false if the current user is not a moderator' do
-  		@helper1.session = { forum_user_id: 2 }
-  		@helper1.current_user
-  		expect(@helper1.moderator?).to eq(false)
-  	end
-
-	end
-
-	describe '#administrator' do 
-
-		it 'returns true if the current user is a administrator' do
-  		@helper1.session = { forum_user_id: 4 }
-  		@helper1.current_user
-  		expect(@helper1.administrator?).to eq(true)
-		end
-
-		it 'returns false if the current user is not administratator' do
-  		@helper1.session = { forum_user_id: 2 }
-  		@helper1.current_user
-  		expect(@helper1.administrator?).to eq(false)
-  	end
-
-  end
-
-	describe '#current_route' do 
-
-		it 'returns the current route' do 
+		it 'returns the current route' do
 			@helper1.request.path_info = '/'
 			expect(@helper1.current_route).to eq('/')
 		end
 
 	end
 
-	describe '#format_time' do 
+	describe '#format_time' do
 
-		it 'formats Time objects' do 
+		it 'formats Time objects' do
 			@time1 = Time.new(2011, 11, 11, 11, 11, 11, "+00:00")
 			expect(@helper1.format_time(@time1)).to eq("2011/11/11 11:11:11")
 		end
 
 	end
 
-	describe '#cached_route_or_home' do 
-
-		it 'redirects to a cached path if set or home if there is no cached path' do 
-			expect(@helper1.cached_route_or_home).to eq('/')
-			@helper1.params[:cached_route] = '/threads'
-			expect(@helper1.cached_route_or_home).to eq('/threads')
-		end
-
-	end
-
-	describe '#set_attributes' do 
+	describe '#set_attributes' do
 
 		it 'it sets attributes of an object that are permitted to be set using values in a hash' do 
 			@user5 = ForumUser.create(username: "phil", email: "phil@phil.com", password: "phil", moderator: true, administrator: true, id: 5)
@@ -137,7 +71,7 @@ describe 'ApplicationHelper' do
 
 	end
 
-	describe "#set_and_save_attributes" do 
+	describe "#set_and_save_attributes" do
 
 		it "it sets attributes of an object that are permitted to be set using values in a hash and then persists the altered object to the database" do
 			@user5 = ForumUser.create(username: "phil", email: "phil@phil.com", password: "phil", moderator: true, administrator: true, id: 5)
@@ -151,47 +85,20 @@ describe 'ApplicationHelper' do
 			@user6 = ForumUser.find_by(username: "bill")
 			expect(@user6.id).to eq(@user5.id)
 		end
-		
+
 	end
 
-	describe '#sort_users' do 
+	describe '#cached_route_or_home' do
 
-		it 'sorts users alphabetically' do 
-		@helper1.sort_users
-		expect(@helper1.users).to eq(@user_array)
+		it 'redirects to a cached path if set or home if there is no cached path' do 
+			expect(@helper1.cached_route_or_home).to eq('/')
+			@helper1.params[:cached_route] = '/threads'
+			expect(@helper1.cached_route_or_home).to eq('/threads')
 		end
 
 	end
 
-	describe '#sort_threads' do 
-
-		it 'sorts threads based on time when last updated (recently updated threads come first)' do 
-		@helper1.sort_threads
-		expect(@helper1.threads).to eq(@thread_array)
-		end
-
-	end
-
-	describe '#sort_user_posts' do 
-
-		it "sorts a user's posts based on time when last updated (recently updated threads come first)" do 
-		@helper1.sort_user_posts(@user2)
-		expect(@helper1.user_posts).to eq(@user2_posts_array)
-		end
-
-	end
-
-	describe '#sort_thread_posts' do 
-
-		it "sorts a user's posts based on time when last updated (recently updated threads come first)" do 
-			@helper1.thread = @thread1
-		@helper1.sort_thread_posts
-		expect(@helper1.thread_posts).to eq(@thread1_posts_array)
-		end
-
-	end
-
-	describe '#trim_whitespace' do 
+	describe '#trim_whitespace' do
 
 		it 'trims whitespace in hash key values where the hash key is included in an array' do 
 			params = { content: " A \t great \n\t time \nnow,\r then.\n", title: "  A  Great \t Time", password: " \tabc  dd \r c" }

@@ -6,18 +6,21 @@ end
 
 class Helper
 
+  include ForumUsersHelper
+  include ForumThreadsHelper
+  include ForumPostsHelper
   include ApplicationHelper
 
-  ATTR_ARRAY = [ 
-    :session,  
-    :user_posts,   
+  ATTR_ARRAY = [
+    :session,
+    :user_posts,
     :threads,
     :users,
     :thread_posts,
     :slug,
     :params,
     :request,
-    :thread 
+    :thread
   ]
 
   ATTR_ARRAY.each { |attr| attr_accessor attr }
