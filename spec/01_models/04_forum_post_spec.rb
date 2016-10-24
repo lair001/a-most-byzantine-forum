@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'helpers_helper'
 
 describe 'ForumPost' do 
 
@@ -7,6 +8,8 @@ describe 'ForumPost' do
     @thread = ForumThread.create(title: "nothing here")
     @post1 = ForumPost.create(content: "ipsum lorem", forum_user_id: @user.id, forum_thread_id: @thread.id)
     @post2 = ForumPost.create(content: "blah blah", forum_user_id: @user.id, forum_thread_id: @thread.id)
+
+    @helper1 = Helper.new
   end
 
   it 'knows its content' do 
@@ -30,9 +33,28 @@ describe 'ForumPost' do
     expect(@post2.created_at).to be_a(Time)
   end
 
+  it "updates the activity of the user that created it" do
+    @initial_activity = @user.last_active
+    ForumPost.create(content: "nothing about nothing", forum_user_id: @user.id, forum_thread_id: @thread.id)
+    @user = ForumUser.find(@user.id)
+    expect(@user.last_active <=> @initial_activity).to eq(1)
+
+    @initial_activity = @user.last_active
+    ForumPost.new(content: "nothing about something", forum_user_id: @user.id, forum_thread_id: @thread.id).save
+    @user = ForumUser.find(@user.id)
+    expect(@user.last_active <=> @initial_activity).to eq(1)
+  end
+
   it 'knows when it was last updated' do 
     expect(@post1.updated_at).to be_a(Time)
     expect(@post2.updated_at).to be_a(Time)
+  end
+
+  it "updates the current user's activity when told about the current user and edited" do
+    @helper1.session = { forum_user_id: @user.id }
+    @initial_activity = @helper1.current_user.last_active
+    @post1.tell_about_current_user_and_update(@helper1.current_user, content: "ipsum lorem and more ipsum lorem")
+    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
   end
 
   it 'belongs to a user' do 

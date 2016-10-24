@@ -20,7 +20,7 @@ class ForumPost < ActiveRecord::Base
 private
 
 	def set_creating_user_activity
-		self.forum_user.last_active = Time.now
+		self.forum_user.update(last_active: Time.now)
 	end
 
 end

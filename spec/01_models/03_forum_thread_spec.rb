@@ -1,10 +1,15 @@
 require 'spec_helper'
+require 'helpers_helper'
 
 describe 'ForumThread' do 
 
   before do
+    @user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true)
+
     @thread1 = ForumThread.create(title: "test 123")
     @thread2 = ForumThread.create(title: "Wow, Bob")
+
+    @helper1 = Helper.new
   end
 
   it 'can slug the title' do
@@ -22,6 +27,13 @@ describe 'ForumThread' do
 
   it 'knows when it was last updated' do 
     expect(@thread1.updated_at).to be_a(Time)
+  end
+
+  it "updates the current user's activity when told about the current user and edited" do
+    @helper1.session = { forum_user_id: @user3.id }
+    @initial_activity = @helper1.current_user.last_active
+    @thread1.tell_about_current_user_and_update(@helper1.current_user, title: "Spam")
+    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
   end
 
   it 'validates for the presence of title' do 
