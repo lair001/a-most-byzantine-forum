@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'views_helper'
 
-describe 'layout' do
+describe 'layouts/application' do
 
 	before do
 	  	@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true)

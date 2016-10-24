@@ -3,7 +3,7 @@ class Controller < Sinatra::Base
 	configure do
 		set :public_folder, 'app/assets'
 		set :views, 'app/views'
-		set :erb, layout: :'layout.html'
+		set :erb, layout: :'layouts/application.html'
 		enable :sessions
 		set :session_secret, "manzikert"
 	end
