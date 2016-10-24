@@ -14,8 +14,7 @@ class ForumPost < ActiveRecord::Base
 		absence_of_forbidden_characters_in :content
 	end
 
-	before_create :set_creating_user_activity
-
+	after_create :set_creating_user_activity
 	after_update :update_current_user_activity
 
 private
