@@ -1,4 +1,4 @@
-require 'capybara_helper'
+require 'capybara_spec_helper'
 
 def expect_redirect
   expect(last_response.status).to eq(302)

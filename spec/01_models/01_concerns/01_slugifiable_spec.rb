@@ -1,5 +1,5 @@
-require 'spec_helper'
-require 'slugifiable_helper'
+require 'sinatra_helper'
+require 'slugifiable_spec_helper'
 
 describe 'Slugifiable' do 
 

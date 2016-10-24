@@ -1,5 +1,5 @@
-require 'spec_helper'
-require 'views_helper'
+require 'sinatra_helper'
+require 'views_spec_helper'
 
 describe 'index' do
 

@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'controllers_helper'
+require 'controllers_spec_helper'
 
 describe 'ApplicationController' do 
 

@@ -1,5 +1,5 @@
-require 'spec_helper'
-require 'helpers_helper'
+require 'sinatra_helper'
+require 'helpers_spec_helper'
 
 describe 'ForumThread' do 
 

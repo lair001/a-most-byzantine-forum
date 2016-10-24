@@ -1,5 +1,5 @@
-require 'spec_helper'
-require 'forbiddable_helper'
+require 'sinatra_helper'
+require 'forbiddable_spec_helper'
 
 describe 'Forbiddable' do
 
