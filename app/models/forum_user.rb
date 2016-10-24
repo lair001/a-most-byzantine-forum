@@ -2,6 +2,8 @@ class ForumUser < ActiveRecord::Base
 
 	include Forbiddable::InstanceMethods
 	include Slugifiable::InstanceMethods
+	include Currentable::InstanceMethods
+
 	extend Slugifiable::ClassMethods
 
 	has_many :forum_posts
@@ -19,6 +21,8 @@ class ForumUser < ActiveRecord::Base
 		absence_of_whitespace_in :email
 		absence_of_whitespace_in :password
 	end
+
+	after_update :update_current_user_activity
 
 	def slug
 		self.slugify(:username)
