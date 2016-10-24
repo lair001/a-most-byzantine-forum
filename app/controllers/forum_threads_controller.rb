@@ -111,8 +111,8 @@ class ForumThreadsController < Controller
 			rescue ActiveRecord::RecordNotFound
 				cached_route_or_home
 			end
-			if set_and_save_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
-				current_user.update(updated_at: Time.now)
+			params["forum_thread"]["current_user"] = current_user
+			if set_and_save_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title", "current_user"])
 				redirect '/forum_threads'
 			else
 				@current_route = "/forum_threads/#{@thread.slug}/edit"

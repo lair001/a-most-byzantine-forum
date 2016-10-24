@@ -59,8 +59,8 @@ class ForumPostsController < Controller
 				cached_route_or_home
 			end
 			cached_route_or_home if @post.forum_user != current_user && !moderator?
-			if set_and_save_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content"])
-				@post.forum_user.update(updated_at: Time.now)
+			params["forum_post"]["current_user"] = current_user
+			if set_and_save_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "current_user"])
 				@post.forum_thread.update(updated_at: Time.now)
 				redirect "/forum_threads/#{@post.forum_thread.slug}"
 			else
