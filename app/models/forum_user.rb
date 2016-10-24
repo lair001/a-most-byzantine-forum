@@ -22,6 +22,8 @@ class ForumUser < ActiveRecord::Base
 		absence_of_whitespace_in :password
 	end
 
+	before_create :set_initial_activity
+
 	after_update :update_current_user_activity
 
 	def slug
@@ -44,6 +46,12 @@ class ForumUser < ActiveRecord::Base
 		else
 			"Courtier"
 		end
+	end
+
+private
+
+	def set_initial_activity
+		self.last_active = Time.now
 	end
 
 end

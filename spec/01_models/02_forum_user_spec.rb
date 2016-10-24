@@ -101,6 +101,10 @@ describe 'ForumUser' do
     expect(@user1.updated_at).to be_a(Time)
   end
 
+  it 'knows when it was last active' do
+    expect(@user1.last_active).to be_a(Time)
+  end
+
   it 'has many threads through posts' do 
     @thread1 = ForumThread.create(title: "nothing here")
     @thread2 = ForumThread.create(title: "hello there")
