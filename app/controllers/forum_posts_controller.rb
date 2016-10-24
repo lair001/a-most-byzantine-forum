@@ -32,8 +32,6 @@ class ForumPostsController < Controller
 		if logged_in?
 			@post = ForumPost.new
 			if set_and_save_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id", "forum_thread_id"])
-				@post.forum_user.update(updated_at: Time.now)
-				@post.forum_thread.update(updated_at: Time.now)
 				if params[:cached_route]
 					route_array = params[:cached_route].split("/")
 					redirect "/forum_threads/#{route_array.last}"
@@ -61,7 +59,6 @@ class ForumPostsController < Controller
 			cached_route_or_home if @post.forum_user != current_user && !moderator?
 			params["forum_post"]["current_user"] = current_user
 			if set_and_save_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "current_user"])
-				@post.forum_thread.update(updated_at: Time.now)
 				redirect "/forum_threads/#{@post.forum_thread.slug}"
 			else
 				@current_route = "/forum_posts/#{@post.id}/edit"
@@ -83,7 +80,7 @@ class ForumPostsController < Controller
 			cached_route_or_home if @post.forum_user != current_user && !moderator?
 			@thread = @post.forum_thread
 			@post.delete
-			current_user.update(updated_at: Time.now)
+			current_user.update(last_active: Time.now)
 			if @thread.forum_posts.count == 0
 				@thread.delete
 				redirect '/forum_threads'
