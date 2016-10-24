@@ -90,12 +90,8 @@ class ForumThreadsController < Controller
 			rescue ActiveRecord::RecordNotFound
 				redirect '/forum_threads'
 			end
-			if @thread.forum_posts
-				@thread.forum_posts.each do |post|
-					post.delete
-				end
-			end
-			@thread.delete
+			@thread.forum_posts.delete_all
+			@thread.destroy
 			current_user.update(last_active: Time.now)
 			redirect '/forum_threads'
 		else
