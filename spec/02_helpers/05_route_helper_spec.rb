@@ -1,7 +1,7 @@
 require 'sinatra_helper'
 # require 'helpers_spec_helper'
 
-describe 'ApplicationHelper' do
+describe 'RoutesHelper' do
 
 	before do
 		@helper1 = Helper.new

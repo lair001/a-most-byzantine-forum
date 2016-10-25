@@ -1,5 +1,5 @@
 
-module RouteHelper
+module RoutesHelper
 
 	def current_route
 		@current_route ||= request.path_info
