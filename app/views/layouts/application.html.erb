@@ -6,11 +6,11 @@
     <script src="/javascripts/modernizr.js" type="text/javascript"></script>
     <link rel="stylesheet" href="/stylesheets/font-awesome.min.css">
     <link rel='stylesheet prefetch' href='/stylesheets/bootstrap.min.css'>
-    <%= current_route != '/' && current_route != '/C11P' ? '<link rel="stylesheet" href="/stylesheets/forum.css">' : '' %>
+    <%= current_route != '/' && current_route != tribute_path ? '<link rel="stylesheet" href="/stylesheets/forum.css">' : '' %>
     <link rel="stylesheet" href="/stylesheets/style_tags.css">
     <link rel="stylesheet" href="/stylesheets/style_classes.css">
     <link rel="stylesheet" href="/stylesheets/navbar.css">
-    <%= current_route == '/C11P' ? '<link rel="stylesheet" href="/stylesheets/C11P.css">' : '' %>
+    <%= current_route == tribute_path ? '<link rel="stylesheet" href="/stylesheets/C11P.css">' : '' %>
     <link rel="stylesheet" href="/stylesheets/style_ids.css">
   </head>
 
@@ -41,7 +41,7 @@
                   <li><a href="#credit_box">Bottom</a></li>
                 </ul>
               </li>
-            <% if logged_in? && current_route != '/C11P' %>
+            <% if logged_in? && current_route != tribute_path %>
               <li><a href="/logout">Logout</a></li>
               <% if current_route != "/forum_users/#{current_user.slug}" %>
                 <li><a href="/forum_users/<%=current_user.slug%>">Profile</a>
@@ -53,7 +53,7 @@
                 <li><a href="/forum_threads">Threads</a></li>
               <% end %>
             <% end %>
-            <% if current_route == '/C11P' %>
+            <% if current_route == tribute_path %>
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Places
                 <span class="caret"></span></a>
@@ -93,7 +93,7 @@
             <% if current_route == '/forum_threads' || ( current_route != '/forum_threads/new' && current_route.match(/\/forum_threads\/[^\/]+/)) %>
               <li><a href="<%= current_route == '/forum_threads' ? '/forum_threads/new' : "/forum_threads/#{@thread.slug}/forum_posts/new" %>">Create</a></li>
             <% end %>
-            <% if current_route == '/C11P' %>
+            <% if current_route == tribute_path %>
             <li><a href="https://www.facebook.com/pages/Constantine-XI-Palaiologos/103225189731462?fref=ts" target="_blank"><i class="fa fa-facebook-official"></i> Facebook</a></li>
             <li><a href="https://www.tumblr.com/search/constantine-xi-palaiologos" target="_blank"><i class="fa fa-tumblr"></i> tumblr.</a></li>
             <% end %>

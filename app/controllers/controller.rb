@@ -13,4 +13,7 @@ class Controller < Sinatra::Base
 	helpers ForumPostsHelper
 	helpers ApplicationHelper
 
+	register PathHelper
+	helpers PathHelper
+
 end

@@ -1,10 +1,10 @@
 class ApplicationController < Controller
 
-	get '/' do 
+	get root_path do 
 		erb :'index.html'
 	end
 
-	get '/C11P' do 
+	get tribute_path do 
 		erb :'C11P.html'
 	end
 
