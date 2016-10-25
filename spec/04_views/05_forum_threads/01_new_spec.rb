@@ -14,7 +14,7 @@ describe 'forum_threads/new' do
     expect(page).to have_no_field("_method")
     expect(page).to have_css('button[type="submit"]')
   	expect(page).to have_field('forum_thread[title]')
-  	expect(page).to have_field('forum_post[content]')
+  	expect(page).to have_field('forum_thread[forum_post_attributes][content]')
   end
 
   it 'shows errors if thread creation is unsuccessful' do

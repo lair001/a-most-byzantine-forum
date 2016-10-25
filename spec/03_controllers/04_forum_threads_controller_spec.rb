@@ -179,8 +179,7 @@ describe 'ForumThreadsController' do
 		it "renders forum_threads/new without persisting a thread or a post if logged in and thread fails to save to database" do 
 			use_controller_to_login_as(@user2)
 			params = {
-				forum_thread: { title: "" },
-				forum_post: { content: "He should've conquered Persia instead.", forum_user_id: 2 }
+				forum_thread: { title: "", forum_post_attributes: { content: "He should've conquered Persia instead.", forum_user_id: 2 } }
 			}
 			post "/forum_threads", params
 			expect(last_response.status).to eq(200)
@@ -205,8 +204,7 @@ describe 'ForumThreadsController' do
 		it "renders forum_threads/new without persisting a thread or a post if logged in and post fails to save to database" do 
 			use_controller_to_login_as(@user2)
 			params = {
-				forum_thread: { title: "On Justinian" },
-				forum_post: { content: "", forum_user_id: 2 }
+				forum_thread: { title: "On Justinian", forum_post_attributes: { content: "", forum_user_id: 2 } }
 			}
 			post "/forum_threads", params
 			expect(last_response.status).to eq(200)
@@ -231,8 +229,7 @@ describe 'ForumThreadsController' do
 		it "redirects to the new thread's show page if both the thread and its first post are successfully saved to the database" do 
 			use_controller_to_login_as(@user2)
 			params = {
-				forum_thread: { title: "On Justinian" },
-				forum_post: { content: "He should've conquered Persia instead.", forum_user_id: 2 }
+				forum_thread: { title: "On Justinian", forum_post_attributes: { content: "He should've conquered Persia instead.", forum_user_id: 2 } }
 			}
 			post "/forum_threads", params
 			expect_redirect

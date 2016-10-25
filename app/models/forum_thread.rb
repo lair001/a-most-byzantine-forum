@@ -25,4 +25,8 @@ class ForumThread < ActiveRecord::Base
 		self.slugify(:title)
 	end
 
+	def forum_post_attributes=(attributes_hash)
+		self.forum_posts.build(attributes_hash)
+	end
+
 end

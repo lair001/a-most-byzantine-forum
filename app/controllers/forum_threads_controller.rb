@@ -33,28 +33,45 @@ class ForumThreadsController < Controller
 		end
 	end
 
+	# post '/forum_threads' do 
+	# 	if logged_in?
+	# 		@thread = ForumThread.new
+	# 		if set_and_save_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
+	# 			@post = ForumPost.new 
+	# 			set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id"])
+	# 			@post.forum_thread = @thread 
+	# 			if @post.save 
+	# 				redirect "/forum_threads/#{@thread.slug}"
+	# 			else
+	# 				@current_route = "/forum_threads/new"
+	# 				@thread.delete
+	# 				erb :'forum_threads/new.html'
+	# 				# redirect '/forum_threads/new'
+	# 			end
+	# 		else
+	# 			@current_route = "/forum_threads/new"
+	# 			# grabbing any errors that the post may have
+	# 			@post = ForumPost.new
+	# 			set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id"])
+	# 			@post.forum_thread = @thread
+	# 			@post.delete if @post.save
+	# 			erb :'forum_threads/new.html'
+	# 			# redirect '/forum_threads/new'
+	# 		end
+	# 	else
+	# 		redirect '/'
+	# 	end
+	# end
+
 	post '/forum_threads' do 
 		if logged_in?
-			@thread = ForumThread.new 
-			if set_and_save_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title"])
-				@post = ForumPost.new 
-				set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id"])
-				@post.forum_thread = @thread 
-				if @post.save 
-					redirect "/forum_threads/#{@thread.slug}"
-				else
-					@current_route = "/forum_threads/new"
-					@thread.delete
-					erb :'forum_threads/new.html'
-					# redirect '/forum_threads/new'
-				end
+			@thread = ForumThread.new
+			params["forum_thread"]["forum_post_attributes"] = trim_whitespace(params["forum_thread"]["forum_post_attributes"], ["content"])
+			if set_and_save_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title", "forum_post_attributes"])
+				redirect "/forum_threads/#{@thread.slug}"
 			else
 				@current_route = "/forum_threads/new"
-				# grabbing any errors that the post may have
-				@post = ForumPost.new
-				set_attributes(@post, trim_whitespace(params[:forum_post], ["content"]), ["content", "forum_user_id"])
-				@post.forum_thread = @thread
-				@post.delete if @post.save
+				@thread.errors.delete(:forum_posts)
 				erb :'forum_threads/new.html'
 				# redirect '/forum_threads/new'
 			end

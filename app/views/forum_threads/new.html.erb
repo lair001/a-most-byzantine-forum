@@ -7,14 +7,15 @@
 		</div>
 		<div class="form-group">
 			<label for="content">Post Content:</label>
-			<textarea rows="20" class="form-control forum-textarea" id="content" name="forum_post[content]" type="text"></textarea>
+			<textarea rows="20" class="form-control forum-textarea" id="content" name="forum_thread[forum_post_attributes][content]" type="text"></textarea>
 		</div>
-		<input type="hidden" name="forum_post[forum_user_id]" value=<%=current_user.id%>>
+		<input type="hidden" name="forum_thread[forum_post_attributes][forum_user_id]" value=<%=current_user.id%>>
 		<button type="submit" id="create_thread" class="btn btn-primary btn-forum shadow">
 			<i class="fa fa-paper-plane"></i> Create Thread
 		</button>
 	</form>
 	<% error_messages = ""
+	@thread.errors.delete(:forum_posts)
 	if @thread.errors.any?
 		@thread.errors.full_messages.each do |error|
 			error_messages += error + "<br>"
@@ -25,8 +26,8 @@
 		</blockquote>
 	<% end %>
 	<% error_messages = ""
-	if @post.errors.any?
-		@post.errors.full_messages.each do |error|
+	if @thread.forum_posts.last && @thread.forum_posts.last.errors.any?
+		@thread.forum_posts.last.errors.full_messages.each do |error|
 			error_messages += error + "<br>"
 		end %>
 		<blockquote class='quote center-block half-width top-margin-10px'>
