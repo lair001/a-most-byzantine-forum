@@ -10,7 +10,7 @@ class Helper
   include ForumThreadsHelper
   include ForumPostsHelper
   include ApplicationHelper
-  include RouteHelper
+  include RoutesHelper
 
   ATTR_ARRAY = [
     :session,
