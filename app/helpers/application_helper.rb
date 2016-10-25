@@ -1,9 +1,5 @@
 module ApplicationHelper
 
-	def current_route
-		@current_route ||= request.path_info
-	end
-
 	def format_time(time)
 		time.strftime("%Y/%m/%d %H:%M:%S")
 	end
@@ -17,10 +13,6 @@ module ApplicationHelper
 	def set_and_save_attributes(model, attr_hash, settable_attr_array)
 		set_attributes(model, attr_hash, settable_attr_array)
 		model.save
-	end
-
-	def cached_route_or_home
-		params[:cached_route].nil? ? redirect('/') : redirect("#{params[:cached_route]}")
 	end
 
 	def trim_whitespace(hash, keys_whose_values_will_be_trimmed_array)

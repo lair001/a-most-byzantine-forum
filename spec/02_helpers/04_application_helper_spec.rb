@@ -31,15 +31,6 @@ describe 'ApplicationHelper' do
 		@thread1_posts_array = @thread1.forum_posts.sort { |a, b| a.created_at <=> b.created_at }
 	end
 
-	describe '#current_route' do
-
-		it 'returns the current route' do
-			@helper1.request.path_info = '/'
-			expect(@helper1.current_route).to eq('/')
-		end
-
-	end
-
 	describe '#format_time' do
 
 		it 'formats Time objects' do
@@ -84,16 +75,6 @@ describe 'ApplicationHelper' do
 			expect(@user5.banned).to eq(false)
 			@user6 = ForumUser.find_by(username: "bill")
 			expect(@user6.id).to eq(@user5.id)
-		end
-
-	end
-
-	describe '#cached_route_or_home' do
-
-		it 'redirects to a cached path if set or home if there is no cached path' do 
-			expect(@helper1.cached_route_or_home).to eq('/')
-			@helper1.params[:cached_route] = '/threads'
-			expect(@helper1.cached_route_or_home).to eq('/threads')
 		end
 
 	end
