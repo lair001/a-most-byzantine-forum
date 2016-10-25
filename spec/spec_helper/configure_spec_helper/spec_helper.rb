@@ -5,3 +5,5 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.order = 'default'
 end
+
+BCrypt::Engine::DEFAULT_COST = 4
