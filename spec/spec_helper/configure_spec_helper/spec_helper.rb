@@ -1,4 +1,4 @@
-require 'database_spec_helper'
+# require 'database_spec_helper'
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true

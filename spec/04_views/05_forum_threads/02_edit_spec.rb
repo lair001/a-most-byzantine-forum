@@ -1,5 +1,5 @@
 require 'sinatra_helper'
-require 'views_spec_helper'
+# require 'views_spec_helper'
 
 describe 'forum_threads/edit' do
 

@@ -1,5 +1,5 @@
 require 'sinatra_helper'
-require 'controllers_spec_helper'
+# require 'controllers_spec_helper'
 
 describe 'ForumUsersController' do
 

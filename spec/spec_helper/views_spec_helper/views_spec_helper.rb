@@ -1,4 +1,4 @@
-require 'capybara_spec_helper'
+# require 'capybara_spec_helper'
 
 def use_view_to_login_as(user)
   visit '/login'

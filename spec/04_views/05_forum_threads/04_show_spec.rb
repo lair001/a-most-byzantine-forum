@@ -1,6 +1,6 @@
 require 'sinatra_helper'
-require 'views_spec_helper'
-require 'helpers_spec_helper'
+# require 'views_spec_helper'
+# require 'helpers_spec_helper'
 
 describe 'forum_users/show' do
 

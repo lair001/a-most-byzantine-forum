@@ -1,5 +1,5 @@
 require 'sinatra_helper'
-require 'helpers_spec_helper'
+# require 'helpers_spec_helper'
 
 describe 'ForumPostsHelper' do
 
