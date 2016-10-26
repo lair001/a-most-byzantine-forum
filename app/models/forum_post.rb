@@ -14,6 +14,7 @@ class ForumPost < ActiveRecord::Base
 	validates :forum_thread, presence: true
 
 	validate do
+		presence_of_unique_slug
 		absence_of_forbidden_characters_in :content
 	end
 
@@ -26,7 +27,10 @@ class ForumPost < ActiveRecord::Base
 	after_update :update_thread_after_post_update
 
 	def slug
-		self.forum_user.slug + "_" + self.forum_thread.slug + "_" + self.slugify(:content)[0, 200]
+		slug = ""
+		slug += self.forum_user.slug + "_" if self.forum_user && self.forum_user.slug
+		slug += self.forum_thread.slug + "_" if self.forum_thread && self.forum_thread.slug
+		slug += self.slugify(:content)[0, 200] if self.content
 	end
 
 private
