@@ -79,7 +79,7 @@ class ForumPostsController < Controller
 			end
 			cached_route_or_home if @post.forum_user != current_user && !moderator?
 			@thread = @post.forum_thread
-			@post.tell_about_current_user_and_destroy(current_user)
+			tell_model_about_current_user_and_destroy(@post)
 			if @thread.forum_posts.count == 0
 				@thread.delete
 				redirect '/forum_threads'

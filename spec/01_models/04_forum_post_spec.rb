@@ -8,8 +8,6 @@ describe 'ForumPost' do
     @thread = ForumThread.create(title: "nothing here")
     @post1 = ForumPost.create(content: "ipsum lorem", forum_user_id: @user.id, forum_thread_id: @thread.id)
     @post2 = ForumPost.create(content: "blah blah", forum_user_id: @user.id, forum_thread_id: @thread.id)
-
-    @helper1 = Helper.new
   end
 
   it 'knows its content' do 
@@ -53,7 +51,7 @@ describe 'ForumPost' do
   it "updates the current user's activity when told about the current user and edited" do
     helper.session = { forum_user_id: @user.id }
     @initial_activity = helper.current_user.last_active
-    @post1.tell_about_current_user_and_update(helper.current_user, content: "ipsum lorem and more ipsum lorem")
+    helper.tell_model_about_current_user_and_update(@post1, content: "ipsum lorem and more ipsum lorem")
     expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
 
     @initial_activity = helper.current_user.last_active
@@ -64,11 +62,11 @@ describe 'ForumPost' do
   end
 
   it "updates the current user's activity when told about the current user and destroyed" do
-    @helper1.session = { forum_user_id: @user.id }
-    @initial_activity = @helper1.current_user.last_active
-    @post1.tell_about_current_user_and_destroy(@helper1.current_user)
+    helper.session = { forum_user_id: @user.id }
+    @initial_activity = helper.current_user.last_active
+    helper.tell_model_about_current_user_and_destroy(@post1)
     expect{ForumPost.find(@post1.id)}.to raise_error(ActiveRecord::RecordNotFound)
-    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
+    expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
   end
 
 

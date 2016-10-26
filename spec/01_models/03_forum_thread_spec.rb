@@ -30,7 +30,7 @@ describe 'ForumThread' do
   it "updates the current user's activity when told about the current user and updated" do
     helper.session = { forum_user_id: @user3.id }
     @initial_activity = helper.current_user.last_active
-    @thread1.tell_about_current_user_and_update(helper.current_user, title: "Spam")
+    helper.tell_model_about_current_user_and_update(@thread1, title: "Spam")
     expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
 
     @initial_activity = helper.current_user.last_active
@@ -43,7 +43,7 @@ describe 'ForumThread' do
   it "updates the current user's activity when told about the current user and destroyed" do
     helper.session = { forum_user_id: @user3.id }
     @initial_activity = helper.current_user.last_active
-    @thread1.tell_about_current_user_and_destroy(helper.current_user)
+    helper.tell_model_about_current_user_and_destroy(@thread1)
     expect{ForumThread.find(@thread1.id)}.to raise_error(ActiveRecord::RecordNotFound)
     expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
   end

@@ -109,7 +109,7 @@ class ForumThreadsController < Controller
 				redirect '/forum_threads'
 			end
 			@thread.forum_posts.delete_all
-			@thread.tell_about_current_user_and_destroy(current_user)
+			tell_model_about_current_user_and_destroy(@thread)
 			redirect '/forum_threads'
 		else
 			redirect '/'

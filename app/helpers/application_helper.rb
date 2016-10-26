@@ -26,4 +26,14 @@ module ApplicationHelper
 		string.gsub(/\t/, "&emsp;&emsp;").gsub(/\u2003/, "&emsp;").gsub(/\r\n/, "<br>").gsub(/[\f\n\r]/, "<br>").gsub(/\v/, "<br><br>")
 	end
 
+	def tell_model_about_current_user_and_update(model, update_hash)
+		model.current_user = current_user
+		model.update(update_hash)
+	end
+
+	def tell_model_about_current_user_and_destroy(model)
+		model.current_user = current_user
+		model.destroy
+	end
+
 end

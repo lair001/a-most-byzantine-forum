@@ -109,7 +109,7 @@ describe 'ForumUser' do
   it "updates the current user's activity when told about the current user and updated" do
     helper.session = { forum_user_id: @user6.id }
     @initial_activity = helper.current_user.last_active
-    @user5.tell_about_current_user_and_update(helper.current_user, username: "sally")
+    helper.tell_model_about_current_user_and_update(@user5, username: "sally")
     expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
 
     @initial_activity = helper.current_user.last_active
