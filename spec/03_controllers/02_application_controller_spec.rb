@@ -13,7 +13,7 @@ describe 'ApplicationController' do
 	    get '/'
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to eq("/")
-      	expect(last_response.body).to include("Chat About All Things Roman")
+      	expect_path(:root)
 	  end
 
 	end
@@ -23,8 +23,7 @@ describe 'ApplicationController' do
 	  it 'loads a tribute page' do
 	    get '/C11P'
 		expect(last_response.status).to eq(200)
-		expect(last_request.path).to eq("/C11P")
-      	expect(last_response.body).to include("Constantine XI Palaiologos")
+		expect_path(:tribute)
 	  end
 
 	end

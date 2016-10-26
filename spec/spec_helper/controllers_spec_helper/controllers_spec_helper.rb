@@ -12,3 +12,9 @@ def use_controller_to_login_as(user)
   }
   post '/login', params
 end
+
+def expect_path(symbol)
+	expect(last_request.path).to eq(self.send("#{symbol}_path"))
+	expect(last_response.body).to include(self.send("#{symbol}_title")) if self.respond_to?("#{symbol}_title")
+	expect(last_response.body).to include(self.send("#{symbol}_tagline")) if self.respond_to?("#{symbol}_tagline")
+end
