@@ -1,6 +1,7 @@
 class ForumPost < ActiveRecord::Base
 
 	include Forbiddable::InstanceMethods
+	include Slugifiable::InstanceMethods
 	include Currentable::InstanceMethods
 
 	belongs_to :forum_user
@@ -21,6 +22,10 @@ class ForumPost < ActiveRecord::Base
 
 	after_update :update_current_user_activity
 	after_update :update_thread_after_post_update
+
+	def slug
+		self.forum_user.slug + "_" + self.forum_thread.slug + "_" + self.slugify(:content)[0, 200]
+	end
 
 private
 

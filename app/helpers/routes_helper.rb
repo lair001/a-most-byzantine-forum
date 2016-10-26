@@ -26,7 +26,6 @@ module RoutesHelper
 		else
 			"/forum_threads/:forum_thread_slug/forum_posts/:slug"
 		end
-
 	end
 
 end
