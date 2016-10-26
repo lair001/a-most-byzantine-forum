@@ -27,14 +27,14 @@ class ForumPost < ActiveRecord::Base
 	after_update :update_thread_after_post_update
 
 	def slug
-		if @slug
-			@slug
-		else
-			@slug = ""
-			@slug += self.forum_user_slug + "_" if self.forum_user && self.forum_user_slug
-			@slug += self.forum_thread_slug + "_" if self.forum_thread && self.forum_thread_slug
-			@slug += self.slugify(:content)[0, 200] if self.content
-		end
+		@slug ||= self.build_slug
+	end
+
+	def build_slug
+		@slug = ""
+		@slug += self.forum_user_slug + "_" if self.forum_user && self.forum_user_slug
+		@slug += self.forum_thread_slug + "_" if self.forum_thread && self.forum_thread_slug
+		@slug += self.slugify(:content)[0, 200] if self.content
 	end
 
 	def forum_user_slug
