@@ -21,8 +21,6 @@ describe 'forum_users/show' do
     @post3.update(content: "Maybe I was too confrontational.", forum_user_id: 2, forum_thread_id: 1)
 
     @user2_posts_array = @user2.forum_posts.sort { |a, b| b.updated_at <=> a.updated_at }
-
-    @helper1 = Helper.new
   end
 
   it "renders a user profile with a listing of the user's posts (recently edited posts come first)" do
@@ -35,8 +33,8 @@ describe 'forum_users/show' do
     #testing for order of posts using css selectors
     post_selector = 'div.forum-divider-top div.row a'
     @user2_posts_array.each do |post|
-    	expect(page.body).to include(@helper1.format_time(post.updated_at))
-    	expect(page.body).to include(@helper1.format_time(post.created_at))
+    	expect(page.body).to include(helper.format_time(post.updated_at))
+    	expect(page.body).to include(helper.format_time(post.created_at))
     	expect(page.body).to include(post.content)
     	expect(page.first(post_selector + "[href='/forum_threads/#{post.forum_thread.slug}##{post.id}']").text).to include(post.forum_thread.title)
     	post_selector = 'div.forum-divider-top+' + post_selector
