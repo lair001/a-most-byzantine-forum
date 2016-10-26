@@ -32,6 +32,7 @@ class Helper
   def initialize
     self.request = Request.new
     self.params = {}
+    self.session = {}
   end
 
   def redirect(string)
