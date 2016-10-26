@@ -10,11 +10,11 @@ def use_controller_to_login_as(user)
   params = {
     forum_user: { username: "#{user.username}", password: "#{user.password}" }
   }
-  post login_path, params
+  post @helper.login_path, params
 end
 
 def expect_path(symbol)
-	expect(last_request.path).to eq(self.send("#{symbol}_path"))
-	expect(last_response.body).to include(self.send("#{symbol}_title")) if self.respond_to?("#{symbol}_title")
-	expect(last_response.body).to include(self.send("#{symbol}_tagline")) if self.respond_to?("#{symbol}_tagline")
+	expect(last_request.path).to eq(@helper.send("#{symbol}_path"))
+	expect(last_response.body).to include(@helper.send("#{symbol}_title")) if @helper.respond_to?("#{symbol}_title")
+	expect(last_response.body).to include(@helper.send("#{symbol}_tagline")) if @helper.respond_to?("#{symbol}_tagline")
 end

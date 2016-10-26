@@ -8,6 +8,6 @@ require_relative '../config/environment'
 # require 'spec_helper'
 require_all 'spec/spec_helper'
 
-include RoutesHelper
-include TitlesHelper
-include TaglinesHelper
+# include RoutesHelper
+# include TitlesHelper
+# include TaglinesHelper

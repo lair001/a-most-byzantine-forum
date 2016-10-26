@@ -11,6 +11,8 @@ class Helper
   include ForumPostsHelper
   include ApplicationHelper
   include RoutesHelper
+  include TitlesHelper
+  include TaglinesHelper
 
   ATTR_ARRAY = [
     :session,
@@ -39,4 +41,8 @@ class Helper
     @current_user.dup.freeze
   end
 
+end
+
+RSpec.configure do |config|
+    config.before(:each) { @helper = Helper.new }
 end
