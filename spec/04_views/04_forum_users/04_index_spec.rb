@@ -11,8 +11,6 @@ describe 'forum_users/index' do
     @user4 = ForumUser.create(username: "wal", email: "wal@wal.com", password: "wal", administrator: true, id: 4)
 
     @user_array = ForumUser.all.sort { |a, b| a.username <=> b.username }
-
-    @helper1 = Helper.new
   end
 
   it 'renders an alphabetical listing of all users' do 
@@ -22,8 +20,8 @@ describe 'forum_users/index' do
     #testing for order of users using css selectors
     user_selector = 'div.forum-divider-top div.row a'
     @user_array.each do |user|
-    	expect(page.body).to include(@helper1.format_time(user.updated_at))
-    	expect(page.body).to include(@helper1.format_time(user.created_at))
+    	expect(page.body).to include(helper.format_time(user.updated_at))
+    	expect(page.body).to include(helper.format_time(user.created_at))
     	expect(page.body).to include(user.email)
     	expect(page.first(user_selector + "[href='/forum_users/#{user.slug}']").text).to include(user.username)
     	user_selector = 'div.forum-divider-top+' + user_selector
