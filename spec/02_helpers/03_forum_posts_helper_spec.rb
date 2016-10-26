@@ -4,8 +4,6 @@ require 'sinatra_helper'
 describe 'ForumPostsHelper' do
 
 	before do
-		@helper1 = Helper.new
-
 		@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
 		@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal", id: 2)
 		@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true, id: 3)
@@ -34,8 +32,8 @@ describe 'ForumPostsHelper' do
 	describe '#sort_user_posts' do
 
 		it "sorts a user's posts based on time when last updated (recently updated threads come first)" do 
-		@helper1.sort_user_posts(@user2)
-		expect(@helper1.user_posts).to eq(@user2_posts_array)
+			helper.sort_user_posts(@user2)
+			expect(helper.user_posts).to eq(@user2_posts_array)
 		end
 
 	end
@@ -43,9 +41,9 @@ describe 'ForumPostsHelper' do
 	describe '#sort_thread_posts' do
 
 		it "sorts a user's posts based on time when last updated (recently updated threads come first)" do 
-			@helper1.thread = @thread1
-		@helper1.sort_thread_posts
-		expect(@helper1.thread_posts).to eq(@thread1_posts_array)
+			helper.thread = @thread1
+			helper.sort_thread_posts
+			expect(helper.thread_posts).to eq(@thread1_posts_array)
 		end
 
 	end

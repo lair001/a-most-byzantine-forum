@@ -51,16 +51,16 @@ describe 'ForumPost' do
   end
 
   it "updates the current user's activity when told about the current user and edited" do
-    @helper1.session = { forum_user_id: @user.id }
-    @initial_activity = @helper1.current_user.last_active
-    @post1.tell_about_current_user_and_update(@helper1.current_user, content: "ipsum lorem and more ipsum lorem")
-    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
+    helper.session = { forum_user_id: @user.id }
+    @initial_activity = helper.current_user.last_active
+    @post1.tell_about_current_user_and_update(helper.current_user, content: "ipsum lorem and more ipsum lorem")
+    expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
 
-    @initial_activity = @helper1.current_user.last_active
+    @initial_activity = helper.current_user.last_active
     params = { "forum_post" => { content: "where be my lorem?" } }
-    params["forum_post"]["current_user"] = @helper1.current_user
-    @helper1.set_and_save_attributes(@post1, @helper1.trim_whitespace(params["forum_post"], ["content"]), ["content", "current_user"])
-    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
+    params["forum_post"]["current_user"] = helper.current_user
+    helper.set_and_save_attributes(@post1, helper.trim_whitespace(params["forum_post"], ["content"]), ["content", "current_user"])
+    expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
   end
 
   it "updates the current user's activity when told about the current user and destroyed" do

@@ -8,8 +8,6 @@ describe 'ForumThread' do
 
     @thread1 = ForumThread.create(title: "test 123")
     @thread2 = ForumThread.create(title: "Wow, Bob")
-
-    @helper1 = Helper.new
   end
 
   it 'can slug the title' do
@@ -30,24 +28,24 @@ describe 'ForumThread' do
   end
 
   it "updates the current user's activity when told about the current user and updated" do
-    @helper1.session = { forum_user_id: @user3.id }
-    @initial_activity = @helper1.current_user.last_active
-    @thread1.tell_about_current_user_and_update(@helper1.current_user, title: "Spam")
-    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
+    helper.session = { forum_user_id: @user3.id }
+    @initial_activity = helper.current_user.last_active
+    @thread1.tell_about_current_user_and_update(helper.current_user, title: "Spam")
+    expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
 
-    @initial_activity = @helper1.current_user.last_active
+    @initial_activity = helper.current_user.last_active
     params = { "forum_thread" => { title: "Spam and more spam" } }
-    params["forum_thread"]["current_user"] = @helper1.current_user
-    @helper1.set_and_save_attributes(@thread1, @helper1.trim_whitespace(params["forum_thread"], ["title"]), ["title", "current_user"])
-    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
+    params["forum_thread"]["current_user"] = helper.current_user
+    helper.set_and_save_attributes(@thread1, helper.trim_whitespace(params["forum_thread"], ["title"]), ["title", "current_user"])
+    expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
   end
 
   it "updates the current user's activity when told about the current user and destroyed" do
-    @helper1.session = { forum_user_id: @user3.id }
-    @initial_activity = @helper1.current_user.last_active
-    @thread1.tell_about_current_user_and_destroy(@helper1.current_user)
+    helper.session = { forum_user_id: @user3.id }
+    @initial_activity = helper.current_user.last_active
+    @thread1.tell_about_current_user_and_destroy(helper.current_user)
     expect{ForumThread.find(@thread1.id)}.to raise_error(ActiveRecord::RecordNotFound)
-    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
+    expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
   end
 
   it 'validates for the presence of title' do 

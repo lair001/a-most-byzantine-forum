@@ -4,8 +4,6 @@ require 'sinatra_helper'
 describe 'ApplicationHelper' do
 
 	before do
-		@helper1 = Helper.new
-
 		@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
 		@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal", id: 2)
 		@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true, id: 3)
@@ -35,7 +33,7 @@ describe 'ApplicationHelper' do
 
 		it 'formats Time objects' do
 			@time1 = Time.new(2011, 11, 11, 11, 11, 11, "+00:00")
-			expect(@helper1.format_time(@time1)).to eq("2011/11/11 11:11:11")
+			expect(helper.format_time(@time1)).to eq("2011/11/11 11:11:11")
 		end
 
 	end
@@ -46,14 +44,14 @@ describe 'ApplicationHelper' do
 			@user5 = ForumUser.create(username: "phil", email: "phil@phil.com", password: "phil", moderator: true, administrator: true, id: 5)
 			attr_hash = { username: "bill", email: "bill@bill.com", password: "bill", banned: true }
 			settable_attr_array = ["username", "email", "password"]
-			@helper1.set_attributes(@user5, attr_hash, settable_attr_array)
+			helper.set_attributes(@user5, attr_hash, settable_attr_array)
 			expect(@user5.username).to eq("bill")
 			expect(@user5.email).to eq("bill@bill.com")
 			expect(@user5.password).to eq("bill")
 			expect(@user5.banned).to eq(false)
 			attr_hash = { username: "will", email: "will@will.com", password: "will", banned: true }
 			settable_attr_array = [:email, :password, :banned]
-			@helper1.set_attributes(@user5, attr_hash, settable_attr_array)
+			helper.set_attributes(@user5, attr_hash, settable_attr_array)
 			expect(@user5.username).to eq("bill")
 			expect(@user5.email).to eq("will@will.com")
 			expect(@user5.password).to eq("will")
@@ -68,7 +66,7 @@ describe 'ApplicationHelper' do
 			@user5 = ForumUser.create(username: "phil", email: "phil@phil.com", password: "phil", moderator: true, administrator: true, id: 5)
 			attr_hash = { username: "bill", email: "bill@bill.com", password: "bill", banned: true }
 			settable_attr_array = ["username", "email", "password"]
-			@helper1.set_and_save_attributes(@user5, attr_hash, settable_attr_array)
+			helper.set_and_save_attributes(@user5, attr_hash, settable_attr_array)
 			expect(@user5.username).to eq("bill")
 			expect(@user5.email).to eq("bill@bill.com")
 			expect(@user5.password).to eq("bill")
@@ -83,13 +81,13 @@ describe 'ApplicationHelper' do
 
 		it 'trims whitespace in hash key values where the hash key is included in an array' do 
 			params = { content: " A \t great \n\t time \nnow,\r then.\n", title: "  A  Great \t Time", password: " \tabc  dd \r c" }
-			params = @helper1.trim_whitespace(params, [:content, :title])
+			params = helper.trim_whitespace(params, [:content, :title])
 			expect(params[:content]).to eq("A\tgreat\n\ttime\nnow,\rthen.")
 			expect(params[:title]).to eq("A Great\tTime")
 			expect(params[:password]).to eq(" \tabc  dd \r c")
 
 			params = { "content" => " A \t great \n\t time \nnow,\r then.\n", "title" => "  A  Great \t Time", "password" => " \tabc  dd \r c" }
-			params = @helper1.trim_whitespace(params, ["content", "title"])
+			params = helper.trim_whitespace(params, ["content", "title"])
 			expect(params["content"]).to eq("A\tgreat\n\ttime\nnow,\rthen.")
 			expect(params["title"]).to eq("A Great\tTime")
 			expect(params["password"]).to eq(" \tabc  dd \r c")
@@ -100,7 +98,7 @@ describe 'ApplicationHelper' do
 	describe 'whitespace_as_html' do
 
 		it 'converts whitespace into html entities' do
-			expect(@helper1.whitespace_as_html("ipsum|\t|\u2003|\r\n|\f|\n|\r|\v|lorem")).to eq("ipsum|&emsp;&emsp;|&emsp;|<br>|<br>|<br>|<br>|<br><br>|lorem")
+			expect(helper.whitespace_as_html("ipsum|\t|\u2003|\r\n|\f|\n|\r|\v|lorem")).to eq("ipsum|&emsp;&emsp;|&emsp;|<br>|<br>|<br>|<br>|<br><br>|lorem")
 		end
 
 	end

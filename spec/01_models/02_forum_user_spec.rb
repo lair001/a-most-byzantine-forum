@@ -10,8 +10,6 @@ describe 'ForumUser' do
     @user4 = ForumUser.create(username: "hackzor", email: "hackzor@gmail.com", password: "1337", banned: true)
     @user5 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true)
     @user6 = ForumUser.create(username: "wal", email: "wal@wal.com", password: "wal", administrator: true)
-
-    @helper1 = Helper.new
   end
   
   it 'can slug the username' do
@@ -109,16 +107,16 @@ describe 'ForumUser' do
   end
 
   it "updates the current user's activity when told about the current user and updated" do
-    @helper1.session = { forum_user_id: @user6.id }
-    @initial_activity = @helper1.current_user.last_active
-    @user5.tell_about_current_user_and_update(@helper1.current_user, username: "sally")
-    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
+    helper.session = { forum_user_id: @user6.id }
+    @initial_activity = helper.current_user.last_active
+    @user5.tell_about_current_user_and_update(helper.current_user, username: "sally")
+    expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
 
-    @initial_activity = @helper1.current_user.last_active
+    @initial_activity = helper.current_user.last_active
     params = { "forum_user" => { username: "sally" } }
-    params["forum_user"]["current_user"] = @helper1.current_user
-    @helper1.set_and_save_attributes(@user5, @helper1.trim_whitespace(params["forum_user"], ["username"]), ["username", "email", "password", "current_user"])
-    expect(@helper1.current_user.last_active <=> @initial_activity).to eq(1)
+    params["forum_user"]["current_user"] = helper.current_user
+    helper.set_and_save_attributes(@user5, helper.trim_whitespace(params["forum_user"], ["username"]), ["username", "email", "password", "current_user"])
+    expect(helper.current_user.last_active <=> @initial_activity).to eq(1)
   end
 
   it 'has many threads through posts' do 

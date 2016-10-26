@@ -4,8 +4,6 @@ require 'sinatra_helper'
 describe 'ForumThreadsHelper' do
 
 	before do
-		@helper1 = Helper.new
-
 		@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
 		@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal", id: 2)
 		@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true, id: 3)
@@ -34,8 +32,8 @@ describe 'ForumThreadsHelper' do
 	describe '#sort_threads' do
 
 		it 'sorts threads based on time when last updated (recently updated threads come first)' do 
-		@helper1.sort_threads
-		expect(@helper1.threads).to eq(@thread_array)
+		helper.sort_threads
+		expect(helper.threads).to eq(@thread_array)
 		end
 
 	end

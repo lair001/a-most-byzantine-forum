@@ -4,8 +4,6 @@ require 'sinatra_helper'
 describe 'ForumUsersHelper' do
 
 	before do
-		@helper1 = Helper.new
-
 		@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
 		@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal", id: 2)
 		@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true, id: 3)
@@ -34,13 +32,13 @@ describe 'ForumUsersHelper' do
 	describe '#logged in' do
 
 	  	it 'returns true if session[:forum_user_id] is set' do
-	  		@helper1.session = { forum_user_id: 1 }
-	  		expect(@helper1.logged_in?).to eq(true)
+	  		helper.session = { forum_user_id: 1 }
+	  		expect(helper.logged_in?).to eq(true)
 	  	end
 
 	  	it 'returns false if session[:forum_user_id] is not set' do
-	  		@helper1.session = {}
-	  		expect(@helper1.logged_in?).to eq(false)
+	  		helper.session = {}
+	  		expect(helper.logged_in?).to eq(false)
 	  	end
 
 	end
@@ -48,9 +46,9 @@ describe 'ForumUsersHelper' do
 	describe '#current_user' do
 
 	  	it 'returns the current user' do
-	  		@helper1.session = { forum_user_id: 2 }
-	  		@helper1.current_user
-	  		expect(@helper1.view_current_user.username).to eq("hal")
+	  		helper.session = { forum_user_id: 2 }
+	  		helper.current_user
+	  		expect(helper.view_current_user.username).to eq("hal")
 	  	end
 
 	end
@@ -58,15 +56,15 @@ describe 'ForumUsersHelper' do
 	describe '#moderator?' do
 
 	  	it 'returns true if the current user is a moderator' do
-	  		@helper1.session = { forum_user_id: 3 }
-	  		@helper1.current_user
-	  		expect(@helper1.moderator?).to eq(true)
+	  		helper.session = { forum_user_id: 3 }
+	  		helper.current_user
+	  		expect(helper.moderator?).to eq(true)
 	  	end
 
 	  	it 'returns false if the current user is not a moderator' do
-	  		@helper1.session = { forum_user_id: 2 }
-	  		@helper1.current_user
-	  		expect(@helper1.moderator?).to eq(false)
+	  		helper.session = { forum_user_id: 2 }
+	  		helper.current_user
+	  		expect(helper.moderator?).to eq(false)
 	  	end
 
 	end
@@ -74,15 +72,15 @@ describe 'ForumUsersHelper' do
 	describe '#administrator?' do
 
 		it 'returns true if the current user is a administrator' do
-	  		@helper1.session = { forum_user_id: 4 }
-	  		@helper1.current_user
-	  		expect(@helper1.administrator?).to eq(true)
+	  		helper.session = { forum_user_id: 4 }
+	  		helper.current_user
+	  		expect(helper.administrator?).to eq(true)
 		end
 
 		it 'returns false if the current user is not administratator' do
-			@helper1.session = { forum_user_id: 2 }
-			@helper1.current_user
-			expect(@helper1.administrator?).to eq(false)
+			helper.session = { forum_user_id: 2 }
+			helper.current_user
+			expect(helper.administrator?).to eq(false)
   		end
 
 	end
@@ -90,8 +88,8 @@ describe 'ForumUsersHelper' do
 	describe '#sort_users' do
 
 		it 'sorts users alphabetically' do
-		@helper1.sort_users
-		expect(@helper1.users).to eq(@user_array)
+		helper.sort_users
+		expect(helper.users).to eq(@user_array)
 		end
 
 	end
