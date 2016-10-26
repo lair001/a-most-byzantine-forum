@@ -11,9 +11,14 @@ class Helper
   include ForumPostsHelper
   include ApplicationHelper
   include RoutesHelper
-  # include PathsHelper
   include TitlesHelper
   include TaglinesHelper
+
+  # include PathsHelper::Application
+  # include PathsHelper::ForumUsers
+  # include PathsHelper::ForumThreads
+  # include PathsHelper::ForumPosts
+  # include PathsHelper::Sessions
 
   ATTR_ARRAY = [
     :session,
@@ -54,4 +59,9 @@ module HelperContext
   let(:helper) { Helper.new }
 end
 
-include PathsHelper # mix path macros into rspec environment
+# mix path macros into rspec environment
+include PathsHelper::Application
+include PathsHelper::ForumUsers
+include PathsHelper::ForumThreads
+include PathsHelper::ForumPosts
+include PathsHelper::Sessions

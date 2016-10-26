@@ -16,7 +16,16 @@ class Controller < Sinatra::Base
 	helpers TitlesHelper
 	helpers TaglinesHelper
 
-	helpers PathsHelper
-	register PathsHelper
+	helpers PathsHelper::Application
+	helpers PathsHelper::ForumUsers
+	helpers PathsHelper::ForumThreads
+	helpers PathsHelper::ForumPosts
+	helpers PathsHelper::Sessions
+
+	register PathsHelper::Application
+	register PathsHelper::ForumUsers
+	register PathsHelper::ForumThreads
+	register PathsHelper::ForumPosts
+	register PathsHelper::Sessions
 
 end
