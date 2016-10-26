@@ -22,7 +22,7 @@ class ForumThread < ActiveRecord::Base
 	after_update :update_current_user_activity
 
 	def slug
-		self.slugify(:title)
+		@slug ||= self.slugify(:title)
 	end
 
 	def forum_post_attributes=(attributes_hash)

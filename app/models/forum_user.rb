@@ -27,7 +27,7 @@ class ForumUser < ActiveRecord::Base
 	after_update :update_current_user_activity
 
 	def slug
-		self.slugify(:username)
+		@slug ||= self.slugify(:username)
 	end
 
 	def title
