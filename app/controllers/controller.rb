@@ -12,10 +12,11 @@ class Controller < Sinatra::Base
 	helpers ForumThreadsHelper
 	helpers ForumPostsHelper
 	helpers ApplicationHelper
+	helpers RoutesHelper
 	helpers TitlesHelper
 	helpers TaglinesHelper
 
-	register RoutesHelper
-	helpers RoutesHelper
+	helpers PathsHelper
+	register PathsHelper
 
 end

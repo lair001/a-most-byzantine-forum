@@ -7,10 +7,10 @@ describe 'ApplicationController' do
 
 	end
 
-  	describe "get '/'" do
+  	describe "get '#{root_path}'" do
 
 	  it 'loads the homepage' do
-	    get '/'
+	    get root_path
 		expect(last_response.status).to eq(200)
 		expect(last_request.path).to eq("/")
       	expect_path(:root)
@@ -18,10 +18,10 @@ describe 'ApplicationController' do
 
 	end
 
-	describe "get '/C11P'" do
+	describe "get '#{tribute_path}'" do
 
 	  it 'loads a tribute page' do
-	    get '/C11P'
+	    get tribute_path
 		expect(last_response.status).to eq(200)
 		expect_path(:tribute)
 	  end

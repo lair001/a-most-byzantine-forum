@@ -11,6 +11,7 @@ class Helper
   include ForumPostsHelper
   include ApplicationHelper
   include RoutesHelper
+  # include PathsHelper
   include TitlesHelper
   include TaglinesHelper
 
@@ -51,3 +52,5 @@ module HelperContext
   extend RSpec::SharedContext
   let(:helper) { Helper.new }
 end
+
+include PathsHelper # mix path macros into rspec environment
