@@ -2,7 +2,7 @@ require 'sinatra_helper'
 # require 'views_spec_helper'
 # require 'helpers_spec_helper'
 
-describe 'forum_users/show' do
+describe 'forum_threads/show' do
 
     before do
         @user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
@@ -62,7 +62,7 @@ describe 'forum_users/show' do
         use_view_to_login_as(@user3)
         visit "/forum_threads/#{@thread1.slug}"
         @thread1_posts_array.each do |post|
-            expect(page).to have_link('Edit', href: "/forum_posts/#{post.id}/edit")
+            expect(page).to have_link('Edit', href: "#{helper.edit_forum_thread_forum_post_path(@thread1, post)}")
         end
     end
 
@@ -72,9 +72,9 @@ describe 'forum_users/show' do
 
         @thread1_posts_array.each do |post|
             if post.forum_user == @user2
-                expect(page).to have_link('Edit', href: "/forum_posts/#{post.id}/edit")
+                expect(page).to have_link('Edit', href: "#{helper.edit_forum_thread_forum_post_path(@thread1, post)}")
             else
-                expect(page).to have_no_link('Edit', href: "/forum_posts/#{post.id}/edit")
+                expect(page).to have_no_link('Edit', href: "#{helper.edit_forum_thread_forum_post_path(@thread1, post)}")
             end
         end
     end
@@ -85,9 +85,9 @@ describe 'forum_users/show' do
 
         @thread1_posts_array.each do |post|
             if post.forum_user == @user4
-                expect(page).to have_link('Edit', href: "/forum_posts/#{post.id}/edit")
+                expect(page).to have_link('Edit', href: "#{helper.edit_forum_thread_forum_post_path(@thread1, post)}")
             else
-                expect(page).to have_no_link('Edit', href: "/forum_posts/#{post.id}/edit")
+                expect(page).to have_no_link('Edit', href: "#{helper.edit_forum_thread_forum_post_path(@thread1, post)}")
             end
         end
     end

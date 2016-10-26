@@ -90,7 +90,7 @@
             <button type="submit" class="btn btn-default submit-btn"><i class="fa fa-search"></i></button>
           </form>
           <ul class="nav navbar-nav navbar-right">
-            <% if current_route == '/forum_threads' || ( current_route != '/forum_threads/new' && current_route.match(/\/forum_threads\/[^\/]+/)) %>
+            <% if current_route == '/forum_threads' || ( current_route != '/forum_threads/new' && current_route.match(/\/forum_threads\/[^\/]+\z/)) %>
               <li><a href="<%= current_route == '/forum_threads' ? '/forum_threads/new' : "/forum_threads/#{@thread.slug}/forum_posts/new" %>">Create</a></li>
             <% end %>
             <% if current_route == tribute_path %>
@@ -112,7 +112,7 @@
     
     <script src='/javascripts/jquery-2.2.4.min.js'></script>
     <script src='/javascripts/bootstrap.min.js'></script>
-    <% if current_route.match(/\/(forum_posts\/(\d)+\/edit|forum_(posts|threads)\/new)/) %>
+    <% if current_route.match(/\/(forum_posts\/(.)+\/edit|forum_(posts|threads)\/new)/) %>
       <script src='/javascripts/taboverride.min.js'></script>
       <script src='/javascripts/enable-taboverride.js'></script>
     <% end %>

@@ -33,7 +33,7 @@
 				</div>
 			</div>
 			<% if moderator? || user == current_user %>
-				<a href="/forum_posts/<%=post.id%>/edit">
+				<a href="<%=edit_forum_thread_forum_post_path(@thread, post)%>">
 				<button type="submit" id="edit" class="btn btn-primary btn-forum pull-right quarter-width shadow">
 					<i class="fa fa-pencil-square-o"></i> Edit
 	 			</button>

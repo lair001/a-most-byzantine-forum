@@ -46,18 +46,18 @@ describe 'ForumUsersController' do
 
   end
 
-  describe "get '/forum_posts/:id/edit'" do
+  describe "get '/forum_threads/:forum_thread_slug/forum_posts/:slug/edit'" do
 
   	it "redirects to / if not logged in" do 
-  		get "/forum_posts/#{@post1.id}/edit"
+  		get "#{helper.edit_forum_thread_forum_post_path(@post1.forum_thread, @post1)}"
   		expect_redirect
-		expect(last_request.path).to eq("/")
-		expect(last_response.body).to include("Chat About All Things Roman")
+  		expect(last_request.path).to eq("/")
+  		expect(last_response.body).to include("Chat About All Things Roman")
   	end
 
   	it "redirects to /forum_threads if attempting to edit a non-existent post while logged_in" do 
   		use_controller_to_login_as(@user1)
-  		get "/forum_posts/#{@post1.id + 100}/edit"
+  		get "/forum_threads/#{@post1.forum_thread.slug}/forum_posts/#{@post1.slug + "gibberish"}/edit"
   		expect_redirect
   		expect(last_request.path).to eq("/forum_threads")
   		expect(last_response.body).to include("Threads")
@@ -65,25 +65,25 @@ describe 'ForumUsersController' do
 
   	it "renders forum_posts/edit if editing an existent post while logged in as a moderator even if the post does not belong to the user" do 
   		use_controller_to_login_as(@user3)
-  		get "/forum_posts/#{@post1.id}/edit"
+  		get "#{helper.edit_forum_thread_forum_post_path(@post1.forum_thread, @post1)}"
     	expect(last_response.status).to eq(200)
-    	expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
+    	expect(last_request.path).to eq("#{helper.edit_forum_thread_forum_post_path(@post1.forum_thread, @post1)}")
     	expect(last_response.body).to include("#{@post1.id}")
     	expect(last_response.body).to include("Editing")
   	end
 
   	it "renders forum_posts/edit if editing an existent post while logged in as an ordinary user if the post belongs to the user" do 
   		use_controller_to_login_as(@user2)
-  		get "/forum_posts/#{@post1.id}/edit"
+  		get "#{helper.edit_forum_thread_forum_post_path(@post1.forum_thread, @post1)}"
   		expect(last_response.status).to eq(200)
-  		expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
+  		expect(last_request.path).to eq("#{helper.edit_forum_thread_forum_post_path(@post1.forum_thread, @post1)}")
   		expect(last_response.body).to include("#{@post1.id}")
   		expect(last_response.body).to include("Editing")
   	end
 
   	it "redirects to /forum_threads if attempting to edit an existent post while logged in as an adminstrator without moderator powers if the post does not belong to the user" do 
   		use_controller_to_login_as(@user4)
-  		get "/forum_posts/#{@post1.id}/edit"
+  		get "#{helper.edit_forum_thread_forum_post_path(@post1.forum_thread, @post1)}"
   		expect_redirect
   		expect(last_request.path).to eq("/forum_threads")
   		expect(last_response.body).to include("Threads")
@@ -196,7 +196,7 @@ describe 'ForumUsersController' do
   	it "redirects to cached route if logged in, a cached route is set, and attempting to edit a non-existent post" do 
   		use_controller_to_login_as(@user2)
   		params = {
-  			cached_route: "/forum_posts/#{@post1.id}/edit",
+  			cached_route: "#{helper.edit_forum_thread_forum_post_path(@post1.forum_thread, @post1)}",
   			forum_post: {
   				content: "I'm sorry, please don't ban me.",
   				forum_user_id: "2",
@@ -206,7 +206,7 @@ describe 'ForumUsersController' do
   		}
   		patch "/forum_posts", params
   		expect_redirect
-  		expect(last_request.path).to eq("/forum_posts/#{@post1.id}/edit")
+  		expect(last_request.path).to eq("#{helper.edit_forum_thread_forum_post_path(@post1.forum_thread, @post1)}")
   		expect(last_response.body).to include("#{@post1.id}")
   		expect(last_response.body).to include("Editing")
   	end

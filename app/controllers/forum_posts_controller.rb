@@ -11,13 +11,10 @@ class ForumPostsController < Controller
 		end
 	end
 
-	get '/forum_posts/:id/edit' do 
+	get edit_forum_thread_forum_post_path do 
 		if logged_in?
-			begin
-				@post = ForumPost.find(params[:id])
-			rescue ActiveRecord::RecordNotFound
-				redirect '/forum_threads'
-			end
+			@post = ForumPost.find_by_slug(params[:slug])
+			redirect '/forum_threads' if @post.nil?
 			if moderator? || @post.forum_user == current_user
 				erb :'forum_posts/edit.html'
 			else

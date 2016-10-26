@@ -4,6 +4,8 @@ class ForumPost < ActiveRecord::Base
 	include Slugifiable::InstanceMethods
 	include Currentable::InstanceMethods
 
+	extend Slugifiable::ClassMethods
+
 	belongs_to :forum_user
 	belongs_to :forum_thread
 
