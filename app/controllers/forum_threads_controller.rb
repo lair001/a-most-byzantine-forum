@@ -5,7 +5,7 @@ class ForumThreadsController < Controller
 			sort_threads
 			erb :'forum_threads/index.html'
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -15,7 +15,7 @@ class ForumThreadsController < Controller
 			@post = ForumPost.new
 			erb :'forum_threads/new.html'
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -29,7 +29,7 @@ class ForumThreadsController < Controller
 				redirect '/forum_threads?message=Title+not+found.'
 			end
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -59,7 +59,7 @@ class ForumThreadsController < Controller
 	# 			# redirect '/forum_threads/new'
 	# 		end
 	# 	else
-	# 		redirect '/'
+	# 		redirect root_path
 	# 	end
 	# end
 
@@ -76,7 +76,7 @@ class ForumThreadsController < Controller
 				# redirect '/forum_threads/new'
 			end
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -87,7 +87,7 @@ class ForumThreadsController < Controller
 			sort_thread_posts
 			erb :'forum_threads/show.html'
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -97,7 +97,7 @@ class ForumThreadsController < Controller
 			redirect '/forum_threads' if @thread.nil? || !moderator?
 			erb :'forum_threads/edit.html'
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -112,7 +112,7 @@ class ForumThreadsController < Controller
 			tell_model_about_current_user_and_destroy(@thread)
 			redirect '/forum_threads'
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -132,7 +132,7 @@ class ForumThreadsController < Controller
 				# cached_route_or_home
 			end
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 

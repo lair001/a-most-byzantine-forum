@@ -7,7 +7,7 @@ class ForumPostsController < Controller
 			@post = ForumPost.new
 			erb :'forum_posts/new.html'
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -24,7 +24,7 @@ class ForumPostsController < Controller
 				redirect '/forum_threads'
 			end
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -45,7 +45,7 @@ class ForumPostsController < Controller
 				# cached_route_or_home
 			end
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -66,7 +66,7 @@ class ForumPostsController < Controller
 				# cached_route_or_home
 			end
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -87,7 +87,7 @@ class ForumPostsController < Controller
 				cached_route_or_home
 			end
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 

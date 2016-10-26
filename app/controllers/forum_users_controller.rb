@@ -28,7 +28,7 @@ class ForumUsersController < Controller
 				redirect '/forum_users?message=Username+not+found.'
 			end
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -70,9 +70,9 @@ class ForumUsersController < Controller
 	get '/logout' do 
 		if logged_in?
 			session.clear
-			redirect '/'
+			redirect root_path
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -81,7 +81,7 @@ class ForumUsersController < Controller
 			sort_users
 			erb :'forum_users/index.html'
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -92,7 +92,7 @@ class ForumUsersController < Controller
 			sort_user_posts(@user)
 			erb :'forum_users/show.html'
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -102,10 +102,10 @@ class ForumUsersController < Controller
 			if administrator? || (@user && @user == current_user)
 				erb :'forum_users/edit.html'
 			else
-				redirect '/'
+				redirect root_path
 			end
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
@@ -131,7 +131,7 @@ class ForumUsersController < Controller
 				# cached_route_or_home
 			end
 		else
-			redirect '/'
+			redirect root_path
 		end
 	end
 
