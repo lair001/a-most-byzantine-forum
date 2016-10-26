@@ -43,6 +43,11 @@ class Helper
 
 end
 
-RSpec.configure do |config|
-    config.before(:each) { @helper = Helper.new }
+# RSpec.configure do |config|
+#     config.before(:each) { @helper = Helper.new }
+# end
+
+module HelperContext
+  extend RSpec::SharedContext
+  let(:helper) { Helper.new }
 end

@@ -1,11 +1,11 @@
 require 'sinatra_helper'
 # require 'controllers_spec_helper'
 
-describe 'ApplicationController' do 
+describe 'ApplicationController' do
 
-  before do
+	before do
 
-  end
+	end
 
   	describe "get '/'" do
 
