@@ -45,6 +45,10 @@ class ForumPost < ActiveRecord::Base
 		@forum_user_username ||= self.forum_user.username
 	end
 
+	def forum_user_title
+		@forum_user_title ||= self.forum_user.title
+	end
+
 	def forum_thread_slug
 		@forum_thread_slug ||= self.forum_thread.slug
 	end
