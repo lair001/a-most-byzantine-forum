@@ -10,7 +10,7 @@ def use_controller_to_login_as(user)
   params = {
     forum_user: { username: "#{user.username}", password: "#{user.password}" }
   }
-  post '/login', params
+  post login_path, params
 end
 
 def expect_path(symbol)

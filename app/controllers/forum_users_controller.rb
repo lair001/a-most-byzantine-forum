@@ -1,6 +1,6 @@
 class ForumUsersController < Controller
 
-	get '/login' do
+	get login_path do
 		if logged_in?
 			redirect '/forum_threads'
 		else
@@ -32,7 +32,7 @@ class ForumUsersController < Controller
 		end
 	end
 
-	post '/login' do
+	post login_path do
 		begin
 			@user = ForumUser.find_by(trim_whitespace({username: params[:forum_user][:username]}, [:username]))
 		rescue ActiveRecord::RecordNotFound 

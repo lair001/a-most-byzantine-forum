@@ -1,4 +1,3 @@
-
 module RoutesHelper
 
 	def current_route
@@ -7,6 +6,10 @@ module RoutesHelper
 
 	def cached_route_or_home
 		params[:cached_route].nil? ? redirect(root_path) : redirect("#{params[:cached_route]}")
+	end
+
+	def login_path
+		"/login"
 	end
 
 	def root_path
