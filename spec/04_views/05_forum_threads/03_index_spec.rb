@@ -19,7 +19,6 @@ describe 'forum_threads/index' do
 
     @thread_array = ForumThread.all.sort { |a, b| b.updated_at <=> a.updated_at }
 
-    @helper1 = Helper.new
   end
 
   it 'renders a listing of all threads (threads updated recently come first)' do 
@@ -29,8 +28,8 @@ describe 'forum_threads/index' do
     #testing for order of threads using css selectors
     thread_selector = 'div.forum-divider-top div.row a'
     @thread_array.each do |thread|
-    	expect(page.body).to include(@helper1.format_time(thread.updated_at))
-    	expect(page.body).to include(@helper1.format_time(thread.created_at))
+    	expect(page.body).to include(helper.format_time(thread.updated_at))
+    	expect(page.body).to include(helper.format_time(thread.created_at))
     	expect(page.first(thread_selector + "[href='/forum_threads/#{thread.slug}']").text).to include(thread.title)
     	thread_selector = 'div.forum-divider-top+' + thread_selector
     end

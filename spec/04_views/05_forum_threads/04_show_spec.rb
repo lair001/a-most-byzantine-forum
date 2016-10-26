@@ -36,8 +36,6 @@ describe 'forum_threads/show' do
 
         @thread1_posts_array = @thread1.forum_posts.sort { |a, b| a.created_at <=> b.created_at }
         @thread5_posts_array = @thread5.forum_posts.sort { |a, b| a.created_at <=> b.created_at }
-
-        @helper1 = Helper.new
     end
 
     it "renders a thread detail view with a listing of the thread's posts (posts are ordered in the order that they were created)" do
@@ -49,8 +47,8 @@ describe 'forum_threads/show' do
         #testing for order of posts using css selectors
         post_selector = 'div.forum-divider-top div.row a'
         @thread1_posts_array.each do |post|
-        	expect(page.body).to include(@helper1.format_time(post.updated_at))
-        	expect(page.body).to include(@helper1.format_time(post.created_at))
+        	expect(page.body).to include(helper.format_time(post.updated_at))
+        	expect(page.body).to include(helper.format_time(post.created_at))
         	expect(page.body).to include(post.content)
         	expect(page.first(post_selector + "[href='/forum_users/#{post.forum_user.slug}']").text).to include(post.forum_user.username)
         	post_selector = 'div.forum-divider-top+' + post_selector
