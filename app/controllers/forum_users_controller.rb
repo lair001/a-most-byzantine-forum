@@ -9,23 +9,23 @@ class ForumUsersController < Controller
 		end
 	end
 
-	get '/forum_users/new' do 
+	get new_forum_user_path do 
 		if logged_in?
-			redirect '/forum_threads'
+			redirect forum_threads_path
 		else
 			@user = ForumUser.new
 			erb :'forum_users/new.html'
 		end
 	end
 
-	post '/forum_users/search' do 
+	post search_forum_users_path do 
 		if logged_in?
 			@user = ForumUser.find_by(trim_whitespace(params[:forum_user], ["username"]))
 			current_user.update(last_active: Time.now)
 			if @user
-				redirect "/forum_users/#{@user.slug}"
+				redirect forum_user_path(@user)
 			else
-				redirect '/forum_users?message=Username+not+found.'
+				redirect "#{forum_users_path}?message=Username+not+found."
 			end
 		else
 			redirect root_path
@@ -41,7 +41,7 @@ class ForumUsersController < Controller
 		if @user && !@user.banned && @user.authenticate(params[:forum_user][:password])
 			session[:forum_user_id] = @user.id
 			@user.update(last_active: Time.now)
-			redirect '/forum_threads'
+			redirect forum_threads_path
 		else
 			if @user.nil?
 				@user = ForumUser.new
@@ -55,19 +55,19 @@ class ForumUsersController < Controller
 		end
 	end
 
-	post '/forum_users' do 
+	post forum_users_path do 
 		@user = ForumUser.new
 		if set_and_save_attributes(@user, trim_whitespace(params[:forum_user], ["username"]), ["username", "email", "password"])
 			session[:forum_user_id] = @user.id 
-			redirect '/forum_threads'
+			redirect forum_threads_path
 		else
-			@current_route = "/forum_users/new"
+			@current_route = new_forum_user_path
 			erb :'forum_users/new.html'
 			# redirect '/forum_users/new'
 		end
 	end
 
-	get '/logout' do 
+	get logout_path do 
 		if logged_in?
 			session.clear
 			redirect root_path
@@ -76,7 +76,7 @@ class ForumUsersController < Controller
 		end
 	end
 
-	get '/forum_users' do 
+	get forum_users_path do 
 		if logged_in?
 			sort_users
 			erb :'forum_users/index.html'
@@ -85,10 +85,10 @@ class ForumUsersController < Controller
 		end
 	end
 
-	get '/forum_users/:slug' do 
+	get forum_user_path do 
 		if logged_in?
 			@user = ForumUser.find_by_slug(params[:slug])
-			redirect '/threads' if @user.nil?
+			redirect forum_threads_path if @user.nil?
 			sort_user_posts(@user)
 			erb :'forum_users/show.html'
 		else
@@ -96,7 +96,7 @@ class ForumUsersController < Controller
 		end
 	end
 
-	get '/forum_users/:slug/edit' do 
+	get edit_forum_user_path do 
 		if logged_in?
 			@user = ForumUser.find_by_slug(params[:slug])
 			if administrator? || (@user && @user == current_user)
@@ -109,7 +109,7 @@ class ForumUsersController < Controller
 		end
 	end
 
-	patch '/forum_users' do
+	patch forum_users_path do
 		if logged_in?
 			begin
 				@user = ForumUser.find(params[:forum_user][:id])
@@ -124,9 +124,9 @@ class ForumUsersController < Controller
 				params["forum_user"]["current_user"] = current_user
 			end
 			if set_and_save_attributes(@user, trim_whitespace(params[:forum_user], ["username"]), settable_attr_array)
-				redirect '/forum_users'
+				redirect forum_users_path
 			else
-				@current_route = "/forum_users/#{@user.slug}/edit"
+				@current_route = edit_forum_user_path(@user)
 				erb :'forum_users/edit.html'
 				# cached_route_or_home
 			end
