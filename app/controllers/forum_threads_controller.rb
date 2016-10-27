@@ -1,6 +1,6 @@
 class ForumThreadsController < Controller
 
-	get '/forum_threads' do 
+	get forum_threads_path do 
 		if logged_in?
 			sort_threads
 			erb :'forum_threads/index.html'
@@ -9,7 +9,7 @@ class ForumThreadsController < Controller
 		end
 	end
 
-	get '/forum_threads/new' do 
+	get new_forum_thread_path do 
 		if logged_in?
 			@thread = ForumThread.new
 			@post = ForumPost.new
@@ -19,14 +19,14 @@ class ForumThreadsController < Controller
 		end
 	end
 
-	post '/forum_threads/search' do 
+	post search_forum_threads_path do 
 		if logged_in?
 			@thread = ForumThread.find_by(trim_whitespace(params[:forum_thread], ["title"]))
 			current_user.update(last_active: Time.now)
 			if @thread 
-				redirect "/forum_threads/#{@thread.slug}"
+				redirect forum_thread_path(@thread)
 			else
-				redirect '/forum_threads?message=Title+not+found.'
+				redirect "#{forum_threads_path}?message=Title+not+found."
 			end
 		else
 			redirect root_path
@@ -63,14 +63,14 @@ class ForumThreadsController < Controller
 	# 	end
 	# end
 
-	post '/forum_threads' do 
+	post forum_threads_path do 
 		if logged_in?
 			@thread = ForumThread.new
 			params["forum_thread"]["forum_post_attributes"] = trim_whitespace(params["forum_thread"]["forum_post_attributes"], ["content"])
 			if set_and_save_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title", "forum_post_attributes"])
-				redirect "/forum_threads/#{@thread.slug}"
+				redirect forum_thread_path(@thread)
 			else
-				@current_route = "/forum_threads/new"
+				@current_route = new_forum_thread_path
 				@thread.errors.delete(:forum_posts)
 				erb :'forum_threads/new.html'
 				# redirect '/forum_threads/new'
@@ -80,10 +80,10 @@ class ForumThreadsController < Controller
 		end
 	end
 
-	get '/forum_threads/:slug' do
+	get forum_thread_path do
 		if logged_in?
 			@thread = ForumThread.find_by_slug(params[:slug])
-			redirect '/forum_threads' if @thread.nil?
+			redirect forum_threads_path if @thread.nil?
 			sort_thread_posts
 			erb :'forum_threads/show.html'
 		else
@@ -91,32 +91,32 @@ class ForumThreadsController < Controller
 		end
 	end
 
-	get '/forum_threads/:slug/edit' do 
+	get edit_forum_thread_path do 
 		if logged_in?
 			@thread = ForumThread.find_by_slug(params[:slug])
-			redirect '/forum_threads' if @thread.nil? || !moderator?
+			redirect forum_threads_path if @thread.nil? || !moderator?
 			erb :'forum_threads/edit.html'
 		else
 			redirect root_path
 		end
 	end
 
-	delete '/forum_threads' do
+	delete forum_threads_path do
 		if moderator?
 			begin
 				@thread = ForumThread.find(params[:forum_thread][:id])
 			rescue ActiveRecord::RecordNotFound
-				redirect '/forum_threads'
+				redirect forum_threads_path
 			end
 			@thread.forum_posts.delete_all
 			tell_model_about_current_user_and_destroy(@thread)
-			redirect '/forum_threads'
+			redirect forum_threads_path
 		else
 			redirect root_path
 		end
 	end
 
-	patch '/forum_threads' do
+	patch forum_threads_path do
 		if moderator?
 			begin
 				@thread = ForumThread.find(params[:forum_thread][:id])
@@ -125,9 +125,9 @@ class ForumThreadsController < Controller
 			end
 			params["forum_thread"]["current_user"] = current_user
 			if set_and_save_attributes(@thread, trim_whitespace(params[:forum_thread], ["title"]), ["title", "current_user"])
-				redirect '/forum_threads'
+				redirect forum_threads_path
 			else
-				@current_route = "/forum_threads/#{@thread.slug}/edit"
+				@current_route = edit_forum_thread_path(@thread)
 				erb :'forum_threads/edit.html'
 				# cached_route_or_home
 			end
