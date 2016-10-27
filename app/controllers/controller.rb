@@ -15,6 +15,7 @@ class Controller < Sinatra::Base
 	helpers RoutesHelper
 	helpers TitlesHelper
 	helpers TaglinesHelper
+	helpers HtmlTagHelper
 
 	helpers PathsHelper::Application
 	helpers PathsHelper::ForumUsers

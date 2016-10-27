@@ -13,6 +13,7 @@ class Helper
   include RoutesHelper
   include TitlesHelper
   include TaglinesHelper
+  include HtmlTagHelper
 
   # include PathsHelper::Application
   # include PathsHelper::ForumUsers

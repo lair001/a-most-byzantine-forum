@@ -19,11 +19,7 @@
 			</a>
 		</div>
 		<div class="col-xs-6">
-			<a href="<%= login_path %>">
-				<div class="jumbotron shadow">
-					<h2 class="text-center">Log In</h2>
-				</div>
-			</a>
+			<%= link_to("", login_path) { content_tag(:div, "", {class: "jumbotron"}) { content_tag(:h2, "Log In", {class: "text-center"}) } } %>
 		</div>
 	</div>
 <% else %>
