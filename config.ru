@@ -8,4 +8,5 @@ use Rack::MethodOverride
 use ForumUsersController
 use ForumPostsController
 use ForumThreadsController
+use SessionsController
 run ApplicationController

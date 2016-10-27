@@ -7,7 +7,7 @@ module PathsHelper
 		end
 
 		def logout_path
-			"/logout"
+			sessions_path
 		end
 
 		def sessions_path

@@ -42,7 +42,7 @@
                 </ul>
               </li>
             <% if logged_in? && current_route != tribute_path %>
-              <li><a href="/logout">Logout</a></li>
+              <li><a data-method="delete" href="<%= sessions_path %>">Logout</a></li>
               <% if current_route != "/forum_users/#{current_user.slug}" %>
                 <li><a href="/forum_users/<%=current_user.slug%>">Profile</a>
               <% end %>
@@ -112,6 +112,7 @@
     
     <script src='/javascripts/jquery-2.2.4.min.js'></script>
     <script src='/javascripts/bootstrap.min.js'></script>
+    <script src='/javascripts/jquery-ujs-1.2.2.rails.min.js'></script>
     <% if current_route.match(/\/(forum_posts\/(.)+\/edit|forum_(posts|threads)\/new)/) %>
       <script src='/javascripts/taboverride.min.js'></script>
       <script src='/javascripts/enable-taboverride.js'></script>

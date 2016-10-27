@@ -3,30 +3,11 @@ require 'sinatra_helper'
 
 describe 'ForumUsersController' do
 
-  before do
-  	@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
-  	@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal", id: 2)
-  	@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true, id: 3)
-  	@user4 = ForumUser.create(username: "wal", email: "wal@wal.com", password: "wal", administrator: true, id: 4)
-  end
-
-	describe "get '/login'" do
-
-		it 'loads the login page if not logged in' do
-			get '/login'
-			expect(last_response.status).to eq(200)
-			expect(last_request.path).to eq("/login")
-			expect(last_response.body).to include("Welcome back!")
-		end
-
-		it 'redirects to /forum_threads if logged in' do
-			use_controller_to_login_as(@user1)
-			get '/login'
-			expect_redirect
-			expect(last_request.path).to eq("/forum_threads")
-			expect(last_response.body).to include("Threads")
-		end
-
+	before do
+		@user1 = ForumUser.create(username: "val", email: "val@val.com", password: "val", moderator: true, administrator: true, id: 1)
+		@user2 = ForumUser.create(username: "hal", email: "hal@hal.com", password: "hal", id: 2)
+		@user3 = ForumUser.create(username: "sal", email: "sal@sal.com", password: "sal", moderator: true, id: 3)
+		@user4 = ForumUser.create(username: "wal", email: "wal@wal.com", password: "wal", administrator: true, id: 4)
 	end
 
 	describe "get '/forum_users/new'" do
@@ -78,25 +59,6 @@ describe 'ForumUsersController' do
 
 	end
 
-	describe "post '/login'" do 
-
-		it "renders the login page if login fails" do 
-			params = { forum_user: { username: "val", password: "willy" } }
-			post '/login', params
-			expect(last_response.status).to eq(200)
-			expect(last_request.path).to eq("/login")
-			expect(last_response.body).to include("Welcome back!")
-		end
-
-		it "redirects to /forum_threads if login succeeds" do
-			use_controller_to_login_as(@user1)
-			expect_redirect
-			expect(last_request.path).to eq("/forum_threads")
-		  	expect(last_response.body).to include("Threads")
-		end
-
-	end
-
 	describe "post '/forum_users'" do 
 
 		it 'renders /forum_users/new if it fails to create a new user' do
@@ -114,29 +76,6 @@ describe 'ForumUsersController' do
 		  	expect(last_request.path).to eq("/forum_threads")
 		  	expect(last_response.body).to include("Threads")
 		  	expect(ForumUser.find_by_slug("willy").username).to eq("willy")
-		end
-
-	end
-
-	describe "get '/logout'" do 
-
-		it "redirects to '/' in not logged in" do 
-			get '/logout' 
-			expect_redirect
-		  	expect(last_request.path).to eq("/")
-			expect(last_response.body).to include("Chat About All Things Roman")
-			expect(last_response.body).to include("Sign Up")
-			expect(last_response.body).to include("Log In")
-		end
-
-		it "redirects to '/' and logs out if logged in" do
-			use_controller_to_login_as(@user1)
-			get '/logout' 
-			expect_redirect
-		  	expect(last_request.path).to eq("/")
-			expect(last_response.body).to include("Chat About All Things Roman")
-			expect(last_response.body).to include("Sign Up")
-			expect(last_response.body).to include("Log In")
 		end
 
 	end
