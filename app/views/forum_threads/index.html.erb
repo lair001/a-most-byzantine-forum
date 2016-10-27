@@ -34,7 +34,7 @@
 						<i class="fa fa-pencil-square-o"></i> Edit
 		 			</button>
 	 			</a>
-				<form method="post" action="/forum_threads" class="quarter-width">
+				<form data-confirm="Are you sure?" method="post" action="/forum_threads" class="quarter-width">
 					<input type="hidden" name="_method" value="delete">
 					<input type="hidden" name="forum_thread[id]" value=<%=thread.id%>>
 					<button type="submit" id="login" class="btn btn-primary btn-forum shadow">

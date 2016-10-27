@@ -1,7 +1,7 @@
 <div class="jumbotron text-center shadow">
 	<% if moderator? && !@user.administrator && !@user.moderator %>
 		<% if !@user.banned %>
-			<form class="center-block quarter-width" method="post" action="/forum_users">
+			<form data-confirm="Are you sure?" class="center-block quarter-width" method="post" action="/forum_users">
 				<input type="hidden" name="_method" value="patch">
 				<input type="hidden" name="forum_user[banned]" value="1">
 				<input type="hidden" name="forum_user[id]" value=<%=@user.id%>>
@@ -10,7 +10,7 @@
 				</button>
 			</form>
 		<% else %>
-			<form class="center-block quarter-width" method="post" action="/forum_users">
+			<form data-confirm="Are you sure?" class="center-block quarter-width" method="post" action="/forum_users">
 				<input type="hidden" name="_method" value="patch">
 				<input type="hidden" name="forum_user[banned]" value="0">
 				<input type="hidden" name="forum_user[id]" value=<%=@user.id%>>
