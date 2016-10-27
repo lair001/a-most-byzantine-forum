@@ -11,8 +11,8 @@ class Helper
   include ForumPostsHelper
   include ApplicationHelper
   include RoutesHelper
-  include TitlesHelper
-  include TaglinesHelper
+  include PagesHelper::Titles
+  include PagesHelper::Taglines
   include HtmlTagHelper
 
   # include PathsHelper::Application

@@ -13,8 +13,8 @@ class Controller < Sinatra::Base
 	helpers ForumPostsHelper
 	helpers ApplicationHelper
 	helpers RoutesHelper
-	helpers TitlesHelper
-	helpers TaglinesHelper
+	helpers PagesHelper::Titles
+	helpers PagesHelper::Taglines
 	helpers HtmlTagHelper
 
 	helpers PathsHelper::Application
