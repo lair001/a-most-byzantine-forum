@@ -2,7 +2,7 @@ module PagesHelper
 
 	module Titles
 
-		def project_page_title
+		def project_title
 			"A Most Byzantine Forum"
 		end
 
@@ -20,6 +20,18 @@ module PagesHelper
 
 		def forum_thread_page_title
 			@thread.title
+		end
+
+		def forum_users_page_title
+			"Users"
+		end
+
+		def forum_user_page_title
+			@user.username
+		end
+
+		def new_forum_thread_forum_post_page_title
+			"Posting to Thread:"
 		end
 
 	end
