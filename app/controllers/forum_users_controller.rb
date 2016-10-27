@@ -2,7 +2,7 @@ class ForumUsersController < Controller
 
 	get login_path do
 		if logged_in?
-			redirect '/forum_threads'
+			redirect forum_threads_path
 		else
 			@user = ForumUser.new
 			erb :'forum_users/login.html'
